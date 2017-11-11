@@ -1,0 +1,9 @@
+<Plugin>
+	<File>OdraIDE.Core.Contracts</File>
+	<Id>OdraIDE.Core.Contracts</Id>
+	<Name>Contracts Core</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies/>
+</Plugin>

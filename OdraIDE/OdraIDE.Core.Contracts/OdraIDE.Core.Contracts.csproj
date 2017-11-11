@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{767995F7-22A5-44C5-878E-B94173BB41B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OdraIDE.Core</RootNamespace>
+    <AssemblyName>OdraIDE.Core.Contracts</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\Lib\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Commands\IExecutableCommand.cs" />
+    <Compile Include="CompositionPoints.cs" />
+    <Compile Include="Conditions\AbstractCondition.cs" />
+    <Compile Include="Conditions\AlwaysFalseCondition.cs" />
+    <Compile Include="Conditions\AlwaysTrueCondition.cs" />
+    <Compile Include="Conditions\ConcreteCondition.cs" />
+    <Compile Include="Conditions\ICondition.cs" />
+    <Compile Include="ExtensionPoints.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Factories\PainterFactory.cs" />
+    <Compile Include="GUI\Controls\AbstractButton.cs" />
+    <Compile Include="GUI\Controls\AbstractCommandControl.cs" />
+    <Compile Include="GUI\Controls\AbstractControl.cs" />
+    <Compile Include="GUI\Controls\AbstractLabel.cs" />
+    <Compile Include="GUI\Controls\AbstractRadioButton.cs" />
+    <Compile Include="GUI\Controls\AbstractSeparator.cs" />
+    <Compile Include="GUI\Controls\AbstractToggleButton.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="GUI\Controls\IButton.cs" />
+    <Compile Include="GUI\Controls\IControl.cs" />
+    <Compile Include="Commands\ICustomCommand.cs" />
+    <Compile Include="GUI\Controls\ILabel.cs" />
+    <Compile Include="GUI\Controls\IRadioButton.cs" />
+    <Compile Include="GUI\Controls\IToggleButton.cs" />
+    <Compile Include="GUI\Layout\IPainter.cs" />
+    <Compile Include="Services\TaskService\ITaskService.cs" />
+    <Compile Include="Services\TaskService\Task.cs" />
+    <Compile Include="Utilities\TextBoxMaskBehavior.cs" />
+    <Compile Include="GUI\DynamicListView\DynamicListView.cs" />
+    <Compile Include="GUI\DynamicListView\DataMatrix.cs" />
+    <Compile Include="GUI\DynamicListView\GenericEnumerator.cs" />
+    <Compile Include="GUI\DynamicListView\MatrixColumn.cs" />
+    <Compile Include="GUI\Layout\AbstractDocument.cs" />
+    <Compile Include="GUI\Layout\AbstractLayoutItem.cs" />
+    <Compile Include="GUI\Layout\AbstractPad.cs" />
+    <Compile Include="GUI\Layout\IDocument.cs" />
+    <Compile Include="GUI\Layout\IDocumentMeta.cs" />
+    <Compile Include="GUI\Layout\ILayoutItem.cs" />
+    <Compile Include="GUI\Layout\ILayoutItemMeta.cs" />
+    <Compile Include="GUI\Layout\ILayoutManager.cs" />
+    <Compile Include="GUI\Layout\IPad.cs" />
+    <Compile Include="GUI\Layout\IPadMeta.cs" />
+    <Compile Include="GUI\MenuItem\AbstractMenuItem.cs" />
+    <Compile Include="GUI\MenuItem\IMenuItem.cs" />
+    <Compile Include="GUI\MenuItem\MenuItemVisibleCondition.cs" />
+    <Compile Include="GUI\Options\AbstractOptionsItem.cs" />
+    <Compile Include="GUI\Options\AbstractOptionsPad.cs" />
+    <Compile Include="GUI\Options\IOptionsItem.cs" />
+    <Compile Include="GUI\Options\IOptionsPad.cs" />
+    <Compile Include="GUI\StatusBar\ApplicationStatus.cs" />
+    <Compile Include="GUI\StatusBar\IStatusBarItem.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarButton\AbstractStatusBarButton.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarButton\AbstractStatusBarButtonView.xaml.cs">
+      <DependentUpon>AbstractStatusBarButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatusBar\StatusBarLabel\AbstractStatusBarLabel.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarLabel\AbstractStatusBarLabelView.xaml.cs">
+      <DependentUpon>AbstractStatusBarLabelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatusBar\StatusBarProgressBar\AbstractStatusBarProgressBar.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarProgressBar\AbstractStatusBarProgressBarView.xaml.cs">
+      <DependentUpon>AbstractStatusBarProgressBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatusBar\StatusBarRadioButton\AbstractStatusBarRadioButton.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarRadioButton\AbstractStatusBarRadioButtonView.xaml.cs">
+      <DependentUpon>AbstractStatusBarRadioButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatusBar\StatusBarSeparator\AbstractStatusBarSeparator.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarSeparator\AbstractStatusBarSeparatorView.xaml.cs">
+      <DependentUpon>AbstractStatusBarSeparatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatusBar\StatusBarToggleButton\AbstractStatusBarToggleButton.cs" />
+    <Compile Include="GUI\StatusBar\StatusBarToggleButton\AbstractStatusBarToggleButtonView.xaml.cs">
+      <DependentUpon>AbstractStatusBarToggleButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\IToolBar.cs" />
+    <Compile Include="GUI\ToolBar\AbstractToolBar.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\IToolBarItem.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarButton\AbstractToolBarButton.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarButton\AbstractToolBarButtonView.xaml.cs">
+      <DependentUpon>AbstractToolBarButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarComboBox\AbstractToolBarComboBox.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarComboBox\AbstractToolBarComboBoxView.xaml.cs">
+      <DependentUpon>AbstractToolBarComboBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarLabel\AbstractToolBarLabel.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarLabel\AbstractToolBarLabelView.xaml.cs">
+      <DependentUpon>AbstractToolBarLabelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarRadioButton\AbstractToolBarRadioButton.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarRadioButton\AbstractToolBarRadioButtonView.xaml.cs">
+      <DependentUpon>AbstractToolBarRadioButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarSeparator\AbstractToolBarSeparator.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarSeparator\AbstractToolBarSeparatorView.xaml.cs">
+      <DependentUpon>AbstractToolBarSeparatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarToggleButton\AbstractToolBarToggleButton.cs" />
+    <Compile Include="GUI\ToolBar\ToolBarItem\ToolBarToggleButton\AbstractToolBarToggleButtonView.xaml.cs">
+      <DependentUpon>AbstractToolBarToggleButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ViewModel\AbstractViewModel.cs" />
+    <Compile Include="GUI\ViewModel\IViewModel.cs" />
+    <Compile Include="Services.cs" />
+    <Compile Include="Factories\DocumentFactory.cs" />
+    <Compile Include="Services\ConnectionService\IConnectionService.cs" />
+    <Compile Include="Services\ConnectionService\NoConnectionException.cs" />
+    <Compile Include="Services\ExtensionService\AbstractExtension.cs" />
+    <Compile Include="Services\ExtensionService\ExtensionService.cs" />
+    <Compile Include="Services\ExtensionService\IExtension.cs" />
+    <Compile Include="Services\ExtensionService\IExtensionService.cs" />
+    <Compile Include="Services\FileDialogService\IFileDialogService.cs" />
+    <Compile Include="Commands\FileCommands.cs" />
+    <Compile Include="Services\FileService\FileEventArgs.cs" />
+    <Compile Include="Factories\FileFactory.cs" />
+    <Compile Include="Services\FileService\FileName.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
+    <Compile Include="Services\FileService\OpenedFile.cs" />
+    <Compile Include="Services\LoggingService\ILoggingService.cs" />
+    <Compile Include="Services\MessagingService\IMessagingService.cs" />
+    <Compile Include="Services\ResultsService\IResultsService.cs" />
+    <Compile Include="Utilities\AppEnvironment.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common\Common.csproj">
+      <Project>{BE68C4B8-B4CA-40C5-8A80-36EA5BEB3876}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Communication\Communication.csproj">
+      <Project>{3A423D5E-E45E-4D30-9F20-06F0527B38F3}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\ModuleBase\ModuleBase.csproj">
+      <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
+      <Name>ModuleBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OdraIDE.Utilities\OdraIDE.Utilities.csproj">
+      <Project>{6F8E53E2-D47A-4379-AD49-E8979D458A85}</Project>
+      <Name>OdraIDE.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Plugins definition\ICSharpCode.AvalonEdit.plugin">
+      <Link>ICSharpCode.AvalonEdit.plugin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Plugins definition\OdraIDE.Core.Contracts.plugin">
+      <Link>OdraIDE.Core.Contracts.plugin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClassDiagram2.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="GUI\StatusBar\StatusBarButton\AbstractStatusBarButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\StatusBar\StatusBarLabel\AbstractStatusBarLabelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\StatusBar\StatusBarProgressBar\AbstractStatusBarProgressBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\StatusBar\StatusBarRadioButton\AbstractStatusBarRadioButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\StatusBar\StatusBarSeparator\AbstractStatusBarSeparatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\StatusBar\StatusBarToggleButton\AbstractStatusBarToggleButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarButton\AbstractToolBarButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarComboBox\AbstractToolBarComboBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarLabel\AbstractToolBarLabelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarRadioButton\AbstractToolBarRadioButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarSeparator\AbstractToolBarSeparatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ToolBar\ToolBarItem\ToolBarToggleButton\AbstractToolBarToggleButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

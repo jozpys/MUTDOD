@@ -1,0 +1,19 @@
+<Plugin>
+	<File>OdraIDE.SolutionExplorer.Contracts</File>
+	<Id>OdraIDE.SolutionExplorer.Contracts</Id>
+	<Name>Solution Explorer Contracts</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>ICSharpCode.TreeView</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+	<Enabled>True</Enabled>
+</Plugin>

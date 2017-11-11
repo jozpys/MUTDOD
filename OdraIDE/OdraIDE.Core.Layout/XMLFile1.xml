@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <Layout>
+    <DockingManager>
+      <ResizingPanel ResizeWidth="*" ResizeHeight="*" EffectiveSize="0,0" Orientation="Vertical">
+        <ResizingPanel ResizeWidth="*" ResizeHeight="70*" EffectiveSize="1536,504.056" Orientation="Horizontal">
+          <DockablePane ResizeWidth="20*" ResizeHeight="*" EffectiveSize="383,504.056" Anchor="Left">
+            <DockableContent Name="SolutionExplorer" AutoHide="false" />
+            <DockableContent Name="PropertyGrid" AutoHide="false" />
+          </DockablePane>
+          <DocumentPanePlaceHolder />
+        </ResizingPanel>
+        <DockablePane ResizeWidth="*" ResizeHeight="30*" EffectiveSize="1536,216.024" Anchor="Bottom">
+          <DockableContent Name="StringResultsPad" AutoHide="false" />
+          <DockableContent Name="GridResultsPad" AutoHide="false" />
+          <DockableContent Name="GridTasksPad" AutoHide="false" />
+        </DockablePane>
+      </ResizingPanel>
+      <Hidden />
+      <Windows />
+    </DockingManager>
+  </Layout>
+  <Documents>
+    <DocumentList>
+      <Item Name="SourceEditor" Memento="D:\skrypt.sbql" />
+    </DocumentList>
+  </Documents>
+</Settings>

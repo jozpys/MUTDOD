@@ -1,0 +1,8 @@
+<Plugin>
+	<File>ICSharpCode.AvalonEdit</File>
+	<Id>ICSharpCode.AvalonEdit</Id>
+	<Name>AvalonEdit</Name>
+	<Version>1.0.0</Version>
+	<Company>ICSharpCode</Company>
+	<Description>WPF-based extensible text editor</Description>
+</Plugin>

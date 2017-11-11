@@ -1,0 +1,14 @@
+<Plugin>
+	<File>OdraIDE.Results</File>
+	<Id>OdraIDE.Results</Id>
+	<Name>Results</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+</Plugin>

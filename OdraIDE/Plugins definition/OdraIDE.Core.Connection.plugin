@@ -1,0 +1,18 @@
+<Plugin>
+	<File>OdraIDE.Core.Connection</File>
+	<Id>OdraIDE.Core.Connection</Id>
+	<Name>Connection Core</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+    <Plugin>
+      <Id>MUTDOD.Common.Settings</Id>
+      <Version>1.0.0</Version>
+    </Plugin>
+	</Dependencies>
+</Plugin>

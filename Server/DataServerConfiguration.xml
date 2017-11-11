@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <facilities>
+    <facility id="uniqueId" type="Castle.Facilities.Startable.StartableFacility, Castle.Windsor" />
+  </facilities>
+  <components>
+    <component
+      service="MUTDOD.Common.ServerBase.IServerRunnable, MUTDOD.Common.ServerBase"
+      type="MUTDOD.Server.DataServer.DataServerBase.DataServerRunnable, MUTDOD.Server.DataServer.DataServerBase"
+      startable="true"
+      startMethod="Run"
+      stopMethod="Stop"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.ICore, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.CoreModule.Core, MUTDOD.Server.Common.CoreModule"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IModuleManager, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.CoreModule.ModuleManager, MUTDOD.Server.Common.CoreModule"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IStorage, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.Storage.Storage, MUTDOD.Server.Common.Storage"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IQueryEngine, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.QueryEngineModule.QueryEngine, MUTDOD.Server.Common.QueryEngineModule"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IOdbc, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.ODBCModule.ODBC, MUTDOD.Server.Common.ODBCModule"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.Settings.ISettingsManager, MUTDOD.Common.Settings"
+      type="MUTDOD.Common.Settings.HardcodedSettings, MUTDOD.Common.Settings"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IQueryAnalyzer, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.QueryAnalyzer.QueryAnalyzer, MUTDOD.Server.Common.QueryAnalyzer"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IExecutionPlanner, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.ExecutionPlanner.ExecutionPlanner, MUTDOD.Server.Common.ExecutionPlanner"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IIndexMechanism, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.IndexMechanism.IndexMechanism, MUTDOD.Server.Common.IndexMechanism"
+      lifestyle="singleton"/>
+  </components>
+</configuration>

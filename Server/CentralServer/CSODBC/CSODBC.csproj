@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2684BE2A-39C9-4E3C-87CF-B65992887A10}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MUTDOD.Server.CentralServer.CSODBC</RootNamespace>
+    <AssemblyName>MUTDOD.Server.CentralServer.CSODBC</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CentralServerConnector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common\Common.csproj">
+      <Project>{BE68C4B8-B4CA-40C5-8A80-36EA5BEB3876}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Communication\Communication.csproj">
+      <Project>{3A423D5E-E45E-4D30-9F20-06F0527B38F3}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\ServerBase\ServerBase.csproj">
+      <Project>{E9B4144E-947A-4745-9FAE-4A2CCAAFE093}</Project>
+      <Name>ServerBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Settings\Settings.csproj">
+      <Project>{6ECCC095-72CF-442B-AA12-2041B8BE3B68}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Types\Types.csproj">
+      <Project>{6f59e8e0-d8c9-438c-ae4c-7f5c08a99db4}</Project>
+      <Name>Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\ModuleBase\ModuleBase.csproj">
+      <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
+      <Name>ModuleBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
+      <Project>{C61B42B5-5A51-4533-BB7E-ECE5743621DB}</Project>
+      <Name>ODBCModule</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E832245E-8A83-4207-AF62-AFBAA02C582C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OdraIDE.Editor</RootNamespace>
+    <AssemblyName>OdraIDE.Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\Lib\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock, Version=1.2.2691.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Factories\DocumentFactory.cs" />
+    <Compile Include="Factories\ErrorPainterFactory.cs" />
+    <Compile Include="Highlighting\Highlightings.cs" />
+    <Compile Include="Layout\Editor\SourceEditor.cs" />
+    <Compile Include="Layout\Editor\SourceEditorView.xaml.cs">
+      <DependentUpon>SourceEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Options\SourceEditorGeneralOptionsPad.cs" />
+    <Compile Include="Options\SourceEditorGeneralOptionsPadView.xaml.cs">
+      <DependentUpon>SourceEditorGeneralOptionsPadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Options\SourceEditorOptions.cs" />
+    <Compile Include="Painter\ErrorPainter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Resources\Images.Designer.cs">
+      <DependentUpon>Images.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Services\TextMarker.cs" />
+    <Compile Include="Services\TextMarkerService.cs" />
+    <Compile Include="Workbench\StatusBar\ColumnCounter.cs" />
+    <Compile Include="Workbench\StatusBar\LineCounter.cs" />
+    <Compile Include="Workbench\ToolBar\StandardToolbar.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="..\Plugins definition\OdraIDE.Editor.plugin">
+      <Link>OdraIDE.Editor.plugin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OdraIDE.Core.Contracts\OdraIDE.Core.Contracts.csproj">
+      <Project>{767995F7-22A5-44C5-878E-B94173BB41B9}</Project>
+      <Name>OdraIDE.Core.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OdraIDE.Editor.Contracts\OdraIDE.Editor.Contracts.csproj">
+      <Project>{92F2D4ED-1A1A-4980-9D63-8B4B26BAC9C3}</Project>
+      <Name>OdraIDE.Editor.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OdraIDE.Utilities\OdraIDE.Utilities.csproj">
+      <Project>{6F8E53E2-D47A-4379-AD49-E8979D458A85}</Project>
+      <Name>OdraIDE.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Copy-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cut-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\document-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\new-page-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\New_file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Open-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Paste-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Layout\Editor\SourceEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\SourceEditorGeneralOptionsPadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Folding\" />
+    <Folder Include="Workbench\MainMenu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveAll.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

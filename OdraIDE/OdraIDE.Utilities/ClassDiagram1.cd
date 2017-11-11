@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Utilities.EditorHelper">
+    <Position X="2.25" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>EditorHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Utilities.FileHelper">
+    <Position X="2.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAACAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Utilities.ImageHelper">
+    <Position X="3.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ImageHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Utilities.NotifyPropertyChangedHelper">
+    <Position X="4.25" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>NotifyPropertyChangedHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Utilities.StringSearch" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAgAAAAAQAAAABAAAAAAAAAAAQAAAhAA=</HashCode>
+      <FileName>StringSearch.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Utilities.XmlHelper">
+    <Position X="6" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmlHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="OdraIDE.Utilities.StringSearchResult" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIgAAAAAAAAAQAAAAEAQAAAAAA=</HashCode>
+      <FileName>StringSearch.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="OdraIDE.Utilities.IStringSearchAlgorithm" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAQAAAAAAAAAAAAAAAAAAAAhAA=</HashCode>
+      <FileName>StringSearch.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

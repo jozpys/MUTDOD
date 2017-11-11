@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:OdraIDE.ServerUtilities"
+    x:Class="OdraIDE.ServerUtilities.ServerConsolePadView">
+
+    <DataTemplate DataType="{x:Type local:ServerConsolePad}">
+        <Grid>
+            <ScrollViewer>
+                <TextBlock Text="{Binding Path=Output}" />
+            </ScrollViewer>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,14 @@
+<Plugin>
+	<File>OdraIDE.Core.Layout</File>
+	<Id>OdraIDE.Core.Layout</Id>
+	<Name>Layout Core</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description/>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+</Plugin>

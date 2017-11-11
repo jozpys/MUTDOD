@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:OdraIDE.Editor"
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:arena="clr-namespace:OdraIDE.Editor;assembly=OdraIDE.Editor"
+    x:Class="OdraIDE.Editor.SourceEditorView">
+
+    <DataTemplate DataType="{x:Type local:SourceEditor}">
+        <ContentControl Content="{Binding Path=TextEditor}"/>
+    </DataTemplate>
+
+</ResourceDictionary>

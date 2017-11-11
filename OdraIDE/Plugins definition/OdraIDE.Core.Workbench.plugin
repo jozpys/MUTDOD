@@ -1,0 +1,14 @@
+<Plugin>
+	<File>OdraIDE.Core.Workbench</File>
+	<Id>OdraIDE.Core.Workbench</Id>
+	<Name>Workbench Core</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+</Plugin>

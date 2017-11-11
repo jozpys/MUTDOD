@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5D0737E6-13C3-4EAB-8EB3-8AF5A5515F4A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataServerApp2</RootNamespace>
+    <AssemblyName>DataServerApp2</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>network_file_server.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common\Common.csproj">
+      <Project>{be68c4b8-b4ca-40c5-8a80-36ea5beb3876}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\ModuleBase\ModuleBase.csproj">
+      <Project>{02c7d2e4-48b6-4c3e-89f4-f15a09dee23f}</Project>
+      <Name>ModuleBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\CoreModule\CoreModule.csproj">
+      <Project>{125a2c8a-8f8c-4546-bb44-3688aa1ca7dd}</Project>
+      <Name>CoreModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\ExecutionPlanner\ExecutionPlanner.csproj">
+      <Project>{e53da5fa-e552-4bb2-ba6c-11d406cbd264}</Project>
+      <Name>ExecutionPlanner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
+      <Project>{f60f8089-adb9-4d93-bf8a-059af83e3193}</Project>
+      <Name>IndexMechanism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\MetamodelModule\MetamodelModule.csproj">
+      <Project>{3bee2a4a-2fb1-4157-a778-cfbcc7b94019}</Project>
+      <Name>MetamodelModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
+      <Project>{c61b42b5-5a51-4533-bb7e-ece5743621db}</Project>
+      <Name>ODBCModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\QueryAnalyzer\QueryAnalyzer.csproj">
+      <Project>{f3509de5-5253-4a0c-b023-f3b0a71565f3}</Project>
+      <Name>QueryAnalyzer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\QueryEngineModule\QueryEngineModule.csproj">
+      <Project>{964e36a2-9daf-4474-8316-7df493133581}</Project>
+      <Name>QueryEngineModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Storage\Storage\Storage.csproj">
+      <Project>{eca1c184-3217-464e-a32e-48132cae47bb}</Project>
+      <Name>Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Tools\Logger\Logger.csproj">
+      <Project>{a2e33731-8ec1-46ad-9156-1378edaeab44}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataServerApp\DataServerApp.csproj">
+      <Project>{68d8800f-9af7-4aca-970f-e0713c4c556e}</Project>
+      <Name>DataServerApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataServerBase\DataServerBase.csproj">
+      <Project>{a6147f6a-6211-4af1-bcac-f7355aa4c9cf}</Project>
+      <Name>DataServerBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="network_file_server.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

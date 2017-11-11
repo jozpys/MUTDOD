@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Core.PluginManager.CompositionPoints.Workbench" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.CompositionPoints.PluginManager" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.PluginInfo">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAAAAAABAAEgAIAAAAAAAAQAAAABAAAAAABABQAAAAA=</HashCode>
+      <FileName>PluginManager\PluginInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.PluginManager" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="2.25" />
+    <Members>
+      <Property Name="AddButton" Hidden="true" />
+      <Property Name="dirtyCondition" Hidden="true" />
+      <Property Name="fileDialogService" Hidden="true" />
+      <Property Name="logger" Hidden="true" />
+      <Field Name="m_AddButton" Hidden="true" />
+      <Field Name="m_dirtyCondition" Hidden="true" />
+      <Field Name="m_Plugins" Hidden="true" />
+      <Field Name="m_RemoveButton" Hidden="true" />
+      <Field Name="m_SelectedPlugin" Hidden="true" />
+      <Field Name="m_SelectedPluginArgs" Hidden="true" />
+      <Property Name="mainWindowExport" Hidden="true" />
+      <Property Name="messagingService" Hidden="true" />
+      <Method Name="OnImportsSatisfied" Hidden="true" />
+      <Field Name="PLUGIN_BIN_DIR" Hidden="true" />
+      <Property Name="RemoveButton" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Class Name="OdraIDE.Core.PluginManager.PluginManager.AddPluginButton" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PluginManager\PluginManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="OdraIDE.Core.PluginManager.PluginManager.RemovePluginButton" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PluginManager\PluginManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAACAABCAAwABIEAEAiCIgACAgBggIAAQAA=</HashCode>
+      <FileName>PluginManager\PluginManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.PluginManagerView" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PluginManager\PluginManagerView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.ToolsMenuPluginManager" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Workbench\MainMenu\ToolsMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.Properties.Resources" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.Properties.Settings" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginManager.Resources.Images" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

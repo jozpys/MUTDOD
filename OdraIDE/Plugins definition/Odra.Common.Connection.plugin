@@ -1,0 +1,8 @@
+<Plugin>
+	<File>Odra.Common.Connection</File>
+	<Id>Odra.Common.Connection</Id>
+	<Name>Odra.Common.Connection</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+</Plugin>

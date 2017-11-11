@@ -1,0 +1,9 @@
+<Plugin>
+	<File>NLog</File>
+	<Id>NLog</Id>
+	<Name>NLog</Name>
+	<Version>1.0.0</Version>
+	<Company/>
+	<Description/>
+	<Dependencies/>
+</Plugin>

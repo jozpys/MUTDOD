@@ -1,0 +1,10 @@
+<Plugin>
+	<File>MUTDOD.Common.Settings</File>
+	<Id>MUTDOD.Common.Settings</Id>
+	<Name>MUTDOD.Common.Settings</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+	</Dependencies>
+</Plugin>

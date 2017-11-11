@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Plugin>
+	<File>AvalonDock</File>
+	<Id>AvalonDock</Id>
+	<Name>AvalonDock</Name>
+	<Version>1.0.0</Version>
+	<Company></Company>
+	<Description></Description>
+	<Dependencies/>
+</Plugin>

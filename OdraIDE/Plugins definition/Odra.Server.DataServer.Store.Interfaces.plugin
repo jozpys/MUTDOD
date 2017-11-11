@@ -1,0 +1,9 @@
+<Plugin>
+	<File>Odra.Server.DataServer.Store.Interfaces</File>
+	<Id>Odra.Server.DataServer.Store.Interfaces</Id>
+	<Name>Odra.Server.DataServer.Store.Interfaces</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies/>
+</Plugin>

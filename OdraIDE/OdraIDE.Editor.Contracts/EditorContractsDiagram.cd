@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Editor.AbstractFileClosingCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\AbstractFileClosingCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.CodeSnippetCompletionData" BaseTypeListCollapsed="true">
+    <Position X="7" Y="0.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAgAgAAIEAAAQABAAAABAABAAAAAACABAAAA=</HashCode>
+      <FileName>Completion\CodeSnippedCompletionData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.AbstractFoldingStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAACAAAAgIAAAAAAAAAAwAAAgEgAAAAEAAAAgAA=</HashCode>
+      <FileName>Folding\AbstractFoldingStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="OdraIDE.Editor.IFileClosingCommand">
+    <Position X="3.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IFileClosingCommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Editor.ISourceEditor">
+    <Position X="4.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAABAAAAAAAAAAAACAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editor\ISourceEditor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Editor.IHighlighting">
+    <Position X="6.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAGEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Highlighting\IHighlighting.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Editor.ITextMarker">
+    <Position X="1" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAAgAiAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ITextMarker.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Editor.ITextMarkerService">
+    <Position X="2.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAIAAAAAAABAAAAAAAAEAAIAAAAAAAAAA=</HashCode>
+      <FileName>Services\ITextMarkerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="OdraIDE.Editor.TextMarkerType" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Services\ITextMarker.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:res="clr-namespace:OdraIDE.Editor"
+    xmlns:local="clr-namespace:OdraIDE.Editor"
+    xmlns:core="clr-namespace:OdraIDE.Core;assembly=OdraIDE.Core.Contracts"
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    x:Class="OdraIDE.Editor.SourceEditorGeneralOptionsPadView">
+
+    <DataTemplate DataType="{x:Type local:SourceEditorGeneralOptionsPad}">
+        <StackPanel>
+            <CheckBox IsChecked="{Binding ShowLineNumbersEdit}">
+                <TextBlock Text="{x:Static res:Resources.Strings.Options_SourceEditor_ShowLineNumbers}"/>
+            </CheckBox>
+            <CheckBox IsChecked="{Binding WordWrapEdit}">
+                <TextBlock Text="{x:Static res:Resources.Strings.Options_SourceEditor_WordWrap}"/>
+            </CheckBox>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.7*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{x:Static res:Resources.Strings.Options_SourceEditor_FontFamily}" Grid.Column="0" 
+                       HorizontalAlignment="Left" Margin="12,0,0,0"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Source={x:Static Member=Fonts.SystemFontFamilies}}"
+                          SelectedItem="{Binding FontFamilyEdit}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontFamily="{Binding .}" Text="{Binding Source}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label Content="{x:Static res:Resources.Strings.Options_SourceEditor_FontSize}" 
+                       Grid.Column="0" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="2"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding FontSizeEdit, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <!--ComboBox Name="highlightingComboBox"
+				SelectedItem="{Binding HighlightingDefinitionEdit}"
+				ItemsSource="{Binding Source={x:Static avalonEdit:HighlightingManager.Instance}, 
+                Path=HighlightingDefinitions}"
+             /-->
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

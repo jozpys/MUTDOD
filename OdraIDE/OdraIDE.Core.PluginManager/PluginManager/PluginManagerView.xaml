@@ -1,0 +1,94 @@
+﻿<Window x:Class="OdraIDE.Core.PluginManager.PluginManagerView"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="Plug-in Manager"
+		WindowStyle="SingleBorderWindow" 
+		WindowStartupLocation="CenterOwner"
+		ResizeMode="NoResize"
+		Width="640" Height="480" ShowInTaskbar="False"
+		Icon="/OdraIDE.Core.PluginManager;component/Resources/PluginManagerIco.png">
+
+	<Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="10"/>
+			<!-- margin -->
+			<ColumnDefinition Width="0.6*"/>
+			<ColumnDefinition Width="0.4*"/>
+			<ColumnDefinition Width="10"/>
+			<!-- margin -->
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10"/>  <!-- margin -->
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="10"/>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="10"/>  <!-- margin -->
+		</Grid.RowDefinitions>
+		<ListView Name="plugins" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Plugins}" SelectedItem="{Binding SelectedPlugin}">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="Name" Width="170">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Path=Name}" Width="Auto"/>
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
+					</GridViewColumn>
+					<GridViewColumn Header="Version" Width="85">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Path=Version}" Width="Auto"/>
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
+					</GridViewColumn>
+					<GridViewColumn Header="Enabled" Width="50">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox ToolTip="Loaded" IsChecked="{Binding Path=Enabled}" HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
+					</GridViewColumn>
+					<GridViewColumn Header="Loaded"	Width="50">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox ToolTip="Loaded" IsEnabled="False" IsChecked="{Binding Path=Loaded}" HorizontalAlignment="Center"/>
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
+					</GridViewColumn>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<Label Content="List of plugins:" Grid.Column="1" Grid.Row="1" FontWeight="Bold" FontSize="13.333"/>
+		<Label Content="Plug-in information:" Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="13.333"/>
+		<Image Source="/OdraIDE.Core.PluginManager;component/Resources/PluginLogo.png" Margin="0,0,0,0"
+			   HorizontalAlignment="Right" Width="48" Height="48" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top"/>
+		<ScrollViewer Grid.Column="2" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+			<StackPanel  CanVerticallyScroll="True">
+				<TextBlock Text="{Binding ElementName=plugins, Path=SelectedItem.Copyright}" Margin="10,5,5,5" TextWrapping="Wrap" FontSize="9.333"/>
+				<Label Background="#3B8D8686" FontWeight="Bold" Margin="5,0,0,0">Name:</Label>
+				<TextBlock Text="{Binding ElementName=plugins, Path=SelectedItem.Name}" Margin="10,5,5,5" TextWrapping="Wrap"/>
+				<Label Background="#3B8D8686" FontWeight="Bold" Margin="5,0,0,0">Version:</Label>
+				<TextBlock Text="{Binding ElementName=plugins, Path=SelectedItem.Version}" Margin="10,5,5,5" TextWrapping="Wrap"/>
+				<Label Background="#3B8D8686" FontWeight="Bold" Margin="5,0,0,0">Company:</Label>
+				<TextBlock Text="{Binding ElementName=plugins, Path=SelectedItem.Company}" Margin="10,5,5,5" TextWrapping="Wrap"/>
+				<Label Background="#3B8D8686" FontWeight="Bold" Margin="5,0,0,0">Description:</Label>
+				<TextBlock Text="{Binding ElementName=plugins, Path=SelectedItem.Description}" Margin="10,5,5,5" TextWrapping="Wrap" VerticalAlignment="Top"/>
+			</StackPanel>
+		</ScrollViewer>
+		<Button HorizontalAlignment="Left" Width="Auto" Grid.Column="1" Grid.Row="4" Command="{Binding AddButton.Command}">
+			<StackPanel Orientation="Horizontal" >
+				<Image Source="/OdraIDE.Core.PluginManager;component/Resources/Add.png" Width="24" Height="24"/>
+				<TextBlock Text="Add new" Width="Auto" VerticalAlignment="Center" FontSize="13.333" Margin="5,0,5,0"/>
+			</StackPanel>
+		</Button>
+		<Button HorizontalAlignment="Right" Width="Auto" Grid.Column="1" Grid.Row="4" Command="{Binding RemoveButton.Command}">
+			<StackPanel Orientation="Horizontal">
+				<Image Source="/OdraIDE.Core.PluginManager;component/Resources/Delete.png" Width="24" Height="24"/>
+				<TextBlock Text="Remove" Width="Auto" VerticalAlignment="Center" FontSize="13.333" Margin="5,0,5,0"/>
+			</StackPanel>
+		</Button>
+		<Button Click="CloseButton_Click" IsDefault="True"
+			HorizontalAlignment="Right" Width="80.8" Content="Close" Grid.Column="2" Grid.Row="4" FontSize="13.333"/>
+	</Grid>
+</Window>

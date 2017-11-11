@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="OdraIDE.Core.Exceptions.InvalidPluginException">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\InvalidPluginException.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Plugin" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginConfig">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <Members>
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Dependencies" Type="OdraIDE.Core.PluginConfig">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.035" Y="0.318" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAACAAABAAAgAICEgAAAAAQAAAAEAIAAAAAABAAAAAA=</HashCode>
+      <FileName>Plugin.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Dependencies" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OdraIDE.Core.Plugin">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAACJABAgEgAICAgAAAAAQgAAAEAIAAAABABQAAAAA=</HashCode>
+      <FileName>Plugin.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Config" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Dependencies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginChecker">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAEAAAAAAAAAIQACAAAAADCQAAAQAAAAQAAEAA=</HashCode>
+      <FileName>PluginChecker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="plugins" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

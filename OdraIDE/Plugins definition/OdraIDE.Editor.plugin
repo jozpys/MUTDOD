@@ -1,0 +1,22 @@
+<Plugin>
+	<File>OdraIDE.Editor</File>
+	<Id>OdraIDE.Editor</Id>
+	<Name>Editor</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>OdraIDE.Editor.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>ICSharpCode.AvalonEdit</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+</Plugin>

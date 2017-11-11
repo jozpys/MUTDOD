@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Core.Exceptions.InvalidPluginException" Collapsed="true">
+    <Position X="3.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\InvalidPluginException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginConfig">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IAACAAABAAAgAICEgAAAAAQAAAAEAIAAAAAABAAAAAA=</HashCode>
+      <FileName>Plugin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Plugin">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <Members>
+      <Property Name="Company" Hidden="true" />
+      <Property Name="Copyright" Hidden="true" />
+      <Property Name="Dependencies" Hidden="true" />
+      <Property Name="Description" Hidden="true" />
+      <Property Name="Enabled" Hidden="true" />
+      <Method Name="Equals" Hidden="true" />
+      <Property Name="File" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Method Name="Plugin" Hidden="true" />
+      <Property Name="Version" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IAAACJABAgEgAICAgAAAAAQgAAAEAIAAAABABQAAAAA=</HashCode>
+      <FileName>Plugin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PluginChecker" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAEAAAAAAAAAIQACAAAAADCQAAAQAAAAQAAEAA=</HashCode>
+      <FileName>PluginChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

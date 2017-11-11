@@ -1,0 +1,9 @@
+<Plugin>
+	<File>ICSharpCode.TreeView</File>
+	<Id>ICSharpCode.TreeView</Id>
+	<Name>ICSharpCode TreeView</Name>
+	<Version>1.0.0</Version>
+	<Company>ICSharpCode</Company>
+	<Description></Description>
+	<Dependencies/>
+</Plugin>

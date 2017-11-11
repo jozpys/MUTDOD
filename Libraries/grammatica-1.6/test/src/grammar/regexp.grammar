@@ -1,0 +1,89 @@
+/*
+ * regexp.grammar
+ *
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the BSD license.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * LICENSE.txt file for more details.
+ *
+ * Copyright (c) 2003-2015 Per Cederberg. All rights reserved.
+ */
+
+%header%
+
+GRAMMARTYPE = "LL"
+
+DESCRIPTION = "A grammar for simple regular expressions. The grammar is LL(1),
+               meaning that it is best read with a recursive descent parser."
+
+AUTHOR      = "Per Cederberg"
+VERSION     = "1.0"
+DATE        = "20 April 2003"
+
+LICENSE     = "This program is free software: you can redistribute it and/or
+               modify it under the terms of the BSD license.
+
+               This program is distributed in the hope that it will be useful,
+               but WITHOUT ANY WARRANTY; without even the implied warranty of
+               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+               LICENSE.txt file for more details."
+
+COPYRIGHT   = "Copyright (c) 2003-2015 Per Cederberg. All rights reserved."
+
+
+%tokens%
+
+LEFT_PAREN                   = "("
+RIGHT_PAREN                  = ")"
+LEFT_BRACKET                 = "["
+RIGHT_BRACKET                = "]"
+LEFT_BRACE                   = "{"
+RIGHT_BRACE                  = "}"
+QUESTION                     = "?"
+ASTERISK                     = "*"
+PLUS                         = "+"
+VERTICAL_BAR                 = "|"
+DOT                          = "."
+COMMA                        = ","
+NUMBER                       = <<[0-9]+>>
+CHAR                         = <<(\\.)|.>>
+
+
+%productions%
+
+Expr = Term ["|" Expr] ;
+
+Term = Fact+ ;
+
+Fact = Atom [AtomModifier] ;
+
+Atom = CHAR
+     | NUMBER
+     | ","
+     | "."
+     | "(" Expr ")"
+     | "[" CharacterSet "]" ;
+
+AtomModifier = "?" ["?"]
+             | "*" ["?"]
+             | "+" ["?"]
+             | "{" NUMBER ["," [NUMBER]] "}" ["?"] ;
+
+CharacterSet = Character+ ;
+
+Character = CHAR
+          | NUMBER
+          | ","
+          | "."
+          | "|"
+          | "+"
+          | "*"
+          | "?"
+          | "{"
+          | "}"
+          | "("
+          | ")"
+          | "[" ;

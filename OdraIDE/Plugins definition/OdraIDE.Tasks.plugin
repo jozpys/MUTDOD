@@ -1,0 +1,26 @@
+<Plugin>
+	<File>OdraIDE.Tasks</File>
+	<Id>OdraIDE.Tasks</Id>
+	<Name>Tasks</Name>
+	<Version>1.0.0</Version>
+	<Company>Wojskowa Akademia Techniczna</Company>
+	<Description></Description>
+	<Dependencies>
+		<Plugin>
+			<Id>OdraIDE.Core.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>OdraIDE.Editor.Contracts</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>OdraIDE.Utilities</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+		<Plugin>
+			<Id>ICSharpCode.AvalonEdit</Id>
+			<Version>1.0.0</Version>
+		</Plugin>
+	</Dependencies>
+</Plugin>

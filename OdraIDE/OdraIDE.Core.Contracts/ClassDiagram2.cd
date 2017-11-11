@@ -1,0 +1,998 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Core.BaseCommand">
+    <Position X="23.25" Y="6" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAABAACAAQAAEYAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Commands\BaseCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractOpenFileCommand">
+    <Position X="21.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAgAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\FileCommands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractSaveFileAsCommand">
+    <Position X="24.25" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAgAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\FileCommands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractSaveFileCommand">
+    <Position X="26.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Commands\FileCommands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractCondition">
+    <Position X="30.25" Y="7.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conditions\AbstractCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AlwaysFalseCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="47.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conditions\AlwaysFalseCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.AlwaysTrueCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="49.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conditions\AlwaysTrueCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.ConcreteCondition">
+    <Position X="29" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAA=</HashCode>
+      <FileName>Conditions\ConcreteCondition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.DocumentFactory" Collapsed="true">
+    <Position X="44.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Factories\DocumentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.FileFactory" Collapsed="true">
+    <Position X="40.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Factories\FileFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.PainterFactory" Collapsed="true">
+    <Position X="42.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\PainterFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractButton" Collapsed="true">
+    <Position X="17.25" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAgQAAAAIAAAAAAAAgAAAEAAACCEAQAA=</HashCode>
+      <FileName>GUI\Controls\AbstractButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractCommandControl" Collapsed="true">
+    <Position X="15.5" Y="20.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAABAACQEAAAAAABAAAAAAAAAAIAAAAAAAIACo=</HashCode>
+      <FileName>GUI\Controls\AbstractCommandControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractControl">
+    <Position X="20.75" Y="16.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="OdraIDE.Core.AbstractExtension" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="15.627" />
+        <Point X="20.25" Y="15.875" />
+        <Point X="21.875" Y="15.875" />
+        <Point X="21.875" Y="16.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAABAAACCAEAAAAAgAAAAAAgAKAAAAAgAAAAA=</HashCode>
+      <FileName>GUI\Controls\AbstractControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractLabel" Collapsed="true">
+    <Position X="22" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAgAAAAAAACAAAAAA=</HashCode>
+      <FileName>GUI\Controls\AbstractLabel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractRadioButton" Collapsed="true">
+    <Position X="17.75" Y="24.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAABAAAE=</HashCode>
+      <FileName>GUI\Controls\AbstractRadioButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractSeparator" Collapsed="true">
+    <Position X="26" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Controls\AbstractSeparator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToggleButton" Collapsed="true">
+    <Position X="17.5" Y="23" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACAAAAAAAAAABACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Controls\AbstractToggleButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.DataMatrix" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAEAAAAAAgAAAA=</HashCode>
+      <FileName>GUI\DynamicListView\DataMatrix.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.DynamicListView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="46" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAIAAAAAAAAARgAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>GUI\DynamicListView\DynamicListView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.GenericEnumerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="46" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAACAAAAAAAAAAAAAYAAAgAAAAAA=</HashCode>
+      <FileName>GUI\DynamicListView\GenericEnumerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.MatrixColumn" Collapsed="true">
+    <Position X="46" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAEAAAAAEQAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>GUI\DynamicListView\MatrixColumn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractDocument" Collapsed="true">
+    <Position X="38" Y="19" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAgIAAAAAAAAAAAAAAgAiAAAAEAAAAAAACAAAAAAA=</HashCode>
+      <FileName>GUI\Layout\AbstractDocument.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractLayoutItem" Collapsed="true">
+    <Position X="37" Y="17.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>MABAAAAAEAAAAEAAAAQAAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Layout\AbstractLayoutItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractPad" Collapsed="true">
+    <Position X="36" Y="19" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAQAAAIIABAACIAAAAAAEBAAAAEAAAA=</HashCode>
+      <FileName>GUI\Layout\AbstractPad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractMenuItem" Collapsed="true">
+    <Position X="15.5" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAMABCAQiQECIQAAQAIBACIAAAAAEAAEAAAICEAQAg=</HashCode>
+      <FileName>GUI\MenuItem\AbstractMenuItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.MenuItemVisibleCondition">
+    <Position X="31.25" Y="9.75" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAABAAAAAAAAAAAIAAAAAAAgAA=</HashCode>
+      <FileName>GUI\MenuItem\MenuItemVisibleCondition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractOptionsItem" Collapsed="true">
+    <Position X="17.75" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAgIAQAAAG4AAAQAIAAAJAAAAgACAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Options\AbstractOptionsItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractOptionsPad" Collapsed="true">
+    <Position X="36" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAQAAAAEAAAAAIAAAAAIAAAAAAAgAAAAAAAAg=</HashCode>
+      <FileName>GUI\Options\AbstractOptionsPad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.ApplicationStatus" Collapsed="true">
+    <Position X="23.25" Y="23" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAEAAAAAAAAAQAAAAAgAAAAAAABAAAA=</HashCode>
+      <FileName>GUI\StatusBar\ApplicationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.ApplicationProgressBar" Collapsed="true">
+    <Position X="19" Y="21.75" Width="2" />
+    <InheritanceLine Type="OdraIDE.Core.AbstractStatusBarProgressBar" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="20.719" Y="21.191" />
+        <Point X="20.719" Y="21.506" />
+        <Point X="20" Y="21.506" />
+        <Point X="20" Y="21.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAEAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\ApplicationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.ApplicationStatusSeparator" Collapsed="true">
+    <Position X="25.25" Y="23" Width="2.25" />
+    <InheritanceLine Type="OdraIDE.Core.AbstractStatusBarSeparator" ManuallyRouted="true">
+      <Path>
+        <Point X="26.25" Y="22.441" />
+        <Point X="26.25" Y="23" />
+        <Point X="26.375" Y="23" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\ApplicationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarButton" Collapsed="true">
+    <Position X="15.5" Y="23" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarButton\AbstractStatusBarButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarButtonView" Collapsed="true">
+    <Position X="40.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarButton\AbstractStatusBarButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarLabel" Collapsed="true">
+    <Position X="23.25" Y="21.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarLabel\AbstractStatusBarLabel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarLabelView" Collapsed="true">
+    <Position X="42.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarLabel\AbstractStatusBarLabelView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarProgressBar" Collapsed="true">
+    <Position X="19.5" Y="20.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarProgressBar\AbstractStatusBarProgressBar.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarProgressBarView" Collapsed="true">
+    <Position X="44.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarProgressBar\AbstractStatusBarProgressBarView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarRadioButton" Collapsed="true">
+    <Position X="16.25" Y="25.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarRadioButton\AbstractStatusBarRadioButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarRadioButtonView" Collapsed="true">
+    <Position X="46" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarRadioButton\AbstractStatusBarRadioButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarSeparator" Collapsed="true">
+    <Position X="25.25" Y="21.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarSeparator\AbstractStatusBarSeparator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarSeparatorView" Collapsed="true">
+    <Position X="47.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarSeparator\AbstractStatusBarSeparatorView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarToggleButton" Collapsed="true">
+    <Position X="19.75" Y="24.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarToggleButton\AbstractStatusBarToggleButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractStatusBarToggleButtonView" Collapsed="true">
+    <Position X="49.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\StatusBarToggleButton\AbstractStatusBarToggleButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBar" Collapsed="true">
+    <Position X="27.75" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAAAAAAAUAAACIAAAQAAAAQIAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>GUI\ToolBar\AbstractToolBar.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarButton" Collapsed="true">
+    <Position X="19.5" Y="23" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarButton\AbstractToolBarButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarButtonView" Collapsed="true">
+    <Position X="51.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarButton\AbstractToolBarButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarComboBox" Collapsed="true">
+    <Position X="23.75" Y="20.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAQAAACIgAAAAAAAAAAAAAAAAAAJAQAAQAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarComboBox\AbstractToolBarComboBox.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarComboBoxView" Collapsed="true">
+    <Position X="53" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarComboBox\AbstractToolBarComboBoxView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarLabel" Collapsed="true">
+    <Position X="21.25" Y="21.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarLabel\AbstractToolBarLabel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarLabelView" Collapsed="true">
+    <Position X="40.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarLabel\AbstractToolBarLabelView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarRadioButton" Collapsed="true">
+    <Position X="18.75" Y="25.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAgIAAAAAAAAAAAAAAAAAAIBAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarRadioButton\AbstractToolBarRadioButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarRadioButtonView" Collapsed="true">
+    <Position X="42.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarRadioButton\AbstractToolBarRadioButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarSeparator" Collapsed="true">
+    <Position X="27.5" Y="21.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarSeparator\AbstractToolBarSeparator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarSeparatorView" Collapsed="true">
+    <Position X="44.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarSeparator\AbstractToolBarSeparatorView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarToggleButton" Collapsed="true">
+    <Position X="15.5" Y="24.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarToggleButton\AbstractToolBarToggleButton.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBarToggleButtonView" Collapsed="true">
+    <Position X="46" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\ToolBarToggleButton\AbstractToolBarToggleButtonView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractViewModel">
+    <Position X="17" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ViewModel\AbstractViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.IsExecutingEventArgs" Collapsed="true">
+    <Position X="40.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.NoConnectionException" Collapsed="true">
+    <Position X="49.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Services\ConnectionService\NoConnectionException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractExtension">
+    <Position X="19.5" Y="13.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAQAAAACAAAAgAAAAAAAAAAAQAAAgEgAAAAEAAAAgAA=</HashCode>
+      <FileName>Services\ExtensionService\AbstractExtension.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.ExtensionService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="47.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAACAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExtensionService\ExtensionService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.FileEventArgs" Collapsed="true">
+    <Position X="53" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAEAAAABAAAA=</HashCode>
+      <FileName>Services\FileService\FileEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.FileNameChangeEventArgs" Collapsed="true">
+    <Position X="44.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAACAAAAAgAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Services\FileService\FileEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.FileName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAEgAAAAAIAAAAAAMAAAAAAAAAAAiA=</HashCode>
+      <FileName>Services\FileService\FileName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.OpenedFile" Collapsed="true">
+    <Position X="51.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAJgAAAIAAAAAAAQAAAAAIAiCAVAKIAAHAQBADCM=</HashCode>
+      <FileName>Services\FileService\OpenedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Task" Collapsed="true">
+    <Position X="47.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAgkAAAAAIBAAABAAAgAAAAAACAAIABBCAA=</HashCode>
+      <FileName>Services\TaskService\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.TaskEventArgs" Collapsed="true">
+    <Position X="49.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAA=</HashCode>
+      <FileName>Services\TaskService\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.AppEnvironment" Collapsed="true">
+    <Position X="51.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAIAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Utilities\AppEnvironment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.TextBoxMaskBehavior" Collapsed="true">
+    <Position X="53" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAEAAAAAAQAACMAAAIAAAAAIggAIAAAEBEAAAAAEwAA=</HashCode>
+      <FileName>Utilities\TextBoxMaskBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.CompositionPoints.Host" Collapsed="true">
+    <Position X="49.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.CompositionPoints.Workbench" Collapsed="true">
+    <Position X="44.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.CompositionPoints.Options" Collapsed="true">
+    <Position X="40.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.CompositionPoints.Help" Collapsed="true">
+    <Position X="47.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompositionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.ExtensionPoints.Host" Collapsed="true">
+    <Position X="53" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAFAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.ExtensionPoints.Workbench" Collapsed="true">
+    <Position X="42.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAiAAAAAIAAAAA=</HashCode>
+      <FileName>ExtensionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.ExtensionPoints.Options" Collapsed="true">
+    <Position X="53" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Extensions.Workbench" Collapsed="true">
+    <Position X="40.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Host" Collapsed="true">
+    <Position X="51.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Logging" Collapsed="true">
+    <Position X="44.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Solution" Collapsed="true">
+    <Position X="46" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Connection" Collapsed="true">
+    <Position X="53" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Layout" Collapsed="true">
+    <Position X="42.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.FileDialog" Collapsed="true">
+    <Position X="51.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Messaging" Collapsed="true">
+    <Position X="47.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Document" Collapsed="true">
+    <Position X="42.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.File" Collapsed="true">
+    <Position X="49.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Results" Collapsed="true">
+    <Position X="44.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Services.Tasks" Collapsed="true">
+    <Position X="51.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OdraIDE.Core.ICustomCommand">
+    <Position X="27" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\ICustomCommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IExecutableCommand">
+    <Position X="11.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Commands\IExecutableCommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IButton">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAEAAAA=</HashCode>
+      <FileName>GUI\Controls\IButton.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IControl">
+    <Position X="8.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAgAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Controls\IControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.ILabel">
+    <Position X="10" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>GUI\Controls\ILabel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IRadioButton">
+    <Position X="3" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>GUI\Controls\IRadioButton.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IToggleButton">
+    <Position X="3" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Controls\IToggleButton.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IDocument">
+    <Position X="15.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAgAgAAAAEAAAAAAACAAAAAAA=</HashCode>
+      <FileName>GUI\Layout\IDocument.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.ILayoutItem">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAAAAAAAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Layout\ILayoutItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.ILayoutManager">
+    <Position X="38.75" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAAVAEAAAAAAAgAIAQAECAAACAAAACAABABA=</HashCode>
+      <FileName>GUI\Layout\ILayoutManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IPad">
+    <Position X="17.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAACAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>GUI\Layout\IPad.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IPainter">
+    <Position X="46.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Layout\IPainter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IMenuItem">
+    <Position X="6.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAiAACAAAAAAAAAAAAAAAAEAAAAAAIAEAAAA=</HashCode>
+      <FileName>GUI\MenuItem\IMenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IOptionsItem">
+    <Position X="11.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAIAAAAACgAAAAAIAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Options\IOptionsItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IOptionsPad">
+    <Position X="19.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAQAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Options\IOptionsPad.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IStatusBarItem" Collapsed="true">
+    <Position X="13.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\StatusBar\IStatusBarItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IToolBar">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\IToolBar.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IToolBarItem" Collapsed="true">
+    <Position X="8.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ToolBar\ToolBarItem\IToolBarItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IViewModel" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\ViewModel\IViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IConnectionService">
+    <Position X="42.75" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEEAAQABAAgAAIMAAAAAAAEAAAAAAAgCAAAA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IExtension">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Services\ExtensionService\IExtension.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IExtensionService">
+    <Position X="44.75" Y="16.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExtensionService\IExtensionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IFileDialogService">
+    <Position X="48.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Services\FileDialogService\IFileDialogService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IFileService">
+    <Position X="44.75" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAQAAAAAAEAAAAACAAIEIAACAAEAIAAgAAAAAAAI=</HashCode>
+      <FileName>Services\FileService\IFileService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.ILoggingService">
+    <Position X="40.75" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAgAAAAAAAbAAQACAAAAAQCAAIAEAAAAAAEAEAAE=</HashCode>
+      <FileName>Services\LoggingService\ILoggingService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IMessagingService">
+    <Position X="48.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\MessagingService\IMessagingService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.IResultsService">
+    <Position X="48.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAIBAAAA=</HashCode>
+      <FileName>Services\ResultsService\IResultsService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OdraIDE.Core.ITaskService">
+    <Position X="46.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAEAAAAAABEAAAAAAAAAAIAAIAABEAAA=</HashCode>
+      <FileName>Services\TaskService\ITaskService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Windows.Input.ICommand" Collapsed="true">
+    <Position X="27" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="OdraIDE.Core.PadLocation" Collapsed="true">
+    <Position X="44.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>GUI\Layout\IPad.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OdraIDE.Core.ExecuteQueryStatus" Collapsed="true">
+    <Position X="40.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OdraIDE.Core.RelativeDirection" Collapsed="true">
+    <Position X="46" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>Services\ExtensionService\IExtension.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OdraIDE.Core.TaskType" Collapsed="true">
+    <Position X="47.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAQAAAAAAABAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Services\TaskService\Task.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OdraIDE.Core.MaskType" Collapsed="true">
+    <Position X="42.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\TextBoxMaskBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="OdraIDE.Core.ExecuteHandler" Collapsed="true">
+    <Position X="47.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\BaseCommand.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.CreateDocumentForFile" Collapsed="true">
+    <Position X="40.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\DocumentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.CreateFileForExtension" Collapsed="true">
+    <Position X="42.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\FileFactory.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.CreatePainterForDocument" Collapsed="true">
+    <Position X="46" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\PainterFactory.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.ExecuteQueryCompleted" Collapsed="true">
+    <Position X="49.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.GetSystemInfoCompleted" Collapsed="true">
+    <Position X="51.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAACA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.CreateNewDatabasCompleted" Collapsed="true">
+    <Position X="44.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Services\ConnectionService\IConnectionService.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="OdraIDE.Core.TaskEventHandler" Collapsed="true">
+    <Position X="53" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\TaskService\Task.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

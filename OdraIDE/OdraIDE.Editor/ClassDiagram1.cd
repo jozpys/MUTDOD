@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Editor.DocumentFactory" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Factories\DocumentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.ErrorPainterFactory" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factories\ErrorPainterFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.Highlightings" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Highlighting\Highlightings.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditor" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="6" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IABQwpAAwJRRDEBACgQAiAAIGAAAEEEAAFgAMAlAMAA=</HashCode>
+      <FileName>Layout\Editor\SourceEditor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MarkerService" />
+      <Property Name="loggingService" />
+      <Property Name="TextEditor" />
+      <Property Name="extensionService" />
+      <Property Name="highlightings" />
+      <Property Name="layoutManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditorView" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Layout\Editor\SourceEditorView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditorGeneralOptionsPad" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAEAVQGAAAAAIAAAIAAkgACAAUAAAIAAAAQgAAAEQI=</HashCode>
+      <FileName>Options\SourceEditorGeneralOptionsPad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditorGeneralOptionsPadView" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\SourceEditorGeneralOptionsPadView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditorOptions" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABACAAAAAABAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\SourceEditorOptions.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.SourceEditorOptionsGeneral" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\SourceEditorOptions.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.ErrorPainter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAABAAACBAAC0AAAAAAAAAAAACAAAAAAAAgIA=</HashCode>
+      <FileName>Painter\ErrorPainter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.TextMarker" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAgAIIAAAAAAEsAiAAiAAACAIBAAAAAAAA=</HashCode>
+      <FileName>Services\TextMarker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.TextMarkerService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAYgIAAAAABAAAAAAAAEAUIAAAAgAAAAA=</HashCode>
+      <FileName>Services\TextMarkerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Editor.ColumnCounterHeading" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Workbench\StatusBar\ColumnCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.ColumnCounterText" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Workbench\StatusBar\ColumnCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.LineCounterHeading" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Workbench\StatusBar\LineCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.LineCounterText" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Workbench\StatusBar\LineCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarSeparator1" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarCutItem" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarCopyItem" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarPasteItem" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarSeparator2" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarUndoItem" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.StandardToolbarRedoItem" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.Properties.Resources" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.Properties.Settings" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAAAAAAAAAAAAAAIgAAAAQBAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.Resources.Images" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAABAAAAAABEAABAwAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Editor.Resources.Strings" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggkIACAAAgAAAAABMgEAAQAAAAAAAAACAABAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Lazy&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ICSharpCode.AvalonEdit.TextEditor" Collapsed="true">
+    <Position X="8" Y="9" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="OdraIDE.Editor.ITextMarkerService" Collapsed="true">
+    <Position X="8" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="OdraIDE.Core.IExtensionService" Collapsed="true">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="OdraIDE.Core.ILayoutManager" Collapsed="true">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

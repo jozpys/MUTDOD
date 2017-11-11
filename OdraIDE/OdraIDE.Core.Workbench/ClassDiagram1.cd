@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OdraIDE.Core.Workbench.Resources.Images" Collapsed="true">
+    <Position X="30.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAIAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.Resources.Strings" Collapsed="true">
+    <Position X="28.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAgAIAAAgAAAAAAKABGAAAAQAAAAEAgAAgAACKAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.AboutWindow" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Workbench\AboutWindow\AboutWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.AboutWindowView" Collapsed="true">
+    <Position X="28.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\AboutWindow\AboutWindowView.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.EditMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\EditMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.FileMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\FileMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.FileMenuNew" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\FileMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.FileMenuOpen" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\FileMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.FileMenuExit" Collapsed="true">
+    <Position X="24" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Workbench\MainMenu\FileMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.HelpMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\HelpMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.HelpMenuAbout" Collapsed="true">
+    <Position X="19.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Workbench\MainMenu\HelpMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.ToolsMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\ToolsMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.ViewMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\ViewMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.ToolBarMenuItem" Collapsed="true">
+    <Position X="15" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAIAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\ViewMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.ViewMenuToolBars" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\ViewMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.WindowMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\MainMenu\WindowMenu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.StandardToolbar" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAABAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\ToolBar\StandardToolbar.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.Workbench" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIAAAAABABGAAQCgEgQIAIAAEAAgAAAIIAIAAA=</HashCode>
+      <FileName>Workbench\Workbench.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.Workbench.WorkBenchView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workbench\WorkBenchView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractMenuItem" Collapsed="true">
+    <Position X="13.75" Y="1" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractExtension" Collapsed="true">
+    <Position X="1.5" Y="6" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractViewModel" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractToolBar" Collapsed="true">
+    <Position X="2.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OdraIDE.Core.AbstractControl" Collapsed="true">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
