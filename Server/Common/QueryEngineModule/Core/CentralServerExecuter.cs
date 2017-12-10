@@ -229,6 +229,46 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         QueryResultType = ResultType.StringResult,
                         StringOutput = "New " + desc.ToLower() + ": " + newClassName + " created."
                     };
+                case "DROP":
+                    if (_database == null)
+                    {
+                        _log("Database is required!", MessageLevel.Error);
+                        return new DTOQueryResult()
+                        {
+                            NextResult = null,
+                            QueryResults = null,
+                            QueryResultType = ResultType.StringResult,
+                            StringOutput = "Error ocured while class droping"
+                        };
+                    }
+
+                    var className = queryTree.ProductionsList.Single(t => t.TokenName == "CLASS_NAME")
+                        .ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+
+                    Class classToDrop = GetClass(className);
+                    Class dropedClass;
+
+                    if (!_database.Schema.Classes.TryRemove(classToDrop.ClassId, out dropedClass))
+                    {
+                        _log("Could not define new", MessageLevel.Error);
+                        return new DTOQueryResult()
+                        {
+                            NextResult = null,
+                            QueryResults = null,
+                            QueryResultType = ResultType.StringResult,
+                            StringOutput = "Error ocured while class creation"
+                        };
+                    }
+                    _storage.SaveSchema(_database.Schema);
+
+                    _log("Droped class: " + dropedClass.Name, MessageLevel.QueryExecution);
+                    return new DTOQueryResult()
+                    {
+                        NextResult = null,
+                        QueryResults = null,
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Class:" + dropedClass.Name + " droped."
+                    };
                 case "NEW_OBJECT":
                     return base.Execute(queryTree);
                 default:

@@ -48,8 +48,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractQueryAnalizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemOperationTest.cs" />
+    <Compile Include="QueryWhereTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,11 +2,111 @@
 
 start: statement SEMICOLON;
 
-statement: PARAM system_operation;
+statement: PARAM system_operation
+		 | get_stmt
+		 | new_object
+		 | interface_declaration
+		 | class_delcaration
+		 | drop_stmt
+		 ;
 
 system_operation: op = SYS_INFO
-				| op = CREATE_DB
+				| op = CREATE_DB NAME
 				;
+
+get_stmt: K_DEREF? get_header where_clause?;
+
+get_header: class_name;
+
+where_clause: K_WHERE clause;
+
+and_or_clause: (AND|OR) clause and_or_clause*;
+
+clause: where_operation and_or_clause?
+	  | O_PAREN clause C_PAREN
+	  ;
+
+where_operation: left=where_value where_operator right=where_value?;
+
+where_value: literal
+		   | NAME (SELECTION NAME)*;
+
+literal: NUMBER 
+	   | STRING_VALUE 
+	   | BOOL_VALUE 
+       | NULL_VALUE
+	   ;
+
+where_operator: is_null
+			  | is_not_null
+			  |	comparison_operator;
+
+new_object: K_NEW class_name O_CURLY object_initialization_attributes_list C_CURLY;
+
+object_initialization_attributes_list: object_initialization_element (COMMA object_initialization_element)* ;
+
+object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
+
+
+interface_declaration: K_INTERFACE K_TEMPORAL? NAME (COLON NAME)* O_CURLY attribute_dec_stm* method_params* relation_dec_stm* C_CURLY;
+
+attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
+
+method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME method_params SEMICOLON;
+
+method_params: O_BRACK method_param ( COMMA method_param )* C_BRACK;
+
+method_param: (K_IN|K_OUT) dataType NAME;
+
+relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
+
+
+class_delcaration: K_CLASS classType? K_TEMPORAL? cardinalyty? class_name (COLON NAME)* O_CURLY cls_attribute_dec_stm* cls_method_dec_stm* cls_relation_dec_stm* C_CURLY;
+
+cls_attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
+
+cls_method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME method_params method_body;
+
+method_body: O_CURLY operation* (K_RETURN operation)? C_CURLY;
+
+cls_relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
+
+drop_stmt: K_DROP (K_CLASS|K_INTERFACE) class_name;
+
+
+operation: (math_operation | assign_operation) SEMICOLON;
+
+assign_operation : dataType? NAME (SELECTION NAME)* assign_operator coercion? math_operation;
+
+math_operation: operation_value
+			  | STRING_VALUE
+			  | BOOL_VALUE
+			  | array_value
+			  ;
+
+operation_value: value (operator coercion? value)*;
+
+array_value: arr_name=NAME O_BRACK ((NAME (SELECTION NAME)*)|literal) C_BRACK;
+
+coercion: O_PAREN dataType C_PAREN;
+
+value: NUMBER 
+     | NAME;
+
+
+class_name: NAME;
+
+dataType: BYTE_TYPE
+		|SHORT_TYPE
+		|INT_TYPE
+		|LONG_TYPE
+		|FLOAT_TYPE
+		|DOUBLE_TYPE
+		|CHAR_TYPE
+		|STRING_TYPE
+		|BOOL_TYPE
+		|NAME
+		;
 
 BYTE_TYPE:	'BYTE'|'byte' ;
 SHORT_TYPE:	'SHORT'|'short' ;
@@ -18,6 +118,24 @@ CHAR_TYPE:	'CHAR'|'char';
 STRING_TYPE:'STRING'|'string';
 BOOL_TYPE:	'BOOL'|'bool';
 VOID_TYPE:	'VOID'|'VOID';
+
+cardinalyty: ZERO_ONE
+		   | ONE_ONE
+		   | ZERO_INFINITY
+		   | ONE_INFINITY;
+
+ZERO_ONE:		'<0..1>';
+ONE_ONE:		'<1..1>';
+ZERO_INFINITY:	'<0..*>';
+ONE_INFINITY:	'<1..*>';
+
+classType:	STATIC_CLS
+			|CONSTANT_CLS
+			|INVARIANT_CLS;
+
+STATIC_CLS:			'STATIC'|'static';
+CONSTANT_CLS:		'CONSTANT'|'constant';
+INVARIANT_CLS:		'INVARIANT'|'invariant';
 
 K_ADD:		'ADD'|'add';
 K_ALL:		'ALL'|'all';
@@ -75,14 +193,81 @@ K_UPDATE:	'UPDATE'|'update';
 K_WHERE:	'WHERE'|'where';
 K_WHILE:	'WHILE'|'while';
 
-K_ADD_DR:	K_ADD K_DYNAMIC K_ROLE;
-K_DROLE:	K_DYNAMIC K_ROLE;
-K_INTEGRAL_BLOCK:	K_INTEGRAL K_BLOCK;
-K_IS_IN_DR:	K_IS K_IN K_ROLE;
-IS_NULL:	K_IS K_NULL;
-IS_NOT_NULL:K_IS K_NOT K_NULL;
-K_REMOVE_ALL_DR:	K_REMOVE K_ALL K_ROLE;
-K_REMOVE_DR:K_REMOVE K_ROLE;
+k_add_dr:	K_ADD K_DYNAMIC K_ROLE;
+k_drole:	K_DYNAMIC K_ROLE;
+k_integral_block:	K_INTEGRAL K_BLOCK;
+k_is_in_dr:	K_IS K_IN K_ROLE;
+is_null:	K_IS K_NULL;
+is_not_null:K_IS K_NOT K_NULL;
+k_remove_all_dr:	K_REMOVE K_ALL K_ROLE;
+k_remove_dr:K_REMOVE K_ROLE;
+
+O_PAREN:	'(';
+C_PAREN:	')';
+O_CURLY:	'{';
+C_CURLY:	'}';
+O_BRACK:	'[';
+C_BRACK:	']';
+
+arithmetic_operator: ADD
+				   | SUB
+				   | MUL
+				   | DIV
+				   | MOD
+				   ;
+
+operator: arithmetic_operator 
+		| comparison_operator 
+		| logical_operator
+		;
+
+ADD:	'+';
+SUB:	'-';
+MUL:	'*';
+DIV:	'/';
+MOD:	'%';
+
+comparison_operator: GREATER
+				   |LESS
+				   |GREATER_EQUAL
+				   |LESS_EQUAL
+				   |ISEQUAL
+				   |NOT_EQUAL;
+
+GREATER:		'>';
+LESS:			'<';
+GREATER_EQUAL:	'>=';
+LESS_EQUAL:		'<=';
+ISEQUAL:		'==';
+NOT_EQUAL:		'<>';
+
+assign_operator: ASSIGN
+			   | ADD_ASSIGN
+			   | SUB_ASSIGN
+			   | MUL_ASSIGN
+			   | DIV_ASSIGN
+			   | MOD_ASSIGN
+			   ;
+
+ASSIGN:			'=';
+ADD_ASSIGN:		'+=';
+SUB_ASSIGN:		'-=';
+MUL_ASSIGN:		'*=';
+DIV_ASSIGN:		'/=';
+MOD_ASSIGN:		'%=';
+
+logical_operator: AND
+				| OR
+				| XOR
+				| COND_AND
+				| COND_OR
+				;
+
+AND:		'&';
+OR:			'|';
+XOR:		'^';
+COND_AND:	'&&';
+COND_OR:	'||';
 
 SELECTION:	'.';
 COMMA:		',';
@@ -94,6 +279,17 @@ SYS_INFO:	'SystemInfo';
 CREATE_DB:	'CreateDatabase';
 TASKS:		'tasks';
 PARALLEL_MTD:'parallel_method';
+
+NUMBER: INTEGER FLOAT_PRESICION?;
+FLOAT_PRESICION: SELECTION DIGIT+;
+INTEGER: SUB? DIGIT+; 
+DIGIT: '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9';
+
+STRING_VALUE: '\'' '[a-zA-Z_0-9@$^~`:-%#\\s]+' '\'';
+BOOL_VALUE:	'true'|'TRUE'|'false'|'FALSE';      
+NULL_VALUE: 'NULL'|'null';
+
+NAME:		[a-zA-Z][a-zA-Z_0-9]*;
 
 
 WS : [ \t\r\n]+ -> skip ;

@@ -26,6 +26,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return queryTree;
         }
 
-        public string Name => "QueryAnalyzer";
+        public string Name => "EBNFQueryAnalyzer";
     }
 }

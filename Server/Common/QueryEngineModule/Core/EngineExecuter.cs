@@ -313,7 +313,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             return queryTree.ProductionsList.Single().TokenValue;
         }
 
-        private Class GetClass(string className)
+        protected Class GetClass(string className)
         {
             if (_database.Schema == null)
                 throw new ApplicationException("Schema can not be null!");

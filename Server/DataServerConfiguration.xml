@@ -35,7 +35,7 @@
       type="MUTDOD.Common.Settings.HardcodedSettings, MUTDOD.Common.Settings"/>
     <component
       service="MUTDOD.Common.ModuleBase.IQueryAnalyzer, MUTDOD.Common.ModuleBase"
-      type="MUTDOD.Server.Common.QueryAnalyzer.QueryAnalyzer, MUTDOD.Server.Common.QueryAnalyzer"/>
+      type="MUTDOD.Server.Common.EBNFQueryAnalyzer.EBNFQueryAnalyzer, MUTDOD.Server.Common.EBNFQueryAnalyzer"/>
     <component
       service="MUTDOD.Common.ModuleBase.IExecutionPlanner, MUTDOD.Common.ModuleBase"
       type="MUTDOD.Server.Common.ExecutionPlanner.ExecutionPlanner, MUTDOD.Server.Common.ExecutionPlanner"

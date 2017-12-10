@@ -51,6 +51,7 @@
     <Compile Include="QuerryTree.cs" />
     <Compile Include="QueryAnalyzer.cs" />
     <Compile Include="QueryVisitor.cs" />
+    <Compile Include="SyntaxException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

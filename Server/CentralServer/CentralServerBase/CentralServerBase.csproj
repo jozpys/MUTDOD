@@ -68,6 +68,10 @@
       <Project>{E9B4144E-947A-4745-9FAE-4A2CCAAFE093}</Project>
       <Name>ServerBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\EBNFQueryAnalyzer\EBNFQueryAnalyzer.csproj">
+      <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
+      <Name>EBNFQueryAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\ExecutionPlanner\ExecutionPlanner.csproj">
       <Project>{E53DA5FA-E552-4BB2-BA6C-11D406CBD264}</Project>
       <Name>ExecutionPlanner</Name>
@@ -124,6 +128,7 @@
     <Content Include="..\..\CentralServerConfiguration.xml">
       <Link>CentralServerConfiguration.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
