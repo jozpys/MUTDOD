@@ -46,7 +46,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule
                 var executionPlan = _executionPlanner.GenerateQueryPlan(queryTree);
                 var executer = new CentralServerExecuter(db,doOnDataServers, systemInfo, _storage, _settingsManager,
                     (s, level) => _logger.Log(Name, s, level));
-                return executer.Execute(queryTree);
+                return executer.Execute(executionPlan.QueryTree);
             }
             catch (QuerySyntaxException ex)
             {

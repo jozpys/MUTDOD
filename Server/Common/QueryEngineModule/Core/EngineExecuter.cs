@@ -31,8 +31,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         {
             switch (queryTree.TokenName)
             {
-                case "NEW_OBJECT":
-                    var className = GetClassName(queryTree.ProductionsList.Single(q => q.TokenName == "CLASS_NAME"));
+                case TokenName.NEW_OBJECT:
+                    var className = GetClassName(queryTree.ProductionsList.Single(q => q.TokenName == TokenName.CLASS_NAME));
                     var objectClass = GetClass(className);
                     if (objectClass == null)
                         return new DTOQueryResult
@@ -50,15 +50,15 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
 
                     var attr =
                         queryTree.ProductionsList.SingleOrDefault(
-                            q => q.TokenName == "OBJECT_INITIALIZATION_ATTRIBUTES_LIST");
+                            q => q.TokenName == TokenName.OBJECT_INITIALIZATION_ATTRIBUTES_LIST);
                     if (attr != null)
                     {
                         foreach (
                             var attrToSet in
-                                attr.ProductionsList.Where(q => q.TokenName == "OBJECT_INITIALIZATION_ELEMENT"))
+                                attr.ProductionsList.Where(q => q.TokenName == TokenName.OBJECT_INITIALIZATION_ELEMENT))
                         {
                             var field =
-                                attrToSet.ProductionsList.Single(q => q.TokenName == "ATTRIBUTE_NAME")
+                                attrToSet.ProductionsList.Single(q => q.TokenName == TokenName.ATTRIBUTE_NAME)
                                     .ProductionsList.Single()
                                     .TokenValue;
                             var property = propeteries.SingleOrDefault(p => p.Name == field);
@@ -69,7 +69,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                     QueryResultType = ResultType.StringResult,
                                     StringOutput = "Unknown field: " + field
                                 };
-                            var literal = attrToSet.ProductionsList.SingleOrDefault(q => q.TokenName == "LITERAL");
+                            var literal = attrToSet.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.LITERAL);
                             if (literal != null)
                                 toStore.Properties.Add(property, GetLiteral(literal));
                         }
@@ -83,16 +83,16 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         QueryResultType = ResultType.StringResult,
                         StringOutput = "new object saved with id: " + oid
                     };
-                case "GET":
-                    var get_stm = queryTree.ProductionsList.Where(q => q.TokenName == "GET_STM");
+                case TokenName.GET:
+                    var get_stm = queryTree.ProductionsList.Where(q => q.TokenName == TokenName.GET_STM);
                     if (get_stm.Count() == 1)
                         return Execute(get_stm.Single());
                     goto default;
-                case "GET_STM":
+                case TokenName.GET_STM:
                     var classNameToGet =
                         GetClassName(
-                            queryTree.ProductionsList.Single(q => q.TokenName == "GET_HEADER")
-                                .ProductionsList.Single(q => q.TokenName == "CLASS_NAME"));
+                            queryTree.ProductionsList.Single(q => q.TokenName == TokenName.GET_HEADER)
+                                .ProductionsList.Single(q => q.TokenName == TokenName.CLASS_NAME));
                     var classToGet = GetClass(classNameToGet);
                     if (classToGet == null)
                         return new DTOQueryResult
@@ -103,14 +103,14 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         };
                     var objs = _storage.GetAll(_database.DatabaseId);
                     objs = objs.Where(s => s.Properties.All(p => p.Key.ParentClassId == classToGet.ClassId.Id));
-                    var seachCriteria = queryTree.ProductionsList.SingleOrDefault(q => q.TokenName == "WHERE_CLAUSE");
+                    var seachCriteria = queryTree.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.WHERE_CLAUSE);
                     if (seachCriteria != null)
                     {
                         var wc = BuildWhereCriteria(seachCriteria);
                         objs = objs.Where(s => wc.All(f => f(s)));
                     }
 
-                    var deref = queryTree.ProductionsList.SingleOrDefault(q => q.TokenName == "K_DEREF");
+                    var deref = queryTree.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.K_DEREF);
                     if(deref!=null)
                         return new DTOQueryResult
                         {
@@ -153,36 +153,36 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         {
             switch (queryTree.TokenName)
             {
-                case "WHERE_CLAUSE":
+                case TokenName.WHERE_CLAUSE:
                     var ret = new List<Func<IStorable, bool>>();
                     foreach (var subTree in queryTree.ProductionsList)
                         BuildWhereCriteria(subTree).ForEach(ret.Add);
                     return ret;
-                case "AND":
-                case "OR":
-                case "K_WHERE":
+                case TokenName.AND:
+                case TokenName.OR:
+                case TokenName.K_WHERE:
                     return new List<Func<IStorable, bool>>();
-                case "AND_OR_CLAUSE":
-                case "CLAUSE":
+                case TokenName.AND_OR_CLAUSE:
+                case TokenName.CLAUSE:
                     var ret2 = new List<Func<IStorable, bool>>();
                     foreach (var subTree in queryTree.ProductionsList)
                         BuildWhereCriteria(subTree).ForEach(ret2.Add);
                     return ret2;
-                case "WHERE_OPERATION":
+                case TokenName.WHERE_OPERATION:
                     var wv =
-                        queryTree.ProductionsList.Single(q => q.TokenName == "WHERE_VALUE");
-                    var leftLiteral = wv.ProductionsList.SingleOrDefault(q => q.TokenName == "LITERAL");
-                    var leftField = wv.ProductionsList.SingleOrDefault(q => q.TokenName == "NAME");
+                        queryTree.ProductionsList.Single(q => q.TokenName == TokenName.WHERE_VALUE);
+                    var leftLiteral = wv.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.LITERAL);
+                    var leftField = wv.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.NAME);
                     if (leftLiteral == null & leftField == null)
                         return new List<Func<IStorable, bool>>(); //TODO!
                     var wt =
-                        queryTree.ProductionsList.Single(q => q.TokenName == "WHERE_TAIL");
-                    var wo = wt.ProductionsList.Single(q => q.TokenName == "WHERE_OPERATOR");
+                        queryTree.ProductionsList.Single(q => q.TokenName == TokenName.WHERE_TAIL);
+                    var wo = wt.ProductionsList.Single(q => q.TokenName == TokenName.WHERE_OPERATOR);
                     if (wo.ProductionsList.Count > 1)
                         throw new ApplicationException(
                             "No support for other tokens then IS_NULL, IS_NOT_NULL and COMPARISON_OPERATOR");
                     var param = Expression.Parameter(typeof (IStorable));
-                    if (wo.ProductionsList.Single().TokenName == "IS_NULL")
+                    if (wo.ProductionsList.Single().TokenName == TokenName.IS_NULL)
                     {
                         if (leftLiteral != null)
                         {
@@ -204,7 +204,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 }
                             });
                     }
-                    if (wo.ProductionsList.Single().TokenName == "IS_NOT_NULL")
+                    if (wo.ProductionsList.Single().TokenName == TokenName.IS_NOT_NULL)
                     {
                         if (leftLiteral != null)
                         {
@@ -226,17 +226,17 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 }
                             });
                     }
-                    if (wo.ProductionsList.Single().TokenName == "COMPARISON_OPERATOR")
+                    if (wo.ProductionsList.Single().TokenName == TokenName.COMPARISON_OPERATOR)
                     {
-                        var rightwv = wt.ProductionsList.Single(q => q.TokenName == "WHERE_VALUE");
-                        var rightLiteral = rightwv.ProductionsList.SingleOrDefault(q => q.TokenName == "LITERAL");
-                        var rightField = rightwv.ProductionsList.SingleOrDefault(q => q.TokenName == "NAME");
+                        var rightwv = wt.ProductionsList.Single(q => q.TokenName == TokenName.WHERE_VALUE);
+                        var rightLiteral = rightwv.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.LITERAL);
+                        var rightField = rightwv.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.NAME);
 
                         if (leftLiteral != null && rightLiteral != null)
                         {
                             var left = Expression.Constant(GetLiteral(leftLiteral));
                             var right = Expression.Constant(GetLiteral(rightLiteral));
-                            var clasue = GetComparationExpression(wt.ProductionsList.Single().TokenValue, left,
+                            var clasue = GetComparationExpression(wo.ProductionsList.Single().ProductionsList.Single().TokenName, left,
                                 right);
 
                             return
@@ -287,21 +287,21 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             }
         }
 
-        private Expression GetComparationExpression(string tokenName, Expression left, Expression right)
+        private Expression GetComparationExpression(TokenName tokenName, Expression left, Expression right)
         {
             switch (tokenName)
             {
-                case "GREATER":
+                case TokenName.GREATER:
                     return Expression.GreaterThan(left, right);
-                case "LESS":
+                case TokenName.LESS:
                     return Expression.LessThan(left, right);
-                case "GREATER_EQUAL":
+                case TokenName.GREATER_EQUAL:
                     return Expression.GreaterThanOrEqual(left, right);
-                case "LESS_EQUAL":
+                case TokenName.LESS_EQUAL:
                     return Expression.LessThanOrEqual(left, right);
-                case "ISEQUAL":
+                case TokenName.ISEQUAL:
                     return Expression.Equal(left, right);
-                case "NOT_EQUAL":
+                case TokenName.NOT_EQUAL:
                     return Expression.NotEqual(left, Expression.Constant(null));
                 default:
                     throw new ApplicationException("Unknown COMPARISON_OPERATOR: " + tokenName);
@@ -324,24 +324,24 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         {
             switch (literalQueryTree.TokenName)
             {
-                case "LITERAL":
+                case TokenName.LITERAL:
                     return GetLiteral(literalQueryTree.ProductionsList.Single());
-                case "NUMBER":
-                    var IsFloat = literalQueryTree.ProductionsList.Any(q => q.TokenName == "FLOAT_PRESICION");
+                case TokenName.NUMBER:
+                    var IsFloat = literalQueryTree.ProductionsList.Any(q => q.TokenName == TokenName.FLOAT_PRESICION);
                     var number = GetNumber(literalQueryTree);
                     return IsFloat
                         ? (object)Double.Parse(number, NumberStyles.Number, CultureInfo.InvariantCulture)
                         : Int32.Parse(number, NumberStyles.Number, CultureInfo.InvariantCulture);
-                case "STRING_VALUE":
+                case TokenName.STRING_VALUE:
                     return literalQueryTree.TokenValue;
-                case "BOOL_VALUE":
+                case TokenName.BOOL_VALUE:
                     if (literalQueryTree.TokenValue.ToUpper() == "TRUE")
                         return true;
                     else if (literalQueryTree.TokenValue.ToUpper() == "FALSE")
                         return false;
                     else
                         throw new ApplicationException("Unknown BOOL_VALUE token value: " + literalQueryTree.TokenValue);
-                case "NULL_VALUE":
+                case TokenName.NULL_VALUE:
                     return null;
                 default:
                     throw new ApplicationException("Unknown LITERAL token: " + literalQueryTree.TokenName);

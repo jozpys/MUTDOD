@@ -8,7 +8,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
     [Serializable]
     public class DTOQueryTree : IQueryTree
     {
-        public string TokenName { get; set; }
+        public TokenName TokenName { get; set; }
         public string TokenValue { get; set; }
         public int TokenLine { get; set; }
         public int TokenCol { get; set; }

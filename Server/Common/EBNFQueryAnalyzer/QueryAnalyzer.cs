@@ -13,7 +13,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
     public class EBNFQueryAnalyzer : Module, IQueryAnalyzer
     {
-
         public IQueryTree ParseQuery(IQuery inputQuery, IDatabaseSchema databaseSchema)
         {
             AntlrInputStream input = new AntlrInputStream(inputQuery.QueryText);
@@ -21,6 +20,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             CommonTokenStream tokens = new CommonTokenStream(lexer);
 
             QueryGrammarParser parser = new QueryGrammarParser(tokens);
+            parser.AddErrorListener(new QueryParserErrorListener());
             IParseTree tree = parser.start();
             IQueryTree queryTree = new QueryVisitor().Visit(tree);
             return queryTree;

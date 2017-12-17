@@ -40,10 +40,10 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         {
             switch (queryTree.TokenName)
             {
-                case "STATEMENT":
+                case TokenName.STATEMENT:
                     DTOQueryResult qr = null;
                     DTOQueryResult lastQr = null;
-                    foreach (var subTree in queryTree.ProductionsList.Where(p => p.TokenName != "SEMICOLON"))
+                    foreach (var subTree in queryTree.ProductionsList.Where(p => p.TokenName != TokenName.SEMICOLON))
                     {
                         var res = Execute(subTree);
                         if (qr == null)
@@ -55,9 +55,9 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         }
                     }
                     return qr;
-                case "SYSTEM_OPERATION":
+                case TokenName.SYSTEM_OPERATION:
                     return Execute(queryTree.ProductionsList[0]);
-                case "GET_SYSTEM_INFO":
+                case TokenName.GET_SYSTEM_INFO:
                     var sb = new StringBuilder();
                     var sw = new StringWriter(sb);
                     var xmlSerializer = new XmlSerializer(typeof (SystemInfo));
@@ -69,10 +69,10 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         QueryResultType = ResultType.SystemInfo,
                         StringOutput = sb.ToString()
                     };
-                case "CREATE_DATABASE":
+                case TokenName.CREATE_DATABASE:
                     try
                     {
-                        var dbName = queryTree.ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                        var dbName = queryTree.ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
                         var did = _storage.CreateDatabase(new DatabaseParameters(dbName, _settingsManager));
                         _log(string.Format("new database created as {0}", did), MessageLevel.Info);
                         var sb2 = new StringBuilder();
@@ -115,8 +115,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                             StringOutput = "Error during database creation: " + ex.ToString()
                         };
                     }
-                case "CLASS_DECLARATION":
-                case "INTERFACE_DECLARATION":
+                case TokenName.CLASS_DECLARATION:
+                case TokenName.INTERFACE_DECLARATION:
                     if (_database == null)
                     {
                         _log("Database is required!", MessageLevel.Error);
@@ -128,12 +128,13 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                             StringOutput = "Error ocured while class creation"
                         };
                     }
-                    var desc = queryTree.TokenName == "CLASS_DECLARATION" ? "Class" : "Interface";
+                    bool isClass = queryTree.TokenName == TokenName.CLASS_DECLARATION;
+                    var desc = isClass ? "Class" : "Interface";
                     var newClassName =
-                        (queryTree.TokenName == "CLASS_DECLARATION"
-                            ? queryTree.ProductionsList.Single(t => t.TokenName == "CLASS_NAME")
+                        (queryTree.TokenName == TokenName.CLASS_DECLARATION
+                            ? queryTree.ProductionsList.Single(t => t.TokenName == TokenName.CLASS_NAME)
                             : queryTree)
-                            .ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                            .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
 
                     if (_database.Schema.Classes.Any(c => c.Value.Name.ToUpper() == newClassName.ToUpper()))
                         return new DTOQueryResult()
@@ -153,15 +154,15 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         ClassId = classId,
                         Name = newClassName
                     };
-                    foreach (var attr in queryTree.ProductionsList.Where(t => t.TokenName.EndsWith("ATTRIBUTE_DEC_STM"))
+                    foreach (var attr in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.ATTRIBUTE_DEC_STM)
                         )
                     {
-                        var attrName = (attr.TokenName == "CLS_ATTRIBUTE_DEC_STM"
-                            ? attr.ProductionsList.Single(t => t.TokenName == "ATTRIBUTE_NAME")
+                        var attrName = (isClass
+                            ? attr.ProductionsList.Single(t => t.TokenName == TokenName.ATTRIBUTE_NAME)
                             : attr)
-                            .ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                            .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
                         var typeName =
-                            attr.ProductionsList.Single(t => t.TokenName == "DATA_TYPE")
+                            attr.ProductionsList.Single(t => t.TokenName == TokenName.DATA_TYPE)
                                 .ProductionsList.Single();
                         var propertyId = new PropertyId
                         {
@@ -175,23 +176,23 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                             Name = attrName,
                             PropertyId = propertyId,
                             Type = typeName.TokenValue,
-                            IsValueType = typeName.TokenName != "NAME"
+                            IsValueType = typeName.TokenName != TokenName.NAME
                         });
                     }
                     _database.Schema.Methods.TryAdd(classId, new List<string>());
-                    foreach (var meth in queryTree.ProductionsList.Where(t => t.TokenName.EndsWith("METHOD_DEC_STM")))
+                    foreach (var meth in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.METHOD_DEC_STM))
                     {
-                        var methName = (meth.TokenName == "CLS_METHOD_DEC_STM"
-                            ? meth.ProductionsList.Single(t => t.TokenName == "METHOD_NAME")
+                        var methName = (isClass
+                            ? meth.ProductionsList.Single(t => t.TokenName == TokenName.METHOD_NAME)
                             : meth)
-                            .ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                            .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
                         _database.Schema.Methods[classId].Add(methName);
                     }
-                    foreach (var rel in queryTree.ProductionsList.Where(t => t.TokenName.EndsWith("RELATION_DEC_STM")))
+                    foreach (var rel in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.RELATION_DEC_STM))
                     {
-                        var attrName = rel.ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                        var attrName = rel.ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
                         string typeName =
-                            rel.ProductionsList.Single(t => t.TokenName == "DATA_TYPE")
+                            rel.ProductionsList.Single(t => t.TokenName == TokenName.DATA_TYPE)
                                 .ProductionsList.Single()
                                 .TokenValue;
                         var propertyId = new PropertyId
@@ -229,7 +230,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         QueryResultType = ResultType.StringResult,
                         StringOutput = "New " + desc.ToLower() + ": " + newClassName + " created."
                     };
-                case "DROP":
+                case TokenName.DROP:
                     if (_database == null)
                     {
                         _log("Database is required!", MessageLevel.Error);
@@ -242,8 +243,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         };
                     }
 
-                    var className = queryTree.ProductionsList.Single(t => t.TokenName == "CLASS_NAME")
-                        .ProductionsList.Single(t => t.TokenName == "NAME").TokenValue;
+                    var className = queryTree.ProductionsList.Single(t => t.TokenName == TokenName.CLASS_NAME)
+                        .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
 
                     Class classToDrop = GetClass(className);
                     Class dropedClass;
@@ -256,7 +257,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                             NextResult = null,
                             QueryResults = null,
                             QueryResultType = ResultType.StringResult,
-                            StringOutput = "Error ocured while class creation"
+                            StringOutput = "Error ocured while class droping"
                         };
                     }
                     _storage.SaveSchema(_database.Schema);
@@ -269,7 +270,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         QueryResultType = ResultType.StringResult,
                         StringOutput = "Class:" + dropedClass.Name + " droped."
                     };
-                case "NEW_OBJECT":
+                case TokenName.NEW_OBJECT:
                     return base.Execute(queryTree);
                 default:
                     if (_doOnDataServers != null)

@@ -6,7 +6,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
     internal class QueryTree : IQueryTree
     {
-        public string TokenName { get; set; }
+        public TokenName TokenName { get; set; }
         public string TokenValue { get; set; }
         public int TokenLine { get; set; }
         public int TokenCol { get; set; }
@@ -14,7 +14,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public QueryTree()
         {
-            this.TokenName = string.Empty;
+            this.TokenName = TokenName.UNKNOWN;
             this.TokenValue = string.Empty;
             this.TokenLine = 0;
             this.TokenCol = 0;
