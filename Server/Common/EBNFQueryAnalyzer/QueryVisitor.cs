@@ -7,144 +7,82 @@ using System.Threading.Tasks;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using MUTDOD.Common.ModuleBase;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
-    class QueryVisitor : QueryGrammarBaseVisitor<IQueryTree>
+    class QueryVisitor : QueryGrammarBaseVisitor<IQueryElement>
     {
-        public override IQueryTree VisitStart([NotNull] QueryGrammarParser.StartContext context)
+        public override IQueryElement VisitStart([NotNull] QueryGrammarParser.StartContext context)
         {
             return Visit(context.statement());
         }
-        public override IQueryTree VisitStatement([NotNull] QueryGrammarParser.StatementContext context)
-        {
-            QueryTree statementTree = new QueryTree();
-            statementTree.TokenName = TokenName.STATEMENT;
 
-            statementTree.ProductionsList = new SubTrees();
+        public override IQueryElement VisitStatement([NotNull] QueryGrammarParser.StatementContext context)
+        {
+
             if (context.system_operation() != null)
             {
-                IQueryTree system_operation = Visit(context.system_operation());
-                statementTree.ProductionsList.Add(system_operation);
-                statementTree.ProductionsList.Add(createSemicolonTree());
-                return statementTree;
+                IQueryElement system_operation = Visit(context.system_operation());
+                return system_operation;
             }
             else if (context.get_stmt() != null)
             {
-                IQueryTree getStmt = Visit(context.get_stmt());
-                statementTree.ProductionsList.Add(getStmt);
-                statementTree.ProductionsList.Add(createSemicolonTree());
-                return statementTree;
-            }
-            else if(context.new_object() != null)
-            {
-                IQueryTree newObject = Visit(context.new_object());
-                statementTree.ProductionsList.Add(newObject);
-                statementTree.ProductionsList.Add(createSemicolonTree());
-                return statementTree;
-            }
-            else if(context.class_delcaration() != null)
-            {
-                IQueryTree classDeclaration = Visit(context.class_delcaration());
-                statementTree.ProductionsList.Add(classDeclaration);
-                statementTree.ProductionsList.Add(createSemicolonTree());
-                return statementTree;
-            }
-            else if(context.drop_stmt() != null)
-            {
-                IQueryTree dropStmt = Visit(context.drop_stmt());
-                statementTree.ProductionsList.Add(dropStmt);
-                statementTree.ProductionsList.Add(createSemicolonTree());
-                return statementTree;
+                IQueryElement select = Visit(context.get_stmt());
+                return select;
             }
 
-            return statementTree;
+
+            return null;
         }
 
-        public override IQueryTree VisitSystem_operation([NotNull] QueryGrammarParser.System_operationContext context)
+        public override IQueryElement VisitSystem_operation([NotNull] QueryGrammarParser.System_operationContext context)
         {
-            QueryTree systemOpertionTree = new QueryTree();
-            systemOpertionTree.TokenName = TokenName.SYSTEM_OPERATION;
-
-            systemOpertionTree.ProductionsList = new SubTrees();
-            if(context.op.Type == QueryGrammarParser.SYS_INFO)
+            SystemOperation systemOperation = new SystemOperation();
+            if (context.op.Type == QueryGrammarParser.SYS_INFO)
             {
-                QueryTree systemInfoTree = new QueryTree();
-                systemInfoTree.TokenName = TokenName.GET_SYSTEM_INFO;
-                systemOpertionTree.ProductionsList.Add(systemInfoTree);
+                SystemInformation systemInfo = new SystemInformation();
+                systemOperation.Add(systemInfo);
             }
             else if (context.op.Type == QueryGrammarParser.CREATE_DB)
             {
-                QueryTree createDatabaseTree = new QueryTree();
-                createDatabaseTree.TokenName = TokenName.CREATE_DATABASE;
-                createDatabaseTree.ProductionsList = new SubTrees();
-
-                QueryTree nameTree = new QueryTree();
-                nameTree.TokenName = TokenName.NAME;
-                nameTree.TokenValue = context.NAME().GetText();
-                createDatabaseTree.ProductionsList.Add(nameTree);
-
-                systemOpertionTree.ProductionsList.Add(createDatabaseTree);
+                CreateDatabase createDatabase = new CreateDatabase();
+                createDatabase.DatabaseName = context.NAME().GetText();
+                systemOperation.Add(createDatabase);
             }
 
-            return systemOpertionTree;
+            return systemOperation;
         }
 
-        public override IQueryTree VisitGet_stmt([NotNull] QueryGrammarParser.Get_stmtContext context)
+        public override IQueryElement VisitGet_stmt([NotNull] QueryGrammarParser.Get_stmtContext context)
         {
-            QueryTree getTree = new QueryTree();
-            getTree.TokenName = TokenName.GET;
-            getTree.ProductionsList = new SubTrees();
-
-            QueryTree getStmtTree= new QueryTree();
-            getStmtTree.TokenName = TokenName.GET_STM;
-            getStmtTree.ProductionsList = new SubTrees();
-            IQueryTree getHeaderTree = Visit(context.get_header());
-            getStmtTree.ProductionsList.Add(getHeaderTree);
+            SelectStatement select = new SelectStatement();
+            IQueryElement className = Visit(context.get_header().class_name());
+            select.Add(className);
 
             if (context.K_DEREF() != null)
             {
-                QueryTree derefTree = new QueryTree();
-                derefTree.TokenName = TokenName.K_DEREF;
-                getStmtTree.ProductionsList.Add(derefTree);
+                select.Deref = true;
             }
 
             if (context.where_clause() != null)
             {
-                IQueryTree whereTree = Visit(context.where_clause());
-                getStmtTree.ProductionsList.Add(whereTree);
+                //IQueryTree whereTree = Visit(context.where_clause());
+                //getStmtTree.ProductionsList.Add(whereTree);
             }
 
-            getTree.ProductionsList.Add(getStmtTree);
-
-            return getTree;
+            return select;
         }
 
-        public override IQueryTree VisitGet_header([NotNull] QueryGrammarParser.Get_headerContext context)
+        public override IQueryElement VisitClass_name([NotNull] QueryGrammarParser.Class_nameContext context)
         {
-            QueryTree getHeaderTree = new QueryTree();
-            getHeaderTree.TokenName = TokenName.GET_HEADER;
-            getHeaderTree.ProductionsList = new SubTrees();
+            ClassName className = new ClassName();
+            className.Name = context.NAME().GetText();
 
-            IQueryTree classNameTree = Visit(context.class_name());
-            getHeaderTree.ProductionsList.Add(classNameTree);
-
-            return getHeaderTree;
+            return className;
         }
 
-        public override IQueryTree VisitClass_name([NotNull] QueryGrammarParser.Class_nameContext context)
-        {
-            QueryTree classNameTree = new QueryTree();
-            classNameTree.TokenName = TokenName.CLASS_NAME;
-            classNameTree.ProductionsList = new SubTrees();
-
-            QueryTree nameTree = new QueryTree();
-            nameTree.TokenName = TokenName.NAME;
-            nameTree.TokenValue = context.NAME().GetText();
-            classNameTree.ProductionsList.Add(nameTree);
-
-            return classNameTree;
-        }
+        /*
 
         public override IQueryTree VisitNew_object([NotNull] QueryGrammarParser.New_objectContext context)
         {
@@ -500,5 +438,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             semicolonTree.TokenValue = ";";
             return semicolonTree;
         }
+        */
     }
 }

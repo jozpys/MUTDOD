@@ -22,11 +22,7 @@ namespace QueryAnalyzerTests
 
             inputQuery.QueryText = "@SystemInfo;";
             IQueryAnalyzer analizer = new EBNFQueryAnalyzer();
-            IQueryTree queryTree = analizer.ParseQuery(inputQuery, databaseSchema);
-            String query = PrintComponentInfo(queryTree);
-            //Assert.AreEqual("STATEMENT SYSTEM_OPERATION GET_SYSTEM_INFO PARAM value=@ SYS_INFO value=SystemInfo SEMICOLON value=; ", query);
-            Assert.AreEqual("STATEMENT SYSTEM_OPERATION GET_SYSTEM_INFO SEMICOLON value=; ", query);
-            System.Diagnostics.Debug.WriteLine(query);
+
 
         }
     }

@@ -8,12 +8,13 @@ using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
     public class EBNFQueryAnalyzer : Module, IQueryAnalyzer
     {
-        public IQueryTree ParseQuery(IQuery inputQuery, IDatabaseSchema databaseSchema)
+        public IQueryElement ParseQuery(IQuery inputQuery)
         {
             AntlrInputStream input = new AntlrInputStream(inputQuery.QueryText);
             QueryGrammarLexer lexer = new QueryGrammarLexer(input);
@@ -22,7 +23,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             QueryGrammarParser parser = new QueryGrammarParser(tokens);
             parser.AddErrorListener(new QueryParserErrorListener());
             IParseTree tree = parser.start();
-            IQueryTree queryTree = new QueryVisitor().Visit(tree);
+            IQueryElement queryTree = new QueryVisitor().Visit(tree);
             return queryTree;
         }
 

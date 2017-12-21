@@ -11,6 +11,7 @@ using MUTDOD.Common.ModuleBase;
 using MUTDOD.Common.ModuleBase.Storage;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using MUTDOD.Common.Types;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryEngineModule.Core
 {
@@ -25,6 +26,11 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             _database = database;
             _storage = storage;
             _log = log;
+        }
+
+        internal virtual DTOQueryResult Execute(IQueryElement queryTree)
+        {
+            return null;
         }
 
         internal virtual DTOQueryResult Execute(IQueryTree queryTree)

@@ -36,6 +36,13 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             _log = log;
         }
 
+        internal override DTOQueryResult Execute(IQueryElement queryTree)
+        {
+            QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log };
+            QueryDTO result = queryTree.Execute(parameters);
+            return result.Result;
+        }
+
         internal override DTOQueryResult Execute(IQueryTree queryTree)
         {
             switch (queryTree.TokenName)

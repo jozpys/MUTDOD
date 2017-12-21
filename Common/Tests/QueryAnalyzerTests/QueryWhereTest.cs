@@ -15,14 +15,10 @@ namespace QueryAnalyzerTests
         public void TestIsNull()
         {
             DTOQuery inputQuery = new DTOQuery();
-            IDatabaseSchema databaseSchema = CreateEmptyDatabaseSchema();
 
             inputQuery.QueryText = "Student where name is null;";
             IQueryAnalyzer analizer = new EBNFQueryAnalyzer();
-            IQueryTree queryTree = analizer.ParseQuery(inputQuery, databaseSchema);
-            String query = PrintComponentInfo(queryTree);
-            //Assert.AreEqual("STATEMENT SYSTEM_OPERATION GET_SYSTEM_INFO SEMICOLON value=; ", query);
-            System.Diagnostics.Debug.WriteLine(query);
+
         }
 
         public void TestIsNotNull()
@@ -32,10 +28,7 @@ namespace QueryAnalyzerTests
 
             inputQuery.QueryText = "Student where name is not null;";
             IQueryAnalyzer analizer = new EBNFQueryAnalyzer();
-            IQueryTree queryTree = analizer.ParseQuery(inputQuery, databaseSchema);
-            String query = PrintComponentInfo(queryTree);
-            //Assert.AreEqual("STATEMENT SYSTEM_OPERATION GET_SYSTEM_INFO SEMICOLON value=; ", query);
-            System.Diagnostics.Debug.WriteLine(query);
+
         }
     }
 }

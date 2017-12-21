@@ -5,6 +5,7 @@ using System.Text;
 
 namespace MUTDOD.Common.ModuleBase.Communication
 {
+    [Obsolete]
     [Serializable]
     public class DTOQueryTree : IQueryTree
     {

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Common.ModuleBase
 {
     public interface IQueryAnalyzer : IModule
     {
-        IQueryTree ParseQuery(IQuery inputQuery, IDatabaseSchema databaseSchema);
+        IQueryElement ParseQuery(IQuery inputQuery);
     }
 
     public abstract class QuerySyntaxException : Exception

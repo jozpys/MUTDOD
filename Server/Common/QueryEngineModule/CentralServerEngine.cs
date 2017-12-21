@@ -42,11 +42,11 @@ namespace MUTDOD.Server.Common.QueryEngineModule
             {
                 var db = _storage.GetDatabases().SingleOrDefault(d => d.Name == dbName);
                 var schema = db == null ? new EmptyDatabaseSchema() : db.Schema;
-                var queryTree = _queryAnalyzer.ParseQuery(query, schema);
-                var executionPlan = _executionPlanner.GenerateQueryPlan(queryTree);
+                var queryTree = _queryAnalyzer.ParseQuery(query);
+                //var executionPlan = _executionPlanner.GenerateQueryPlan(queryTree);
                 var executer = new CentralServerExecuter(db,doOnDataServers, systemInfo, _storage, _settingsManager,
                     (s, level) => _logger.Log(Name, s, level));
-                return executer.Execute(executionPlan.QueryTree);
+                return executer.Execute(queryTree);
             }
             catch (QuerySyntaxException ex)
             {
