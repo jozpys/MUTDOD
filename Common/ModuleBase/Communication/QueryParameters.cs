@@ -16,5 +16,6 @@ namespace MUTDOD.Common.ModuleBase.Communication
         public IStorage Storage { get; set; }
         public ISettingsManager SettingsManager { get; set; }
         public Action<String, MessageLevel> Log { get; set; }
+        public QueryDTO Subquery { get; set; }
     }
 }

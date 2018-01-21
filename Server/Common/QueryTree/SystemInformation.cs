@@ -9,7 +9,7 @@ using System.IO;
 using System.Xml.Serialization;
 using MUTDOD.Common.ModuleBase.Communication;
 
-namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
+namespace MUTDOD.Server.Common.QueryTree
 {
     public class SystemInformation : AbstractLeaf
     {

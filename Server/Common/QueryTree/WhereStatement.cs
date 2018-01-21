@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
-    public class SystemOperation : AbstractComposite
+    public class WhereStatement : AbstractComposite
     {
-        public SystemOperation() : base(ElementType.SYSTEM_OPERATION) { }
+        public WhereStatement() : base(ElementType.WHERE){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            return elements.Values.Single().Execute(parameters);
+            return elements.Single().Value.Execute(parameters);
         }
     }
 }

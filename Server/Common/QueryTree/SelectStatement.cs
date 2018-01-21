@@ -10,7 +10,7 @@ using MUTDOD.Common.Types;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 
-namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
+namespace MUTDOD.Server.Common.QueryTree
 {
     public class SelectStatement : AbstractComposite
     {
@@ -31,15 +31,19 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             var classToGet = classResult.QueryClass;
             var objs = parameters.Storage.GetAll(parameters.Database.DatabaseId);
             objs = objs.Where(s => s.Properties.All(p => p.Key.ParentClassId == classToGet.ClassId.Id));
-            /*
-            var seachCriteria = queryTree.ProductionsList.SingleOrDefault(q => q.TokenName == TokenName.WHERE_CLAUSE);
-            if (seachCriteria != null)
-            {
-                var wc = BuildWhereCriteria(seachCriteria);
-                objs = objs.Where(s => wc.All(f => f(s)));
-            }
-            */
             var selectDto = new QueryDTO { QueryClass = classToGet, QueryObjects = objs };
+
+            if (elements.TryGetValue(ElementType.WHERE, out IQueryElement seachCriteria))
+            {
+                parameters.Subquery = selectDto;
+                QueryDTO whereDto = seachCriteria.Execute(parameters);
+                if(whereDto.Result?.QueryResultType == ResultType.StringResult)
+                {
+                    return whereDto;
+                }
+                objs = whereDto.QueryObjects;
+            }
+
             if (Deref) {
                 var derefResult = new DTOQueryResult
                 {

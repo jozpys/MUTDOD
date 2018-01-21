@@ -7,7 +7,7 @@
     <ProjectGuid>{D5E93D78-E622-491B-BC54-A0BD3CE37E67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MUTDOD.Server.Common.EBNFQueryAnalyzer</RootNamespace>
+    <RootNamespace>MUTDOD.Server.Common.QueryTree</RootNamespace>
     <AssemblyName>QueryTree</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -45,11 +45,29 @@
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
     <Compile Include="ClassName.cs" />
+    <Compile Include="ClassProperty.cs" />
     <Compile Include="CreateDatabase.cs" />
+    <Compile Include="LeftOperand.cs" />
+    <Compile Include="Literal\BoolLiteral.cs" />
+    <Compile Include="Literal\NullLiteral.cs" />
+    <Compile Include="Literal\IntegerLiteral.cs" />
+    <Compile Include="Literal\StringLiteral.cs" />
+    <Compile Include="Exception\NoClassPropertyException.cs" />
+    <Compile Include="OperationIsNotNull.cs" />
+    <Compile Include="OperationComperision.cs" />
+    <Compile Include="OperationIsNull.cs" />
+    <Compile Include="Operator\OperatorNotEqual.cs" />
+    <Compile Include="Operator\OperatorIsEqual.cs" />
+    <Compile Include="Operator\OperatorLessEqual.cs" />
+    <Compile Include="Operator\OperatorGraterEqual.cs" />
+    <Compile Include="Operator\OperatorLess.cs" />
+    <Compile Include="Operator\OperatorGrater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightOperand.cs" />
     <Compile Include="SelectStatement.cs" />
     <Compile Include="SystemInformation.cs" />
     <Compile Include="SystemOperation.cs" />
+    <Compile Include="WhereStatement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common\Common.csproj">

@@ -10,7 +10,7 @@ using System.IO;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 
-namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
+namespace MUTDOD.Server.Common.QueryTree
 {
     public class CreateDatabase : AbstractLeaf
     {

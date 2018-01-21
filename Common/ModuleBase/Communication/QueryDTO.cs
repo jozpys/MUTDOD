@@ -14,5 +14,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         public DTOQueryResult Result { get; set; }
         public Class QueryClass { get; set; }
         public IEnumerable<IStorable> QueryObjects { get; set; }
+        public Object Value { get; set; }
+        public Object AdditionalValue { get; set; }
     }
 }

@@ -8,6 +8,9 @@ using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using MUTDOD.Common.ModuleBase;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Server.Common.QueryTree;
+using MUTDOD.Server.Common.QueryTree.Literal;
+using MUTDOD.Server.Common.QueryTree.Operator;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
@@ -67,8 +70,8 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
             if (context.where_clause() != null)
             {
-                //IQueryTree whereTree = Visit(context.where_clause());
-                //getStmtTree.ProductionsList.Add(whereTree);
+                IQueryElement where = Visit(context.where_clause());
+                select.Add(where);
             }
 
             return select;
@@ -200,108 +203,74 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             dropTree.ProductionsList.Add(classNameTree);
             return dropTree;
         }
-
-        public override IQueryTree VisitWhere_clause([NotNull] QueryGrammarParser.Where_clauseContext context)
+        */
+        public override IQueryElement VisitWhere_clause([NotNull] QueryGrammarParser.Where_clauseContext context)
         {
-            QueryTree whereClauseTree = new QueryTree();
-            whereClauseTree.TokenName = TokenName.WHERE_CLAUSE;
-            whereClauseTree.ProductionsList = new SubTrees();
+            WhereStatement where = new WhereStatement();
 
-            QueryTree whereTree = new QueryTree();
-            whereTree.TokenName = TokenName.K_WHERE;
-            whereTree.ProductionsList = new SubTrees();
-            whereClauseTree.ProductionsList.Add(whereTree);
+            IQueryElement clause = Visit(context.clause());
+            where.Add(clause);
 
-            IQueryTree clauseTree = Visit(context.clause());
-            whereClauseTree.ProductionsList.Add(clauseTree);
-
-            return whereClauseTree;
+            return where;
         }
 
-        public override IQueryTree VisitClause([NotNull] QueryGrammarParser.ClauseContext context)
+        public override IQueryElement VisitClause([NotNull] QueryGrammarParser.ClauseContext context)
         {
-            QueryTree clauseTree = new QueryTree();
-            clauseTree.TokenName = TokenName.CLAUSE;
-            clauseTree.ProductionsList = new SubTrees();
-            IQueryTree whereOperationTree = Visit(context.where_operation());
-            clauseTree.ProductionsList.Add(whereOperationTree);
-
-            return clauseTree;
+            return Visit(context.where_operation());
         }
 
-        public override IQueryTree VisitWhere_operation([NotNull] QueryGrammarParser.Where_operationContext context)
+        public override IQueryElement VisitWhere_operation([NotNull] QueryGrammarParser.Where_operationContext context)
         {
-            QueryTree clauseTree = new QueryTree();
-            clauseTree.TokenName = TokenName.WHERE_OPERATION;
-            clauseTree.ProductionsList = new SubTrees();
-
-            IQueryTree leftValueTree = Visit(context.left);
-            clauseTree.ProductionsList.Add(leftValueTree);
-
-            QueryTree whereTailTree = new QueryTree();
-            whereTailTree.TokenName = TokenName.WHERE_TAIL;
-            whereTailTree.ProductionsList = new SubTrees();
-            clauseTree.ProductionsList.Add(whereTailTree);
-
-            QueryTree whereOperator = new QueryTree();
-            whereOperator.TokenName = TokenName.WHERE_OPERATOR;
-            whereOperator.ProductionsList = new SubTrees();
-            whereTailTree.ProductionsList.Add(whereOperator);
-
+            IQueryElement leftValueTree = Visit(context.left);
 
             if (context.where_operator().is_null() != null)
             {
-                QueryTree isNullTree = new QueryTree();
-                isNullTree.TokenName = TokenName.IS_NULL;
-                isNullTree.ProductionsList = new SubTrees();
-                whereOperator.ProductionsList.Add(isNullTree);
-                return clauseTree;
+                OperationIsNull isNullTree = new OperationIsNull();
+                isNullTree.Add(leftValueTree);
+                return isNullTree;
             }
             else if(context.where_operator().is_not_null() != null)
             {
-                QueryTree isNotNullTree = new QueryTree();
-                isNotNullTree.TokenName = TokenName.IS_NOT_NULL;
-                isNotNullTree.ProductionsList = new SubTrees();
-                whereOperator.ProductionsList.Add(isNotNullTree);
-                return clauseTree;
+                OperationIsNotNull isNotNullTree = new OperationIsNotNull();
+                isNotNullTree.Add(leftValueTree);
+                return isNotNullTree;
             }
-            
 
-            QueryTree comperisionTree = new QueryTree();
-            comperisionTree.TokenName = TokenName.COMPARISON_OPERATOR;
-            comperisionTree.ProductionsList = new SubTrees();
-            whereOperator.ProductionsList.Add(comperisionTree);
+            OperationComperision comperasionTree = new OperationComperision();
 
-            IQueryTree operatorTree = Visit(context.where_operator().comparison_operator());
-            comperisionTree.ProductionsList.Add(operatorTree);
+            LeftOperand left = new LeftOperand();
+            left.Add(leftValueTree);
+            comperasionTree.Add(left);
 
-            IQueryTree rightValueTree = Visit(context.right);
-            whereTailTree.ProductionsList.Add(rightValueTree);
+            IQueryElement operatorTree = Visit(context.where_operator().comparison_operator());
+            comperasionTree.Add(operatorTree);
 
-            return clauseTree;
+            RightOperand right = new RightOperand();
+            IQueryElement rightValueTree = Visit(context.right);
+            right.Add(rightValueTree);
+            comperasionTree.Add(right);
+
+            return comperasionTree;
         }
 
-        public override IQueryTree VisitWhere_value([NotNull] QueryGrammarParser.Where_valueContext context)
+        public override IQueryElement VisitWhere_value([NotNull] QueryGrammarParser.Where_valueContext context)
         {
-            QueryTree whereValueTree = new QueryTree();
-            whereValueTree.TokenName = TokenName.WHERE_VALUE;
-            whereValueTree.ProductionsList = new SubTrees();
             if(context.literal() != null)
             {
-                IQueryTree literalTree = Visit(context.literal());
-                whereValueTree.ProductionsList.Add(literalTree);
+                IQueryElement literal = Visit(context.literal());
+                return literal;
             }
             else if(context.NAME() != null)
             {
-                QueryTree nameTree = new QueryTree();
-                nameTree.TokenName = TokenName.NAME;
-                nameTree.TokenValue = context.GetText();
-                whereValueTree.ProductionsList.Add(nameTree);
+                ClassProperty property = new ClassProperty();
+                property.Name = context.GetText();
+                return property;
             }
 
-            return whereValueTree;
+            return null;
         }
 
+        /*
         public override IQueryTree VisitDataType([NotNull] QueryGrammarParser.DataTypeContext context)
         {
             QueryTree dateTypeTree = new QueryTree();
@@ -363,81 +332,67 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
             return dateTypeTree;
         }
+        */
 
-        public override IQueryTree VisitLiteral([NotNull] QueryGrammarParser.LiteralContext context)
+        
+        public override IQueryElement VisitLiteral([NotNull] QueryGrammarParser.LiteralContext context)
         {
-            QueryTree literalTree = new QueryTree();
-            literalTree.TokenName = TokenName.LITERAL;
-            literalTree.ProductionsList = new SubTrees();
-
-            QueryTree valueTree = new QueryTree();
             if (context.NUMBER() != null)
             {
-                valueTree.TokenName = TokenName.NUMBER;
-                valueTree.ProductionsList = new SubTrees();
-
-                QueryTree integerTree = new QueryTree();
-                integerTree.TokenName = TokenName.INTEGER;
-                integerTree.TokenValue = context.NUMBER().GetText();
-                valueTree.ProductionsList.Add(integerTree);
+                IntegerLiteral literal = new IntegerLiteral();
+                literal.Value = context.NUMBER().GetText();
+                return literal;
             }
             else if(context.STRING_VALUE() != null)
             {
-                valueTree.TokenName = TokenName.STRING_VALUE;
-                valueTree.TokenValue = context.STRING_VALUE().GetText().Replace("'", "\"");
+                StringLiteral literal = new StringLiteral();
+                literal.Value = context.STRING_VALUE().GetText().Replace("'", "\"");
+                return literal;
             }
             else if(context.BOOL_VALUE() != null)
             {
-                valueTree.TokenName = TokenName.BOOL_VALUE;
-                valueTree.TokenValue = context.BOOL_VALUE().GetText();
+                BoolLiteral literal = new BoolLiteral();
+                literal.Value = context.BOOL_VALUE().GetText();
+                return literal;
             }
             else if(context.NULL_VALUE() != null)
             {
-                valueTree.TokenName = TokenName.NULL_VALUE;
+                NullLiteral literal = new NullLiteral();
+                return literal;
             }
-            literalTree.ProductionsList.Add(valueTree);
 
-            return literalTree;
+            return null;
         }
 
-        public override IQueryTree VisitComparison_operator([NotNull] QueryGrammarParser.Comparison_operatorContext context)
+        public override IQueryElement VisitComparison_operator([NotNull] QueryGrammarParser.Comparison_operatorContext context)
         {
-            QueryTree literalTree = new QueryTree();
             if (context.GREATER() != null)
             {
-                literalTree.TokenName = TokenName.GREATER;
+                return new OperatorGrater();
             }
             else if(context.LESS() != null)
             {
-                literalTree.TokenName = TokenName.LESS;
+                return new OperatorLess();
             }
             else if (context.GREATER_EQUAL() != null)
             {
-                literalTree.TokenName = TokenName.GREATER_EQUAL;
+                return new OperatorGraterEqual();
             }
             else if (context.LESS_EQUAL() != null)
             {
-                literalTree.TokenName = TokenName.LESS_EQUAL;
+                return new OperatorLessEqual();
             }
             else if (context.ISEQUAL() != null)
             {
-                literalTree.TokenName = TokenName.ISEQUAL;
+                return new OperatorIsEqual();
             }
             else if (context.NOT_EQUAL() != null)
             {
-                literalTree.TokenName = TokenName.NOT_EQUAL;
+                return new OperatorNotEqual();
             }
 
-            return literalTree;
+            return null;
         }
-
-        private IQueryTree createSemicolonTree()
-        {
-            QueryTree semicolonTree = new QueryTree();
-            semicolonTree.TokenName = TokenName.SEMICOLON;
-            semicolonTree.TokenValue = ";";
-            return semicolonTree;
-        }
-        */
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase.Communication;
 
-namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
+namespace MUTDOD.Server.Common.QueryTree
 {
     public abstract class AbstractComposite : AbstractElement, IQueryCompositeElement
     {
