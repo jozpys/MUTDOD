@@ -86,6 +86,10 @@
       <Project>{125a2c8a-8f8c-4546-bb44-3688aa1ca7dd}</Project>
       <Name>CoreModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\EBNFQueryAnalyzer\EBNFQueryAnalyzer.csproj">
+      <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
+      <Name>EBNFQueryAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\ExecutionPlanner\ExecutionPlanner.csproj">
       <Project>{e53da5fa-e552-4bb2-ba6c-11d406cbd264}</Project>
       <Name>ExecutionPlanner</Name>
@@ -101,10 +105,6 @@
     <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
       <Project>{c61b42b5-5a51-4533-bb7e-ece5743621db}</Project>
       <Name>ODBCModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\QueryAnalyzer\QueryAnalyzer.csproj">
-      <Project>{f3509de5-5253-4a0c-b023-f3b0a71565f3}</Project>
-      <Name>QueryAnalyzer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\QueryEngineModule\QueryEngineModule.csproj">
       <Project>{964e36a2-9daf-4474-8316-7df493133581}</Project>

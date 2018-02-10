@@ -34,15 +34,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\..\..\packages\Castle.Windsor.3.3.0\lib\net40\Castle.Windsor.dll</HintPath>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,6 +79,10 @@
       <Project>{125A2C8A-8F8C-4546-BB44-3688AA1CA7DD}</Project>
       <Name>CoreModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\EBNFQueryAnalyzer\EBNFQueryAnalyzer.csproj">
+      <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
+      <Name>EBNFQueryAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\ExecutionPlanner\ExecutionPlanner.csproj">
       <Project>{E53DA5FA-E552-4BB2-BA6C-11D406CBD264}</Project>
       <Name>ExecutionPlanner</Name>
@@ -91,10 +98,6 @@
     <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
       <Project>{C61B42B5-5A51-4533-BB7E-ECE5743621DB}</Project>
       <Name>ODBCModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\QueryAnalyzer\QueryAnalyzer.csproj">
-      <Project>{F3509DE5-5253-4A0C-B023-F3B0A71565F3}</Project>
-      <Name>QueryAnalyzer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\QueryEngineModule\QueryEngineModule.csproj">
       <Project>{964E36A2-9DAF-4474-8316-7DF493133581}</Project>
@@ -114,13 +117,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\DataServerConfiguration.xml">
       <Link>DataServerConfiguration.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

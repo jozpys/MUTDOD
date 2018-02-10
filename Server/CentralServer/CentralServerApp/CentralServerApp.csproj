@@ -36,14 +36,17 @@
     <ApplicationIcon>server_right.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -126,10 +129,6 @@
     <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
       <Project>{c61b42b5-5a51-4533-bb7e-ece5743621db}</Project>
       <Name>ODBCModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\QueryAnalyzer\QueryAnalyzer.csproj">
-      <Project>{f3509de5-5253-4a0c-b023-f3b0a71565f3}</Project>
-      <Name>QueryAnalyzer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\QueryEngineModule\QueryEngineModule.csproj">
       <Project>{964e36a2-9daf-4474-8316-7df493133581}</Project>
