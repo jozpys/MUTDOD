@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using MUTDOD.Common.Settings;
 using MUTDOD.Common.Types;
@@ -19,8 +20,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule
         private readonly IQueryAnalyzer _queryAnalyzer;
         private readonly ISettingsManager _settingsManager;
 
-        public CentralServerEngine(IQueryAnalyzer queryAnalyzer, IExecutionPlanner executionPlanner, IStorage storage,
-            ISettingsManager settingsManager, ILogger logger) : base(executionPlanner, storage,logger)
+        public CentralServerEngine(IQueryAnalyzer queryAnalyzer, IQueryOptimizer queryOptimizer, IStorage storage,
+            ISettingsManager settingsManager, ILogger logger) : base(queryOptimizer, storage,logger)
         {
             _queryAnalyzer = queryAnalyzer;
             _settingsManager = settingsManager;
@@ -31,7 +32,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule
             get { return "CentralServerEngine"; }
         }
 
-        public IQueryResult Execute(string dbName, IQueryTree queryTree)
+        public IQueryResult Execute(string dbName, IQueryElement queryTree)
         {
             throw new NotImplementedException();
         }
@@ -43,7 +44,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule
                 var db = _storage.GetDatabases().SingleOrDefault(d => d.Name == dbName);
                 var schema = db == null ? new EmptyDatabaseSchema() : db.Schema;
                 var queryTree = _queryAnalyzer.ParseQuery(query);
-                //var executionPlan = _executionPlanner.GenerateQueryPlan(queryTree);
+                queryTree = _queryOptimizer.OptimizeQueryPlan(queryTree);
                 var executer = new CentralServerExecuter(db,doOnDataServers, systemInfo, _storage, _settingsManager,
                     (s, level) => _logger.Log(Name, s, level));
                 return executer.Execute(queryTree);

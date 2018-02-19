@@ -129,9 +129,9 @@
       <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
       <Name>EBNFQueryAnalyzer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\ExecutionPlanner\ExecutionPlanner.csproj">
+    <ProjectReference Include="..\..\Common\ExecutionPlanner\DummyQueryOptimizer.csproj">
       <Project>{e53da5fa-e552-4bb2-ba6c-11d406cbd264}</Project>
-      <Name>ExecutionPlanner</Name>
+      <Name>DummyQueryOptimizer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
       <Project>{f60f8089-adb9-4d93-bf8a-059af83e3193}</Project>

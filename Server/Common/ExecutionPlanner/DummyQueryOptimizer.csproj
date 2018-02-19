@@ -7,8 +7,8 @@
     <ProjectGuid>{E53DA5FA-E552-4BB2-BA6C-11D406CBD264}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MUTDOD.Server.Common.ExecutionPlanner</RootNamespace>
-    <AssemblyName>MUTDOD.Server.Common.ExecutionPlanner</AssemblyName>
+    <RootNamespace>MUTDOD.Server.Common.DummyGueryOptimizer</RootNamespace>
+    <AssemblyName>MUTDOD.Server.Common.DummyQueryOptimizer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExecutionPlanner.cs" />
+    <Compile Include="QueryOptimizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

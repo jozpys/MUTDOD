@@ -10,8 +10,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule
         private readonly IQueryAnalyzer _queryAnalyzer;
         private readonly ISettingsManager _settingsManager;
 
-        public QueryEngine(IQueryAnalyzer queryAnalyzer, IExecutionPlanner executionPlanner,IStorage storage, ISettingsManager settingsManager, ILogger logger) 
-            : base(executionPlanner,storage,logger)
+        public QueryEngine(IQueryAnalyzer queryAnalyzer, IQueryOptimizer queryOptimizer,IStorage storage, ISettingsManager settingsManager, ILogger logger) 
+            : base(queryOptimizer, storage,logger)
         {
             _queryAnalyzer = queryAnalyzer;
             _settingsManager = settingsManager;

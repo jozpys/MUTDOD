@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MUTDOD.Common.ModuleBase.Communication;
+using System;
 
 namespace MUTDOD.Common.ModuleBase
 {
     public interface IQueryEngine : IModule
     {
-        IQueryResult Execute(string dbName, IQueryTree queryTree);
+        IQueryResult Execute(string dbName, IQueryElement queryTree);
     }
     public interface ICentralServerEngine : IModule, IQueryEngine
     {

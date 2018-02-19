@@ -9,11 +9,11 @@ namespace MUTDOD.Server.Common.CoreModule
     {
         private readonly ILogger _logger;
 
-        public Core(IModuleManager moduleManager, IStorage storage, IQueryEngine queryEngine, IOdbc odbc, IExecutionPlanner executionPlanner, IIndexMechanism indexMechanism, ILogger logger)
+        public Core(IModuleManager moduleManager, IStorage storage, IQueryEngine queryEngine, IOdbc odbc, IQueryOptimizer queryOptimizer, IIndexMechanism indexMechanism, ILogger logger)
         {
             _logger = logger;
             IndexMechanism = indexMechanism;
-            ExecutionPlanner = executionPlanner;
+            QueryOptimizer = queryOptimizer;
             ModuleManager = moduleManager;
             Storage = storage;
             QueryEngine = queryEngine;
@@ -30,7 +30,7 @@ namespace MUTDOD.Server.Common.CoreModule
         public IQueryEngine QueryEngine { get; private set; }
 
         public IOdbc ODBC { get; private set; }
-        public IExecutionPlanner ExecutionPlanner { get; private set; }
+        public IQueryOptimizer QueryOptimizer { get; private set; }
 
         public IModuleManager ModuleManager { get; protected set; }
 
@@ -42,7 +42,7 @@ namespace MUTDOD.Server.Common.CoreModule
 
             ModuleManager.RegisterModule(Storage);
 
-            ModuleManager.RegisterModule(ExecutionPlanner);
+            ModuleManager.RegisterModule(QueryOptimizer);
             
             ModuleManager.RegisterModule(QueryEngine);
 

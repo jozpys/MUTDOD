@@ -55,7 +55,7 @@
     <Compile Include="ICore.cs" />
     <Compile Include="Communication\IDataServerContract.cs" />
     <Compile Include="Communication\IInternalCommunicator.cs" />
-    <Compile Include="IExecutionPlanner.cs" />
+    <Compile Include="IQueryOptimizer.cs" />
     <Compile Include="IIndexMechanism.cs" />
     <Compile Include="Indexing\IndexCostInformation.cs" />
     <Compile Include="Indexing\IndexCostSource.cs" />
