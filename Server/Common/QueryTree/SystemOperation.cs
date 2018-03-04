@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common;
@@ -8,6 +9,7 @@ using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract(Name = "SystemOperation")]
     public class SystemOperation : AbstractComposite
     {
         public SystemOperation() : base(ElementType.SYSTEM_OPERATION) { }

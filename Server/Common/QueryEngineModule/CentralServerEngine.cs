@@ -37,7 +37,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule
             throw new NotImplementedException();
         }
 
-        public IQueryResult Execute(string dbName, IQuery query, SystemInfo systemInfo, Action<IQueryTree> doOnDataServers)
+        public IQueryResult Execute(string dbName, IQuery query, SystemInfo systemInfo, Action<IQueryElement> doOnDataServers)
         {
             try
             {

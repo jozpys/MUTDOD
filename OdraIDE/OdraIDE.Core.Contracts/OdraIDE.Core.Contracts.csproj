@@ -197,6 +197,10 @@
       <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
       <Name>ModuleBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Server\Common\CoreModule\CoreModule.csproj">
+      <Project>{125A2C8A-8F8C-4546-BB44-3688AA1CA7DD}</Project>
+      <Name>CoreModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OdraIDE.Utilities\OdraIDE.Utilities.csproj">
       <Project>{6F8E53E2-D47A-4379-AD49-E8979D458A85}</Project>
       <Name>OdraIDE.Utilities</Name>

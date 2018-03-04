@@ -72,6 +72,10 @@
       <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
       <Name>ModuleBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\CoreModule\CoreModule.csproj">
+      <Project>{125A2C8A-8F8C-4546-BB44-3688AA1CA7DD}</Project>
+      <Name>CoreModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
       <Project>{C61B42B5-5A51-4533-BB7E-ECE5743621DB}</Project>
       <Name>ODBCModule</Name>

@@ -10,8 +10,8 @@ using System.Threading;
 using System.Xml.Serialization;
 using MUTDOD.Common;
 using MUTDOD.Common.Communication;
-using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Settings;
+using MUTDOD.Server.Common.CoreModule.Communication;
 using OdraIDE.Core.Services;
 
 namespace OdraIDE.Core.Connection

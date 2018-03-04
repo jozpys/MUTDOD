@@ -46,15 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\ElementType.cs" />
-    <Compile Include="Communication\ICentralServerContract.cs" />
     <Compile Include="Communication\IQueryElement.cs" />
     <Compile Include="Communication\QueryDTO.cs" />
     <Compile Include="Communication\QueryParameters.cs" />
-    <Compile Include="Communication\QueryTreeDTO.cs" />
     <Compile Include="Indexing\CompareType.cs" />
     <Compile Include="ICore.cs" />
-    <Compile Include="Communication\IDataServerContract.cs" />
-    <Compile Include="Communication\IInternalCommunicator.cs" />
     <Compile Include="IQueryOptimizer.cs" />
     <Compile Include="IIndexMechanism.cs" />
     <Compile Include="Indexing\IndexCostInformation.cs" />

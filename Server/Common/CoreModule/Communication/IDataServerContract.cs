@@ -1,7 +1,8 @@
-﻿using System.ServiceModel;
+﻿using MUTDOD.Common;
 using MUTDOD.Common.Communication;
+using System.ServiceModel;
 
-namespace MUTDOD.Common.ModuleBase.Communication
+namespace MUTDOD.Server.Common.CoreModule.Communication
 {
     [ServiceContract(Namespace = "Mutdod.Server.DataSever")]
     public interface IDataServerContract

@@ -1,4 +1,4 @@
-﻿namespace MUTDOD.Common.ModuleBase.Communication
+﻿namespace MUTDOD.Server.Common.CoreModule.Communication
 {
     public interface IInternalCommunicator : IDataServerContract, ICentralServerContract
     {

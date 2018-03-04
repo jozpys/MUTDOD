@@ -101,6 +101,10 @@
       <Project>{6eccc095-72cf-442b-aa12-2041b8be3b68}</Project>
       <Name>Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Server\Common\CoreModule\CoreModule.csproj">
+      <Project>{125A2C8A-8F8C-4546-BB44-3688AA1CA7DD}</Project>
+      <Name>CoreModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OdraIDE.Core.Contracts\OdraIDE.Core.Contracts.csproj">
       <Project>{767995F7-22A5-44C5-878E-B94173BB41B9}</Project>
       <Name>OdraIDE.Core.Contracts</Name>

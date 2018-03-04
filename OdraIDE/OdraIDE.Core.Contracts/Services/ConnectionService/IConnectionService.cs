@@ -2,6 +2,7 @@
 using System.Collections;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Server.Common.CoreModule.Communication;
 
 namespace OdraIDE.Core
 {

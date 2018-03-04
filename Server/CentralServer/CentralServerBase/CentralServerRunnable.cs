@@ -4,10 +4,10 @@ using System.ServiceModel;
 using System.Threading;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase;
-using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ServerBase;
 using MUTDOD.Common.Settings;
 using MUTDOD.Server.CentralServer.CSODBC;
+using MUTDOD.Server.Common.CoreModule.Communication;
 
 namespace MUTDOD.Server.CentralServer.CentralServerBase
 {

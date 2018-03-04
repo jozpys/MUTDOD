@@ -8,6 +8,7 @@ using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Settings;
+using MUTDOD.Server.Common.CoreModule.Communication;
 
 namespace MUTDOD.Server.CentralServer.CSODBC
 {
@@ -73,7 +74,7 @@ namespace MUTDOD.Server.CentralServer.CSODBC
             }
         }
 
-        private void RunOnDataServers(DatabaseInfo dbName, IQueryTree queryTree)
+        private void RunOnDataServers(DatabaseInfo dbName, IQueryElement queryTree)
         {
             _dataServers.Values.ToList().ForEach(s =>
             {

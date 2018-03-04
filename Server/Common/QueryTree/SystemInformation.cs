@@ -8,9 +8,11 @@ using MUTDOD.Common.Communication;
 using System.IO;
 using System.Xml.Serialization;
 using MUTDOD.Common.ModuleBase.Communication;
+using System.Runtime.Serialization;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class SystemInformation : AbstractLeaf
     {
         public SystemInformation() : base(ElementType.SYSTEM_INFO) { }

@@ -17,13 +17,13 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
     internal class CentralServerExecuter : EngineExecuter
     {
         private readonly IDatabaseParameters _database;
-        private Action<IQueryTree> _doOnDataServers;
+        private Action<IQueryElement> _doOnDataServers;
         private Action<string, MessageLevel> _log;
         private SystemInfo _systemInfo;
         private readonly IStorage _storage;
         private readonly ISettingsManager _settingsManager;
 
-        public CentralServerExecuter(IDatabaseParameters database, Action<IQueryTree> doOnDataServers,
+        public CentralServerExecuter(IDatabaseParameters database, Action<IQueryElement> doOnDataServers,
             SystemInfo systemInfo, IStorage storage,
             ISettingsManager settingsManager, Action<string, MessageLevel> log)
             : base(database, storage, log)
@@ -39,6 +39,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         internal override DTOQueryResult Execute(IQueryElement queryTree)
         {
             QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log };
+            if (_doOnDataServers != null)
+                _doOnDataServers(queryTree);
             QueryDTO result = queryTree.Execute(parameters);
             return result.Result;
         }
@@ -280,8 +282,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                 case TokenName.NEW_OBJECT:
                     return base.Execute(queryTree);
                 default:
-                    if (_doOnDataServers != null)
-                        _doOnDataServers(queryTree);
+                    //if (_doOnDataServers != null)
+                    //    _doOnDataServers(queryTree);
                     return base.Execute(queryTree);
             }
         }

@@ -3,6 +3,7 @@ using System.ServiceModel;
 using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Server.Common.CoreModule.Communication;
 
 namespace MUTDOD.Server.DataServer.DSODBC
 {

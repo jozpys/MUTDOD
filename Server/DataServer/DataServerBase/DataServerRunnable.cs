@@ -4,9 +4,9 @@ using System.ServiceModel;
 using System.Threading;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase;
-using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ServerBase;
 using MUTDOD.Common.Settings;
+using MUTDOD.Server.Common.CoreModule.Communication;
 using MUTDOD.Server.DataServer.DSODBC;
 
 namespace MUTDOD.Server.DataServer.DataServerBase
