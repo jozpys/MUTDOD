@@ -9,7 +9,7 @@ using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
-    [DataContract(Name = "SystemOperation")]
+    [DataContract]
     public class SystemOperation : AbstractComposite
     {
         public SystemOperation() : base(ElementType.SYSTEM_OPERATION) { }

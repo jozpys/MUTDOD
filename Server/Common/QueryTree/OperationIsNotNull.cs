@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common;
@@ -11,6 +12,7 @@ using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class OperationIsNotNull : AbstractComposite
     {
         public OperationIsNotNull() : base(ElementType.IS_NOT_NULL){}

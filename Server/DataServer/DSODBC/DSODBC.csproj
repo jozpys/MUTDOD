@@ -56,6 +56,10 @@
       <Project>{3A423D5E-E45E-4D30-9F20-06F0527B38F3}</Project>
       <Name>Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Settings\Settings.csproj">
+      <Project>{6ECCC095-72CF-442B-AA12-2041B8BE3B68}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Common\Types\Types.csproj">
       <Project>{6f59e8e0-d8c9-438c-ae4c-7f5c08a99db4}</Project>
       <Name>Types</Name>

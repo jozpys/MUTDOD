@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common;
@@ -10,9 +11,11 @@ using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class ClassName : AbstractLeaf
     {
         public ClassName() : base(ElementType.CLASS_NAME) { }
+        [DataMember]
         public String Name {get; set;}
 
         public override QueryDTO Execute(QueryParameters parameters)

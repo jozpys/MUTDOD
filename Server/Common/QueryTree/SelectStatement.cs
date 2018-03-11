@@ -9,15 +9,18 @@ using System.Xml;
 using MUTDOD.Common.Types;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using System.Runtime.Serialization;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class SelectStatement : AbstractComposite
     {
         public SelectStatement() : base(ElementType.SELECT)
         {
             Deref = false;
         }
+        [DataMember]
         public Boolean Deref { get; set; }
         public override QueryDTO Execute(QueryParameters parameters)
         {

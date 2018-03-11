@@ -86,6 +86,7 @@ namespace MUTDOD.Server.CentralServer.CSODBC
 
                 (m_serverChanel as IContextChannel).OperationTimeout = TimeSpan.FromMinutes(1);
 
+                //DTOQueryResult result = m_serverChanel.ExecuteQuery(dbName, new DTOQueryTree(queryTree));
                 _logger.Log("CentralServerConnector", String.Format("Response from {0}: {1}", s.ServerName,
                     m_serverChanel.ExecuteQuery(dbName, new DTOQueryTree(queryTree)).StringOutput), MessageLevel.QueryExecution);
                 scf.Close();

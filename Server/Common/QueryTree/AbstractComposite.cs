@@ -37,5 +37,10 @@ namespace MUTDOD.Server.Common.QueryTree
             }
             return null;
         }
+
+        public override string ToString()
+        {
+            return ElementType + " (" + String.Join(", ", elements.Values) + ")";
+        }
     }
 }

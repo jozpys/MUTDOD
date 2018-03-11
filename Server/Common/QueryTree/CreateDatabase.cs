@@ -9,12 +9,15 @@ using System.Xml.Serialization;
 using System.IO;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using System.Runtime.Serialization;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class CreateDatabase : AbstractLeaf
     {
         public CreateDatabase() : base(ElementType.CREATE_DATABASE) { }
+        [DataMember]
         public String DatabaseName { get; set; }
 
         public override QueryDTO Execute(QueryParameters parameters)

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryTree.Operator
 {
+    [DataContract]
     public class OperatorNotEqual : AbstractComposite
     {
         public OperatorNotEqual() : base(ElementType.OPERATOR) { }

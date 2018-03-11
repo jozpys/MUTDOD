@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Threading;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase;
+using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using MUTDOD.Common.ServerBase;
 using MUTDOD.Common.Settings;
 using MUTDOD.Server.Common.CoreModule.Communication;
@@ -14,18 +15,20 @@ namespace MUTDOD.Server.DataServer.DataServerBase
     public class DataServerRunnable : ServerRunnable
     {
         private readonly ISettingsManager _settingsManager;
+        private readonly IStorage _storage;
         private readonly ILogger _logger;
 
-        public DataServerRunnable(ICore core, ISettingsManager settingsManager, ILogger logger) : base(core, logger)
+        public DataServerRunnable(ICore core, ISettingsManager settingsManager, IStorage storage, ILogger logger) : base(core, logger)
         {
             _settingsManager = settingsManager;
+            _storage = storage;
             _logger = logger;
             do
             {
                 _addres = string.Format("net.tcp://localhost:{0}", DateTime.Now.Millisecond%10000);
             } while (_addres == settingsManager.CentralServerRemoteAdress);
 
-            var dataServerConnector = new DataServerConnector(logger);
+            var dataServerConnector = new DataServerConnector(settingsManager, storage, logger);
 
             _serviceHost = new ServiceHost(
                 dataServerConnector,

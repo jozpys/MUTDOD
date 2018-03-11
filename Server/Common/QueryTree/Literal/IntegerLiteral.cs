@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common.ModuleBase.Communication;
 
 namespace MUTDOD.Server.Common.QueryTree.Literal
 {
+    [DataContract]
     public class IntegerLiteral : AbstractLeaf
     {
         public IntegerLiteral() : base(ElementType.LITERAL){}
+        [DataMember]
         public String Value { get; set; }
         public override QueryDTO Execute(QueryParameters parameters)
         {
