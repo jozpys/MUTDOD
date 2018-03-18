@@ -47,6 +47,7 @@
     <Compile Include="AbstractLeaf.cs" />
     <Compile Include="ClassName.cs" />
     <Compile Include="ClassProperty.cs" />
+    <Compile Include="RenameDatabase.cs" />
     <Compile Include="CreateDatabase.cs" />
     <Compile Include="LeftOperand.cs" />
     <Compile Include="Literal\BoolLiteral.cs" />

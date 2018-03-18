@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MUTDOD.Common.ModuleBase.Storage;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using MUTDOD.Common.Settings;
 using MUTDOD.Common.Types;
 
 namespace MUTDOD.Common.ModuleBase
@@ -16,6 +17,7 @@ namespace MUTDOD.Common.ModuleBase
         IDatabaseParameters GetDatabase(Did did);
         DeleteDatabaseStatus RemoveDatabase(IDatabaseRemoveParameters databaseRemoveParameters);
         Did CreateDatabase(IDatabaseParameters databaseParameters);
+        Did RenameDatabase(IDatabaseParameters databaseParameters, string databaseNewName, ISettingsManager settingsManager);
         IDatabaseSchema GetSchema(Did databaseId);
         void SaveSchema(IDatabaseSchema schema);
     }

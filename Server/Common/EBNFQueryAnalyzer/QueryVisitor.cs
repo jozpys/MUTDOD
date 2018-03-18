@@ -50,8 +50,15 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             else if (context.op.Type == QueryGrammarParser.CREATE_DB)
             {
                 CreateDatabase createDatabase = new CreateDatabase();
-                createDatabase.DatabaseName = context.NAME().GetText();
+                createDatabase.DatabaseName = context.db_name.Text;
                 systemOperation.Add(createDatabase);
+            }
+            else if (context.op.Type == QueryGrammarParser.RENAME_DB)
+            {
+                RenameDatabase renameDatabase = new RenameDatabase();
+                renameDatabase.DatabaseName = context.db_name.Text;
+                renameDatabase.NewDatabaseName = context.db_new_name.Text;
+                systemOperation.Add(renameDatabase);
             }
 
             return systemOperation;

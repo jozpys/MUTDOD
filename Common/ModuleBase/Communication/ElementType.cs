@@ -11,6 +11,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         SYSTEM_OPERATION,
         SYSTEM_INFO,
         CREATE_DATABASE,
+        RENAME_DATABASE,
         SELECT,
         CLASS_NAME,
         WHERE,

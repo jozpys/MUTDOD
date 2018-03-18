@@ -15,6 +15,7 @@ using MUTDOD.Common.Types;
 using MUTDOD.Server.Common.Storage.MetadataElements;
 using MUTDOD.Server.Common.Storage.Serialization;
 using MUTDOD.Server.Common.Storage.Strategies.Speed;
+using System.IO;
 
 namespace MUTDOD.Server.Common.Storage
 {
@@ -153,6 +154,24 @@ namespace MUTDOD.Server.Common.Storage
 
             StorageMetadata.SaveMetadata(_metadata, _logger);
             return newDid;
+        }
+
+        public Did RenameDatabase(IDatabaseParameters databaseParameters, string databaseNweName, ISettingsManager settingsManager)
+        {
+            DatabaseParameters renamedParameters = new DatabaseParameters(databaseNweName, settingsManager);
+            renamedParameters.DatabaseId = databaseParameters.DatabaseId;
+            renamedParameters.Schema = databaseParameters.Schema;
+            renamedParameters.PageSize = databaseParameters.PageSize;
+            renamedParameters.OptimizeSize = databaseParameters.OptimizeSize;
+            renamedParameters.StartupSize = databaseParameters.StartupSize;
+            renamedParameters.IncreaseFactor = databaseParameters.IncreaseFactor;
+
+            _metadata.Databases[databaseParameters.DatabaseId] = renamedParameters;
+            _engine.OpenDatabase(databaseParameters);
+
+            StorageMetadata.SaveMetadata(_metadata, _logger);
+            //File.Move(databaseParameters.DataFileFullPath, renamedParameters.DataFileFullPath);
+            return renamedParameters.DatabaseId;
         }
 
         public DeleteDatabaseStatus RemoveDatabase(IDatabaseRemoveParameters databaseRemoveParameters)
