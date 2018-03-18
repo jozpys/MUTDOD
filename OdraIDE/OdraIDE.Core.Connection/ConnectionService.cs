@@ -203,6 +203,52 @@ namespace OdraIDE.Core.Connection
             }
         }
 
+        public void RenameDatabase(DatabaseInfo dbName, string newDatabaseName, RenameDatabaseNameCompleted renameDatabaseNameCompleted)
+        {
+            if (m_serverChanel == null)
+            {
+                throw new NoConnectionException();
+            }
+
+            if (!m_worker.IsBusy)
+            {
+                m_worker = new BackgroundWorker();
+                m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
+
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
+                {
+                    var qr = e.Result as IQueryResult;
+                    IsExecutingChanged(this, new IsExecutingEventArgs(false));
+                    //TODO odbsluga wyjatkow
+                    if (qr == null || qr.QueryResultType != ResultType.SystemInfo)
+                    {
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Error, dbName, qr);
+                    }
+                    else if (e.Error != null)
+                    {
+                        messageService.ShowMessage(e.Error.Message, "Error");
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Error, dbName, qr);
+                        Disconnected(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Done, dbName, qr);
+                        Databases.Add(dbName.Name);
+                        DatabasesChanged(this, EventArgs.Empty);
+                    }
+
+                };
+
+                //wraps args to query structure
+                QueryStruct queryStruct = new QueryStruct();
+                queryStruct.DbName = dbName;
+                queryStruct.Query = InternalQueries.RenameDatabaseQuery(dbName.Name, newDatabaseName);
+
+                IsExecutingChanged(this, new IsExecutingEventArgs(true));
+                m_worker.RunWorkerAsync(queryStruct);
+            }
+        }
+
 
         public void ExecuteQuery(DatabaseInfo dbName, IQuery query, ExecuteQueryCompleted executeQueryCompleted)
         {

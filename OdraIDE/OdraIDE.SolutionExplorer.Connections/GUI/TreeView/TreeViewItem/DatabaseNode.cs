@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using ICSharpCode.TreeView;
+using OdraIDE.Core;
 using OdraIDE.Utilities;
 
 namespace OdraIDE.SolutionExplorer.Connections
 {
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export("DatabaseNode")]
     public class DatabaseNode : SharpTreeNode
     {
-        private string m_databaseName;
+        [Import(CompositionPoints.Workbench.Commands.RenameDatabase, typeof(ICustomCommand))]
+        private RenameDatabaseCommand renameDatabaseCommand { get; set; }
 
-        public DatabaseNode(string databaseName)
+        public string DatabaseName { get; set; }
+
+        public DatabaseNode()
         {
-            m_databaseName = databaseName;
             ShowIcon = true;
         }
 
@@ -21,7 +28,7 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return m_databaseName;
+                return DatabaseName;
             }
         }
 
@@ -31,6 +38,22 @@ namespace OdraIDE.SolutionExplorer.Connections
             {
                 return ImageHelper.GetImageFromResources(Resources.Images.Database);
             }
+        }
+
+        private ContextMenu m_menu;
+
+        public override ContextMenu GetContextMenu()
+        {
+            if (m_menu == null)
+            {
+                m_menu = new ContextMenu();
+                MenuItem addDatabaseItem = new MenuItem();
+                renameDatabaseCommand.DatabaseName = DatabaseName;
+                addDatabaseItem.Command = renameDatabaseCommand;
+                addDatabaseItem.Header = "Rename database";
+                m_menu.Items.Add(addDatabaseItem);
+            }
+            return m_menu;
         }
     }
 }

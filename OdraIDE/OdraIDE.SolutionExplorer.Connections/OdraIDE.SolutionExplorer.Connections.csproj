@@ -87,10 +87,16 @@
   <ItemGroup>
     <Compile Include="Commands\ConnectionCommands.cs" />
     <Compile Include="Commands\NewDatabaseCommand.cs" />
+    <Compile Include="Commands\RenameDatabaseCommand.cs" />
+    <Compile Include="Commands\TreeLoader.cs" />
     <Compile Include="CompositionPoints.cs" />
     <Compile Include="GUI\Dialog\NewDatabaseDialog.cs" />
     <Compile Include="GUI\Dialog\NewDatabaseDialogView.xaml.cs">
       <DependentUpon>NewDatabaseDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Dialog\RenameDatabaseDialog.cs" />
+    <Compile Include="GUI\Dialog\RenameDatabaseDialogView.xaml.cs">
+      <DependentUpon>RenameDatabaseDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\TreeView\TreeViewItem\CentralServerNode.cs" />
     <Compile Include="GUI\TreeView\TreeViewItem\ClassNode.cs" />
@@ -204,6 +210,10 @@
     <Page Include="GUI\Dialog\NewDatabaseDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Dialog\RenameDatabaseDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
