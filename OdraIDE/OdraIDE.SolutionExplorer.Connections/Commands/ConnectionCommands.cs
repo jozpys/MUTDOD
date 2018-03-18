@@ -58,6 +58,12 @@ namespace OdraIDE.SolutionExplorer.Connections
 			{
 				case ExecuteQueryStatus.Done:
 
+                    connectionService.DatabasesChanged += delegate (object s, EventArgs e)
+                    {
+                        IConnectionService senderService = (IConnectionService)s;
+                        solutionExplorer.TreeView.Root = treeLoader.load(senderService.SystemInfo);
+                    };
+
                     CentralServerNode centralServerNode = treeLoader.load(systemInfo);
                     solutionExplorer.TreeView.Root = centralServerNode;
 					solutionExplorer.TreeView.ShowRootExpander = true;

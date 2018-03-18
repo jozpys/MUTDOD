@@ -36,17 +36,6 @@ namespace OdraIDE.SolutionExplorer.Connections.Commands
 
             DatabasesFolderNode databasesFolderNode = dfnFactory.CreateExport().Value;
 
-            connectionService.DatabasesChanged += delegate (object s, EventArgs e)
-            {
-                databasesFolderNode.Children.Clear();
-                foreach (string database in connectionService.Databases)
-                {
-                    DatabaseNode databaseNode = dfFactory.CreateExport().Value;
-                    databaseNode.DatabaseName = database;
-                    databasesFolderNode.Children.Add(databaseNode);
-                }
-            };
-
             foreach (var database in systemInfo.Databases.OrderBy(db => db.Name))
             {
                 DatabaseNode databaseNode = dfFactory.CreateExport().Value;

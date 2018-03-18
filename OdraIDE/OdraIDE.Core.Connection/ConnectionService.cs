@@ -35,6 +35,8 @@ namespace OdraIDE.Core.Connection
         [Import(Messaging.MessagingService, typeof(IMessagingService))]
         private IMessagingService messageService { get; set; }
 
+        public SystemInfo SystemInfo { get; private set; }
+
         public struct QueryStruct
         {
             public DatabaseInfo DbName { get; set; }
@@ -233,7 +235,10 @@ namespace OdraIDE.Core.Connection
                     else
                     {
                         renameDatabaseNameCompleted(ExecuteQueryStatus.Done, dbName, qr);
-                        Databases.Add(dbName.Name);
+                        StringReader txtR = new StringReader(qr.StringOutput);
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(SystemInfo));
+                        SystemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
+
                         DatabasesChanged(this, EventArgs.Empty);
                     }
 
