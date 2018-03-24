@@ -171,12 +171,12 @@ namespace OdraIDE.Core.Connection
                 m_worker = new BackgroundWorker();
                 m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
 
-                m_worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e)
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
                 {
                     var qr = e.Result as IQueryResult;
                     IsExecutingChanged(this, new IsExecutingEventArgs(false));
                     //TODO odbsluga wyjatkow
-                    if (qr == null || qr.QueryResultType != ResultType.DatabaseInfo)
+                    if (qr == null || qr.QueryResultType != ResultType.SystemInfo)
                     {
                         createNewDatabasCompleted(ExecuteQueryStatus.Error, dbName, qr);
                     }
@@ -188,8 +188,11 @@ namespace OdraIDE.Core.Connection
                     }
                     else
                     {
-                        createNewDatabasCompleted(ExecuteQueryStatus.Done, dbName,qr);
-                        Databases.Add(dbName.Name);
+                        createNewDatabasCompleted(ExecuteQueryStatus.Done, dbName, qr);
+                        StringReader txtR = new StringReader(qr.StringOutput);
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(SystemInfo));
+                        SystemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
+
                         DatabasesChanged(this, EventArgs.Empty);
                     }
 
@@ -248,6 +251,55 @@ namespace OdraIDE.Core.Connection
                 QueryStruct queryStruct = new QueryStruct();
                 queryStruct.DbName = dbName;
                 queryStruct.Query = InternalQueries.RenameDatabaseQuery(dbName.Name, newDatabaseName);
+
+                IsExecutingChanged(this, new IsExecutingEventArgs(true));
+                m_worker.RunWorkerAsync(queryStruct);
+            }
+        }
+
+        public void DeleteDatabase(DatabaseInfo dbName, DeleteDatabaseCompleted renameDatabaseNameCompleted)
+        {
+            if (m_serverChanel == null)
+            {
+                throw new NoConnectionException();
+            }
+
+            if (!m_worker.IsBusy)
+            {
+                m_worker = new BackgroundWorker();
+                m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
+
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
+                {
+                    var qr = e.Result as IQueryResult;
+                    IsExecutingChanged(this, new IsExecutingEventArgs(false));
+                    //TODO odbsluga wyjatkow
+                    if (qr == null || qr.QueryResultType != ResultType.SystemInfo)
+                    {
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Error, dbName, qr);
+                    }
+                    else if (e.Error != null)
+                    {
+                        messageService.ShowMessage(e.Error.Message, "Error");
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Error, dbName, qr);
+                        Disconnected(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        renameDatabaseNameCompleted(ExecuteQueryStatus.Done, dbName, qr);
+                        StringReader txtR = new StringReader(qr.StringOutput);
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(SystemInfo));
+                        SystemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
+
+                        DatabasesChanged(this, EventArgs.Empty);
+                    }
+
+                };
+
+                //wraps args to query structure
+                QueryStruct queryStruct = new QueryStruct();
+                queryStruct.DbName = dbName;
+                queryStruct.Query = InternalQueries.DropDatabaseQuery(dbName.Name);
 
                 IsExecutingChanged(this, new IsExecutingEventArgs(true));
                 m_worker.RunWorkerAsync(queryStruct);

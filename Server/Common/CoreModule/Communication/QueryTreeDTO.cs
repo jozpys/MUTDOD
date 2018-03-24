@@ -16,6 +16,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(SystemInformation))]
     [KnownType(typeof(CreateDatabase))]
     [KnownType(typeof(RenameDatabase))]
+    [KnownType(typeof(DropDatabase))]
     [KnownType(typeof(SelectStatement))]
     [KnownType(typeof(ClassName))]
     [KnownType(typeof(WhereStatement))]

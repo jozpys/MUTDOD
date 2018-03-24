@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Commands\ConnectionCommands.cs" />
     <Compile Include="Commands\NewDatabaseCommand.cs" />
+    <Compile Include="Commands\DeleteDatabaseCommand.cs" />
     <Compile Include="Commands\RenameDatabaseCommand.cs" />
     <Compile Include="Commands\TreeLoader.cs" />
     <Compile Include="CompositionPoints.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="GUI\Dialog\NewDatabaseDialogView.xaml.cs">
       <DependentUpon>NewDatabaseDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Dialog\DeleteDatabaseDialog.cs" />
     <Compile Include="GUI\Dialog\RenameDatabaseDialog.cs" />
     <Compile Include="GUI\Dialog\RenameDatabaseDialogView.xaml.cs">
       <DependentUpon>RenameDatabaseDialogView.xaml</DependentUpon>

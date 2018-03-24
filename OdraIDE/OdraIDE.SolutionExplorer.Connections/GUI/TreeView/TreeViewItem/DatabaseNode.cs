@@ -15,7 +15,10 @@ namespace OdraIDE.SolutionExplorer.Connections
     public class DatabaseNode : SharpTreeNode
     {
         [Import(CompositionPoints.Workbench.Commands.RenameDatabase, typeof(ICustomCommand))]
-        private RenameDatabaseCommand renameDatabaseCommand { get; set; }
+        private RenameDatabaseCommand RenameDatabaseCommand { get; set; }
+
+        [Import(CompositionPoints.Workbench.Commands.DeleteDatabase, typeof(ICustomCommand))]
+        private DeleteDatabaseCommand DeleteDatabaseCommand { get; set; }
 
         public string DatabaseName { get; set; }
 
@@ -47,11 +50,17 @@ namespace OdraIDE.SolutionExplorer.Connections
             if (m_menu == null)
             {
                 m_menu = new ContextMenu();
-                MenuItem addDatabaseItem = new MenuItem();
-                renameDatabaseCommand.DatabaseName = DatabaseName;
-                addDatabaseItem.Command = renameDatabaseCommand;
-                addDatabaseItem.Header = "Rename database";
-                m_menu.Items.Add(addDatabaseItem);
+                MenuItem renameDatabaseItem = new MenuItem();
+                RenameDatabaseCommand.DatabaseName = DatabaseName;
+                renameDatabaseItem.Command = RenameDatabaseCommand;
+                renameDatabaseItem.Header = "Rename database";
+                m_menu.Items.Add(renameDatabaseItem);
+
+                MenuItem deleteDatabaseItem = new MenuItem();
+                DeleteDatabaseCommand.DatabaseName = DatabaseName;
+                deleteDatabaseItem.Command = DeleteDatabaseCommand;
+                deleteDatabaseItem.Header = "Delete database";
+                m_menu.Items.Add(deleteDatabaseItem);
             }
             return m_menu;
         }

@@ -60,6 +60,12 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 renameDatabase.NewDatabaseName = context.db_new_name.Text;
                 systemOperation.Add(renameDatabase);
             }
+            else if (context.op.Type == QueryGrammarParser.DROP_DB)
+            {
+                DropDatabase renameDatabase = new DropDatabase();
+                renameDatabase.DatabaseName = context.db_name.Text;
+                systemOperation.Add(renameDatabase);
+            }
 
             return systemOperation;
         }

@@ -10,13 +10,14 @@ using System.IO;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using System.Runtime.Serialization;
+using MUTDOD.Server.Common.Storage.MetadataElements;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
     [DataContract]
-    public class CreateDatabase : AbstractLeaf
+    public class DropDatabase : AbstractLeaf
     {
-        public CreateDatabase() : base(ElementType.CREATE_DATABASE) { }
+        public DropDatabase() : base(ElementType.DROP_DATABASE) { }
         [DataMember]
         public String DatabaseName { get; set; }
 
@@ -24,8 +25,11 @@ namespace MUTDOD.Server.Common.QueryTree
         {
             try
             {
-                var did = parameters.Storage.CreateDatabase(new DatabaseParameters(DatabaseName, parameters.SettingsManager));
-                parameters.Log(string.Format("new database created as {0}", did), MessageLevel.Info);
+                var did = parameters.Storage.RemoveDatabase(new DatabaseRemoveParameters
+                {
+                    DatabaseToRemove = parameters.Database.DatabaseId
+                });
+                parameters.Log(string.Format("database {0} removed", did), MessageLevel.Info);
                 var sb = new StringBuilder();
                 var sw = new StringWriter(sb);
                 var xmlSerializer = new XmlSerializer(typeof(SystemInfo));

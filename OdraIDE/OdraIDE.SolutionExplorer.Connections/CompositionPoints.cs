@@ -13,10 +13,12 @@ namespace OdraIDE.SolutionExplorer.Connections.CompositionPoints
             public const string Disconnect = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.Commands.Disconnect";
             public const string NewDatabase = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.Commands.NewDatabase";
             public const string RenameDatabase = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.Commands.RenameDatabase";
+            public const string DeleteDatabase = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.Commands.DeleteDatabase";
         }
 
         public const string NewDatabaseDialog = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.NewDatabaseDialog";
         public const string RenameDatabaseDialog = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.RenameDatabaseDialog";
+        public const string DeleteDatabaseDialog = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.DeleteDatabaseDialog";
         public const string TreeLoader = "OdraIDE.SolutionExplorer.Connections.CompositionPoints.Workbench.TreeLoader";
     }
 }

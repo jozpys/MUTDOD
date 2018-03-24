@@ -13,6 +13,11 @@
         {
             return new RenameDatabaseQuery(dbName, newName);
         }
+
+        public static IQuery DropDatabaseQuery(string dbName)
+        {
+            return new DropDatabaseQuery(dbName);
+        }
     }
 
     internal class SystemInfoQuery : IQuery
@@ -52,6 +57,21 @@
         public string QueryText
         {
             get { return string.Format("@RenameDatabase {0}, {1};", _dbName, _newName); }
+        }
+    }
+
+    internal class DropDatabaseQuery : IQuery
+    {
+        private readonly string _dbName;
+
+        internal DropDatabaseQuery(string dbName)
+        {
+            _dbName = dbName;
+        }
+
+        public string QueryText
+        {
+            get { return string.Format("@DropDatabase {0};", _dbName); }
         }
     }
 }

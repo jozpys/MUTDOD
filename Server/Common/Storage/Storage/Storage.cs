@@ -167,10 +167,11 @@ namespace MUTDOD.Server.Common.Storage
             renamedParameters.IncreaseFactor = databaseParameters.IncreaseFactor;
 
             _metadata.Databases[databaseParameters.DatabaseId] = renamedParameters;
-            _engine.OpenDatabase(databaseParameters);
 
             StorageMetadata.SaveMetadata(_metadata, _logger);
+            //_engine.Dispose();
             //File.Move(databaseParameters.DataFileFullPath, renamedParameters.DataFileFullPath);
+            _engine.OpenDatabase(renamedParameters);
             return renamedParameters.DatabaseId;
         }
 

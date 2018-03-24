@@ -13,6 +13,7 @@ statement: PARAM system_operation
 system_operation: op = SYS_INFO
 				| op = CREATE_DB db_name = NAME
 				| op = RENAME_DB db_name = NAME COMMA db_new_name = NAME
+				| op = DROP_DB db_name = NAME
 				;
 
 get_stmt: K_DEREF? get_header where_clause?;
@@ -279,6 +280,7 @@ PARAM:		'@';
 SYS_INFO:	'SystemInfo';
 CREATE_DB:	'CreateDatabase';
 RENAME_DB:	'RenameDatabase';
+DROP_DB:	'DropDatabase';
 TASKS:		'tasks';
 PARALLEL_MTD:'parallel_method';
 

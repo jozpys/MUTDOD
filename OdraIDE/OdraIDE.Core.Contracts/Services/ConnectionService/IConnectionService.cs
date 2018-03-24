@@ -20,6 +20,7 @@ namespace OdraIDE.Core
         void GetSystemInfo(GetSystemInfoCompleted getSystemInfoCompleted);
         void CreateNewDatabase(DatabaseInfo dbName, CreateNewDatabasCompleted createNewDatabasCompleted);
         void RenameDatabase(DatabaseInfo dbName, string newDatabaseName, RenameDatabaseNameCompleted createNewDatabasCompleted);
+        void DeleteDatabase(DatabaseInfo dbName, DeleteDatabaseCompleted createNewDatabasCompleted);
         void ExecuteQuery(DatabaseInfo dbName, IQuery query, ExecuteQueryCompleted executeQueryCompleted);
         void CancelExecutingQuery();
         IList Databases { get; }
@@ -30,6 +31,7 @@ namespace OdraIDE.Core
     public delegate void GetSystemInfoCompleted(ExecuteQueryStatus status, SystemInfo systemInfo, IQueryResult result);
     public delegate void CreateNewDatabasCompleted(ExecuteQueryStatus status, DatabaseInfo database, IQueryResult result);
     public delegate void RenameDatabaseNameCompleted(ExecuteQueryStatus status, DatabaseInfo systemInfo, IQueryResult result);
+    public delegate void DeleteDatabaseCompleted(ExecuteQueryStatus status, DatabaseInfo database, IQueryResult result);
 
     public enum ExecuteQueryStatus
     {
