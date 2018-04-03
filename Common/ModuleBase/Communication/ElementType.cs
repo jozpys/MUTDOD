@@ -13,6 +13,8 @@ namespace MUTDOD.Common.ModuleBase.Communication
         CREATE_DATABASE,
         RENAME_DATABASE,
         DROP_DATABASE,
+        CLASS_DECLARATION,
+        ATTRIBUTE_DECLARATION,
         SELECT,
         CLASS_NAME,
         WHERE,
@@ -23,6 +25,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         RIGHT_OPERAND,
         OPERATOR,
         CLASS_PROPERTY,
-        LITERAL
+        LITERAL,
+        DATA_TYPE
     }
 }

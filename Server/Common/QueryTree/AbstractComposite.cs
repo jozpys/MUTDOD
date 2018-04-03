@@ -15,7 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public AbstractComposite(ElementType ElementType) : base(ElementType) { }
 
         [DataMember]
-        protected IDictionary<ElementType, IQueryElement> elements = new Dictionary<ElementType, IQueryElement>();
+        private IDictionary<ElementType, ISet<IQueryElement>> elements = new Dictionary<ElementType, ISet<IQueryElement>>();
 
 
         public override IQueryCompositeElement GetComposite()
@@ -23,17 +23,58 @@ namespace MUTDOD.Server.Common.QueryTree
             return this;
         }
 
+        public IEnumerable<IQueryElement> AllElements(ElementType elementType)
+        {
+            if (!elements.ContainsKey(elementType))
+            {
+                return Enumerable.Empty<IQueryElement>();
+            }
+            return elements[elementType];
+        }
+
+        public IQueryElement Element(ElementType elementType)
+        {
+            return elements[elementType].Single();
+        }
+
+        public IQueryElement SingleElement()
+        {
+            return elements.Single().Value.Single();
+        }
+
+        public Boolean TryGetElement(ElementType elementType, out IQueryElement searchedElement)
+        {
+            if (elements.ContainsKey(elementType))
+            {
+                var typeElements = elements[elementType];
+                if(typeElements.Take(2).Count() == 1)
+                {
+                    searchedElement = typeElements.Single();
+                    return true;
+                }
+            }
+            searchedElement = null;
+            return false;
+        }
+
         public void Add(IQueryElement element)
         {
-            elements.Add(element.ElementType, element);
+            if (!elements.ContainsKey(element.ElementType))
+            {
+                elements.Add(element.ElementType, new HashSet<IQueryElement>());
+            }
+            elements[element.ElementType].Add(element);
         }
 
         public IQueryElement Remove(IQueryElement element)
         {
-            Boolean exists = elements.Remove(element.ElementType);
-            if (exists)
+            if (elements.ContainsKey(element.ElementType))
             {
-                return element;
+                Boolean exists = elements[element.ElementType].Remove(element);
+                if (exists)
+                {
+                    return element;
+                }
             }
             return null;
         }

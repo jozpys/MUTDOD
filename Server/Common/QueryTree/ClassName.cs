@@ -24,13 +24,14 @@ namespace MUTDOD.Server.Common.QueryTree
                 throw new ApplicationException("Schema can not be null!");
             Class selectedClass = parameters.Database.Schema.Classes.Values.SingleOrDefault(c => c.Name == Name);
             if (selectedClass == null) {
+                Class errorClass = new Class() { Name = Name };
                 DTOQueryResult errorResult = new DTOQueryResult
                 {
                     NextResult = null,
                     QueryResultType = ResultType.StringResult,
                     StringOutput = "Unknown class: " + Name
                 };
-                return new QueryDTO { Result = errorResult };
+                return new QueryDTO { Result = errorResult, QueryClass = errorClass };
             }
             return new QueryDTO { QueryClass = selectedClass };
         }

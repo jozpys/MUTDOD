@@ -5,6 +5,16 @@ namespace MUTDOD.Common.Types
     [Serializable]
     public class Property : IEquatable<Property>
     {
+        public const String FLOAT = "float";
+        public const String BYTE = "byte";
+        public const String SHORT = "short";
+        public const String INT = "int";
+        public const String LONG = "long";
+        public const String DOUBLE = "double";
+        public const String CHAR = "char";
+        public const String STRING = "string";
+        public const String BOOL = "bool";
+        public const String GUID = "guid";
         public string Type { get; set; }
 
         public Type DotNetType
@@ -13,25 +23,25 @@ namespace MUTDOD.Common.Types
             {
                 switch (Type.ToLower())
                 {
-                    case "float":
+                    case FLOAT:
                         return typeof (double);
-                    case "byte":
+                    case BYTE:
                         return typeof (byte);
-                    case "short":
+                    case SHORT:
                         return typeof (short);
-                    case "int":
+                    case INT:
                         return typeof (int);
-                    case "long":
+                    case LONG:
                         return typeof (long);
-                    case "double":
+                    case DOUBLE:
                         return typeof (double);
-                    case "char":
+                    case CHAR:
                         return typeof (char);
-                    case "string":
+                    case STRING:
                         return typeof (string);
-                    case "bool":
+                    case BOOL:
                         return typeof (bool);
-                    case "guid":
+                    case GUID:
                         return typeof (Guid);
                     default:
                         throw new Exception("Unknown value type: " + Type);

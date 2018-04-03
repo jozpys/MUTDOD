@@ -14,7 +14,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public WhereStatement() : base(ElementType.WHERE){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            return elements.Single().Value.Execute(parameters);
+            return SingleElement().Execute(parameters);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public OperationIsNotNull() : base(ElementType.IS_NOT_NULL){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            IQueryElement valueElement = elements.Single().Value;
+            IQueryElement valueElement = SingleElement();
             Func<IStorable, bool> expression = delegate (IStorable databaseObject)
             {
                 QueryDTO subquery = new QueryDTO { QueryObjects = new List<IStorable> { databaseObject } };

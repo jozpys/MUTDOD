@@ -45,6 +45,8 @@
     <Compile Include="AbstractComposite.cs" />
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
+    <Compile Include="AttributeDeclaration.cs" />
+    <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />
     <Compile Include="ClassProperty.cs" />
     <Compile Include="DropDatabase.cs" />
@@ -70,6 +72,16 @@
     <Compile Include="SelectStatement.cs" />
     <Compile Include="SystemInformation.cs" />
     <Compile Include="SystemOperation.cs" />
+    <Compile Include="Type\AbstractValueType.cs" />
+    <Compile Include="Type\ByteType.cs" />
+    <Compile Include="Type\DoubleType.cs" />
+    <Compile Include="Type\CharType.cs" />
+    <Compile Include="Type\BoolType.cs" />
+    <Compile Include="Type\StringType.cs" />
+    <Compile Include="Type\LongType.cs" />
+    <Compile Include="Type\IntType.cs" />
+    <Compile Include="Type\ShortType.cs" />
+    <Compile Include="Type\FloatType.cs" />
     <Compile Include="WhereStatement.cs" />
   </ItemGroup>
   <ItemGroup>

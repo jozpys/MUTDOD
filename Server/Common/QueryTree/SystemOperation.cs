@@ -15,7 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public SystemOperation() : base(ElementType.SYSTEM_OPERATION) { }
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            return elements.Values.Single().Execute(parameters);
+            return SingleElement().Execute(parameters);
         }
     }
 }

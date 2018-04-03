@@ -11,6 +11,7 @@ using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Server.Common.QueryTree;
 using MUTDOD.Server.Common.QueryTree.Literal;
 using MUTDOD.Server.Common.QueryTree.Operator;
+using MUTDOD.Server.Common.QueryTree.Type;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
@@ -33,6 +34,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             {
                 IQueryElement select = Visit(context.get_stmt());
                 return select;
+            }
+            else if(context.class_delcaration() != null)
+            {
+                IQueryElement classDeclaration = Visit(context.class_delcaration());
+                return classDeclaration;
             }
 
 
@@ -166,45 +172,38 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             throw new SyntaxException("Attribute literal or statement");
         }
 
-        public override IQueryTree VisitClass_delcaration([NotNull] QueryGrammarParser.Class_delcarationContext context)
+            */
+
+        public override IQueryElement VisitClass_delcaration([NotNull] QueryGrammarParser.Class_delcarationContext context)
         {
-            QueryTree classDeclarationTree = new QueryTree();
-            classDeclarationTree.TokenName = TokenName.CLASS_DECLARATION;
-            classDeclarationTree.ProductionsList = new SubTrees();
+            ClassDeclaration classDeclaration = new ClassDeclaration();
 
-            IQueryTree classNameTree = Visit(context.class_name());
-            classDeclarationTree.ProductionsList.Add(classNameTree);
+            IQueryElement className = Visit(context.class_name());
+            classDeclaration.Add(className);
 
-            foreach (var element in context.cls_attribute_dec_stm())
+            foreach (var attribute in context.cls_attribute_dec_stm())
             {
-                IQueryTree elementTree = Visit(element);
-                classDeclarationTree.ProductionsList.Add(elementTree);
+                IQueryElement attributeDeclaration = Visit(attribute);
+                classDeclaration.Add(attributeDeclaration);
             }
 
-            return classDeclarationTree;
+            return classDeclaration;
         }
 
-        public override IQueryTree VisitCls_attribute_dec_stm([NotNull] QueryGrammarParser.Cls_attribute_dec_stmContext context)
+
+
+        public override IQueryElement VisitCls_attribute_dec_stm([NotNull] QueryGrammarParser.Cls_attribute_dec_stmContext context)
         {
-            QueryTree attributeStmtTree = new QueryTree();
-            attributeStmtTree.TokenName = TokenName.ATTRIBUTE_DEC_STM;
-            attributeStmtTree.ProductionsList = new SubTrees();
+            AttributeDeclaration attribute = new AttributeDeclaration();
+            attribute.Name = context.NAME().GetText();
 
-            QueryTree attributeName = new QueryTree();
-            attributeName.TokenName = TokenName.ATTRIBUTE_NAME;
-            attributeName.ProductionsList = new SubTrees();
-            attributeStmtTree.ProductionsList.Add(attributeName);
+            IQueryElement dateType = Visit(context.dataType());
+            attribute.Add(dateType);
 
-            QueryTree nameTree = new QueryTree();
-            nameTree.TokenName = TokenName.NAME;
-            nameTree.TokenValue = context.NAME().GetText();
-            attributeName.ProductionsList.Add(nameTree);
-
-            IQueryTree dateType = Visit(context.dataType());
-            attributeStmtTree.ProductionsList.Add(dateType);
-
-            return attributeStmtTree;
+            return attribute;
         }
+
+        /*
 
         public override IQueryTree VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)
         {
@@ -283,69 +282,52 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return null;
         }
 
-        /*
-        public override IQueryTree VisitDataType([NotNull] QueryGrammarParser.DataTypeContext context)
+        public override IQueryElement VisitDataType([NotNull] QueryGrammarParser.DataTypeContext context)
         {
-            QueryTree dateTypeTree = new QueryTree();
-            dateTypeTree.TokenName = TokenName.DATA_TYPE;
-            dateTypeTree.ProductionsList = new SubTrees();
-
-            QueryTree type = new QueryTree();
             if (context.BYTE_TYPE() != null)
             {
-                type.TokenName = TokenName.BYTE_TYPE;
-                type.TokenValue = "byte";
+                return new ByteType();
             }
             else if(context.SHORT_TYPE() != null)
             {
-                type.TokenName = TokenName.SHORT_TYPE;
-                type.TokenValue = "short";
+                return new ShortType();
             }
             else if (context.INT_TYPE() != null)
             {
-                type.TokenName = TokenName.INT_TYPE;
-                type.TokenValue = "int";
+                return new IntType();
             }
             else if (context.LONG_TYPE() != null)
             {
-                type.TokenName = TokenName.LONG_TYPE;
-                type.TokenValue = "long";
+                return new LongType();
             }
             else if (context.FLOAT_TYPE() != null)
             {
-                type.TokenName = TokenName.FLOAT_TYPE;
-                type.TokenValue = "float";
+                return new FloatType();
             }
             else if (context.DOUBLE_TYPE() != null)
             {
-                type.TokenName = TokenName.DOUBLE_TYPE;
-                type.TokenValue = "double";
+                return new DoubleType();
             }
             else if (context.CHAR_TYPE() != null)
             {
-                type.TokenName = TokenName.CHAR_TYPE;
-                type.TokenValue = "char";
+                return new CharType();
             }
             else if (context.STRING_TYPE() != null)
             {
-                type.TokenName = TokenName.STRING_TYPE;
-                type.TokenValue = "string";
+                return new StringType();
             }
             else if (context.BOOL_TYPE() != null)
             {
-                type.TokenName = TokenName.BOOL_TYPE;
-                type.TokenValue = "bool";
+                return new BoolType();
             }
             else if (context.NAME() != null)
             {
-                type.TokenName = TokenName.NAME;
-                type.TokenValue = context.NAME().GetText();
+                //type.TokenName = TokenName.NAME;
+                //type.TokenValue = context.NAME().GetText();
             }
-            dateTypeTree.ProductionsList.Add(type);
 
-            return dateTypeTree;
+            return null;
         }
-        */
 
         
         public override IQueryElement VisitLiteral([NotNull] QueryGrammarParser.LiteralContext context)

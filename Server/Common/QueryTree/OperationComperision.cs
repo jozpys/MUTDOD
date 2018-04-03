@@ -18,9 +18,9 @@ namespace MUTDOD.Server.Common.QueryTree
         public OperationComperision() : base(ElementType.COMPERISION){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            IQueryElement leftElement = elements[ElementType.LEFT_OPERAND];
-            IQueryElement rightElement = elements[ElementType.RIGHT_OPERAND];
-            IQueryElement operation = elements[ElementType.OPERATOR];
+            IQueryElement leftElement = Element(ElementType.LEFT_OPERAND);
+            IQueryElement rightElement = Element(ElementType.RIGHT_OPERAND);
+            IQueryElement operation = Element(ElementType.OPERATOR);
             Func<IStorable, bool> expression = delegate (IStorable databaseObject)
             {
                 QueryDTO subquery = new QueryDTO { QueryObjects = new List<IStorable> { databaseObject } };

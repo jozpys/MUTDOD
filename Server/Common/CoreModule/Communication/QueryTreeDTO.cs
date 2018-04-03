@@ -3,6 +3,7 @@ using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Server.Common.QueryTree;
 using MUTDOD.Server.Common.QueryTree.Literal;
 using MUTDOD.Server.Common.QueryTree.Operator;
+using MUTDOD.Server.Common.QueryTree.Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ using System.Text;
 namespace MUTDOD.Server.Common.CoreModule.Communication
 {
     [DataContract]
+    [KnownType(typeof(HashSet<IQueryElement>))]
     [KnownType(typeof(SystemOperation))]
     [KnownType(typeof(SystemInformation))]
     [KnownType(typeof(CreateDatabase))]
     [KnownType(typeof(RenameDatabase))]
     [KnownType(typeof(DropDatabase))]
+    [KnownType(typeof(ClassDeclaration))]
+    [KnownType(typeof(AttributeDeclaration))]
     [KnownType(typeof(SelectStatement))]
     [KnownType(typeof(ClassName))]
     [KnownType(typeof(WhereStatement))]
@@ -38,6 +42,16 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(IntegerLiteral))]
     [KnownType(typeof(NullLiteral))]
     [KnownType(typeof(StringLiteral))]
+
+    [KnownType(typeof(BoolType))]
+    [KnownType(typeof(ByteType))]
+    [KnownType(typeof(CharType))]
+    [KnownType(typeof(DoubleType))]
+    [KnownType(typeof(FloatType))]
+    [KnownType(typeof(IntType))]
+    [KnownType(typeof(LongType))]
+    [KnownType(typeof(ShortType))]
+    [KnownType(typeof(StringType))]
     public class DTOQueryTree
     {
         [DataMember]

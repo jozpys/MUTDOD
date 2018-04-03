@@ -25,7 +25,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public override QueryDTO Execute(QueryParameters parameters)
         {
 
-            IQueryElement classNameElement = elements[ElementType.CLASS_NAME];
+            IQueryElement classNameElement = Element(ElementType.CLASS_NAME);
             QueryDTO classResult = classNameElement.Execute(parameters);
             if (classResult.Result != null)
             {
@@ -36,10 +36,10 @@ namespace MUTDOD.Server.Common.QueryTree
             objs = objs.Where(s => s.Properties.All(p => p.Key.ParentClassId == classToGet.ClassId.Id));
             var selectDto = new QueryDTO { QueryClass = classToGet, QueryObjects = objs };
 
-            if (elements.TryGetValue(ElementType.WHERE, out IQueryElement seachCriteria))
+            if (TryGetElement(ElementType.WHERE, out IQueryElement searchCriteria))
             {
                 parameters.Subquery = selectDto;
-                QueryDTO whereDto = seachCriteria.Execute(parameters);
+                QueryDTO whereDto = searchCriteria.Execute(parameters);
                 if(whereDto.Result?.QueryResultType == ResultType.StringResult)
                 {
                     return whereDto;

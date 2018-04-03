@@ -128,11 +128,11 @@ namespace OdraIDE.Core.Connection
                         {
                             StringReader txtR = new StringReader(qr.StringOutput);
                             XmlSerializer xmlSerializer = new XmlSerializer(typeof (SystemInfo));
-                            SystemInfo systemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
+                            SystemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
 
-                            Databases = systemInfo.Databases.Select(d => d.Name).ToList();
+                            Databases = SystemInfo.Databases.Select(d => d.Name).ToList();
 
-                            getSystemInfoCompleted(ExecuteQueryStatus.Done, systemInfo, qr);
+                            getSystemInfoCompleted(ExecuteQueryStatus.Done, SystemInfo, qr);
                         }
                         else if (qr.QueryResultType == ResultType.StringResult)
                         {
