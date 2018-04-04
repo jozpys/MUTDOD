@@ -60,6 +60,7 @@
 			<Word>select</Word>
 			<Word>from</Word>
 			<Word>deref</Word>
+      <Word>drop</Word>
 			<!-- ... -->
 		</Keywords>
 		

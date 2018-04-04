@@ -49,6 +49,7 @@
     <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />
     <Compile Include="ClassProperty.cs" />
+    <Compile Include="DropClass.cs" />
     <Compile Include="DropDatabase.cs" />
     <Compile Include="RenameDatabase.cs" />
     <Compile Include="CreateDatabase.cs" />

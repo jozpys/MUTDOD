@@ -15,6 +15,8 @@ namespace MUTDOD.Common.ModuleBase.Communication
         DROP_DATABASE,
         CLASS_DECLARATION,
         ATTRIBUTE_DECLARATION,
+        DROP_CLASS,
+        DROP_INTERFACE,
         SELECT,
         CLASS_NAME,
         WHERE,

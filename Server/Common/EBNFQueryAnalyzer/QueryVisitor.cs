@@ -40,6 +40,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement classDeclaration = Visit(context.class_delcaration());
                 return classDeclaration;
             }
+            else if(context.drop_stmt() != null)
+            {
+                IQueryElement dropStatement = Visit(context.drop_stmt());
+                return dropStatement;
+            }
 
 
             return null;
@@ -190,8 +195,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return classDeclaration;
         }
 
-
-
         public override IQueryElement VisitCls_attribute_dec_stm([NotNull] QueryGrammarParser.Cls_attribute_dec_stmContext context)
         {
             AttributeDeclaration attribute = new AttributeDeclaration();
@@ -203,19 +206,15 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return attribute;
         }
 
-        /*
-
-        public override IQueryTree VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)
+        public override IQueryElement VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)
         {
-            QueryTree dropTree = new QueryTree();
-            dropTree.TokenName = TokenName.DROP;
-            dropTree.ProductionsList = new SubTrees();
+            DropClass dropClass = new DropClass();
 
-            IQueryTree classNameTree = Visit(context.class_name());
-            dropTree.ProductionsList.Add(classNameTree);
-            return dropTree;
+            IQueryElement className = Visit(context.class_name());
+            dropClass.Add(className);
+            return dropClass;
         }
-        */
+
         public override IQueryElement VisitWhere_clause([NotNull] QueryGrammarParser.Where_clauseContext context)
         {
             WhereStatement where = new WhereStatement();
