@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common;
@@ -10,6 +11,7 @@ using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
+    [DataContract]
     public class DropClass : AbstractComposite
     {
         public DropClass() : base(ElementType.DROP_CLASS) { }

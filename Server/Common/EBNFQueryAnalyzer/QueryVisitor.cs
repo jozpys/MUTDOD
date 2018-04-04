@@ -45,6 +45,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement dropStatement = Visit(context.drop_stmt());
                 return dropStatement;
             }
+            else if(context.new_object() != null)
+            {
+                IQueryElement newObject = Visit(context.new_object());
+                return newObject;
+            }
 
 
             return null;
@@ -109,58 +114,31 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return className;
         }
 
-        /*
-
-        public override IQueryTree VisitNew_object([NotNull] QueryGrammarParser.New_objectContext context)
+        public override IQueryElement VisitNew_object([NotNull] QueryGrammarParser.New_objectContext context)
         {
-            QueryTree newObjectTree = new QueryTree();
-            newObjectTree.TokenName = TokenName.NEW_OBJECT;
-            newObjectTree.ProductionsList = new SubTrees();
+            NewObject newObject = new NewObject();
 
-            IQueryTree classNameTree = Visit(context.class_name());
-            newObjectTree.ProductionsList.Add(classNameTree);
+            IQueryElement className = Visit(context.class_name());
+            newObject.Add(className);
 
-            IQueryTree attributesTree = Visit(context.object_initialization_attributes_list());
-            newObjectTree.ProductionsList.Add(attributesTree);
-
-            return newObjectTree;
-        }
-
-        public override IQueryTree VisitObject_initialization_attributes_list([NotNull] QueryGrammarParser.Object_initialization_attributes_listContext context)
-        {
-            QueryTree objectAtributesTree = new QueryTree();
-            objectAtributesTree.TokenName = TokenName.OBJECT_INITIALIZATION_ATTRIBUTES_LIST;
-            objectAtributesTree.ProductionsList = new SubTrees();
-
-            foreach( var element in context.object_initialization_element())
+            foreach ( var element in context.object_initialization_attributes_list().object_initialization_element())
             {
-                IQueryTree elementTree = Visit(element);
-                objectAtributesTree.ProductionsList.Add(elementTree);
+                IQueryElement objectElement = Visit(element);
+                newObject.Add(objectElement);
             }
 
-            return objectAtributesTree;
+            return newObject;
         }
 
-        public override IQueryTree VisitObject_initialization_element([NotNull] QueryGrammarParser.Object_initialization_elementContext context)
+        public override IQueryElement VisitObject_initialization_element([NotNull] QueryGrammarParser.Object_initialization_elementContext context)
         {
-            QueryTree elementTree = new QueryTree();
-            elementTree.TokenName = TokenName.OBJECT_INITIALIZATION_ELEMENT;
-            elementTree.ProductionsList = new SubTrees();
+            ObjectInitializationElement objectElement = new ObjectInitializationElement();
+            objectElement.FieldName = context.NAME().GetText();
 
-            QueryTree attributeNameTree = new QueryTree();
-            attributeNameTree.TokenName = TokenName.ATTRIBUTE_NAME;
-            attributeNameTree.ProductionsList = new SubTrees();
+            IQueryElement attributeValue = Visit(GetElementValue(context));
+            objectElement.Add(attributeValue);
 
-            QueryTree nameTree = new QueryTree();
-            nameTree.TokenName = TokenName.NAME;
-            nameTree.TokenValue = context.NAME().GetText();
-            attributeNameTree.ProductionsList.Add(nameTree);
-            elementTree.ProductionsList.Add(attributeNameTree);
-
-            IQueryTree attributeValueTree = Visit(GetElementValue(context));
-            elementTree.ProductionsList.Add(attributeValueTree);
-
-            return elementTree;
+            return objectElement;
         }
 
         private IParseTree GetElementValue([NotNull] QueryGrammarParser.Object_initialization_elementContext context)
@@ -176,8 +154,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
             throw new SyntaxException("Attribute literal or statement");
         }
-
-            */
 
         public override IQueryElement VisitClass_delcaration([NotNull] QueryGrammarParser.Class_delcarationContext context)
         {

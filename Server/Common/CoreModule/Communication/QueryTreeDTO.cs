@@ -22,6 +22,8 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(ClassDeclaration))]
     [KnownType(typeof(AttributeDeclaration))]
     [KnownType(typeof(DropClass))]
+    [KnownType(typeof(NewObject))]
+    [KnownType(typeof(ObjectInitializationElement))]
     [KnownType(typeof(SelectStatement))]
     [KnownType(typeof(ClassName))]
     [KnownType(typeof(WhereStatement))]
