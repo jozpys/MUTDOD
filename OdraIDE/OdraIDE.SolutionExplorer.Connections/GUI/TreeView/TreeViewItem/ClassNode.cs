@@ -39,10 +39,12 @@ namespace OdraIDE.SolutionExplorer.Connections
     public class FieldNode : SharpTreeNode
     {
         private string m_className;
+        private string m_type;
 
-        public FieldNode(string className)
+        public FieldNode(string className, string type)
         {
             m_className = className;
+            m_type = type;
             ShowIcon = true;
         }
 
@@ -50,7 +52,7 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return m_className;
+                return m_className + " (" + m_type + ")";
             }
         }
 

@@ -96,9 +96,9 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 {
                                     Name = c.Value.Name,
                                     Fields =
-                                        db.Schema.Properties.Where(p => p.Value.ParentClassId == c.Value.ClassId.Id)
-                                            .Select(p => p.Value.Name)
-                                            .ToList(),
+                                        db.Schema.Properties.Values.Where(p => p.ParentClassId == c.Value.ClassId.Id)
+                                        .Select(f => new Field { Name = f.Name, Type = f.Type })
+                                        .ToList(),
                                     Methods =
                                         db.Schema.Methods.ContainsKey(c.Key)
                                             ? db.Schema.Methods[c.Key]

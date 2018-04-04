@@ -19,7 +19,14 @@ namespace MUTDOD.Common
     public class DatabaseClass
     {
         public string Name { get; set; }
-        public List<string> Fields { get; set; }
+        public List<Field> Fields { get; set; }
         public List<string> Methods { get; set; }
+    }
+
+    [Serializable]
+    public class Field
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
     }
 }
