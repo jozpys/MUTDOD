@@ -55,6 +55,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(LongType))]
     [KnownType(typeof(ShortType))]
     [KnownType(typeof(StringType))]
+    [KnownType(typeof(Name))]
     public class DTOQueryTree
     {
         [DataMember]

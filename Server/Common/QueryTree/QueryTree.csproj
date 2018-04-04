@@ -77,6 +77,7 @@
     <Compile Include="SystemOperation.cs" />
     <Compile Include="Type\AbstractValueType.cs" />
     <Compile Include="Type\ByteType.cs" />
+    <Compile Include="Type\Name.cs" />
     <Compile Include="Type\DoubleType.cs" />
     <Compile Include="Type\CharType.cs" />
     <Compile Include="Type\BoolType.cs" />

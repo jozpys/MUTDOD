@@ -297,11 +297,10 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             }
             else if (context.NAME() != null)
             {
-                //type.TokenName = TokenName.NAME;
-                //type.TokenValue = context.NAME().GetText();
+                return new Name() { ClassName = context.NAME().GetText() };
             }
 
-            return null;
+            throw new SyntaxException("Unsupported data type.");
         }
 
         
@@ -331,7 +330,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 return literal;
             }
 
-            return null;
+            throw new SyntaxException("Unsupported literal.");
         }
 
         public override IQueryElement VisitComparison_operator([NotNull] QueryGrammarParser.Comparison_operatorContext context)
@@ -361,7 +360,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 return new OperatorNotEqual();
             }
 
-            return null;
+            throw new SyntaxException("Unsupported operator.");
         }
         
     }

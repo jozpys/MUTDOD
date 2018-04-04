@@ -33,7 +33,7 @@ namespace MUTDOD.Server.Common.QueryTree
                 Name = Name,
                 PropertyId = propertyId,
                 Type = typeDao.Value,
-                IsValueType = typeDao.AdditionalValue //typeName.TokenName != TokenName.NAME
+                IsValueType = typeDao.AdditionalValue
             });
 
             if (!success)

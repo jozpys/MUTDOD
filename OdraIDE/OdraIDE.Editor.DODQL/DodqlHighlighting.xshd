@@ -23,11 +23,16 @@
 		</Span>
 
 
-		<Keywords fontWeight="bold" foreground="Red">
-			<Word>String</Word>
-			<Word>Integer</Word>
-			<Word>Boolean</Word>
-			<Word>Long</Word>
+		<Keywords fontWeight="bold" foreground="DarkGray">
+			<Word>string</Word>
+			<Word>int</Word>
+			<Word>bool</Word>
+			<Word>long</Word>
+      <Word>byte</Word>
+      <Word>char</Word>
+      <Word>float</Word>
+      <Word>double</Word>
+      <Word>short</Word>
 			<!-- ... -->
 		</Keywords>
 		
@@ -47,6 +52,7 @@
 			<Word>all</Word>
 			<Word>new</Word>
 			<Word>class</Word>
+      <Word>attribute</Word>
 			<Word>delete</Word>
 			<Word>foreach</Word>
       <Word>endforeach</Word>
