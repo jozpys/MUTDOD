@@ -212,6 +212,13 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             InterfaceDeclaration interfaceDeclaration = new InterfaceDeclaration();
             interfaceDeclaration.Name = context.NAME().GetText();
 
+            if (context.parent_type() != null)
+            {
+                ParentClasses parentClasses = (ParentClasses) Visit(context.parent_type());
+                parentClasses.InterfaceOnly = true;
+                interfaceDeclaration.Add(parentClasses);
+            }
+
             foreach (var attribute in context.attribute_dec_stm())
             {
                 IQueryElement attributeDeclaration = Visit(attribute);

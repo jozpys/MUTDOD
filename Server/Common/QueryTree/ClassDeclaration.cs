@@ -60,6 +60,10 @@ namespace MUTDOD.Server.Common.QueryTree
             if (TryGetElement(ElementType.PARENT_CLASSES, out IQueryElement parentClassesElement))
             {
                 var parentClasses = parentClassesElement.Execute(parameters);
+                if(parentClasses.Result != null)
+                {
+                    return parentClasses;
+                }
                 classDef.Parent = parentClasses.Value;
             }
 

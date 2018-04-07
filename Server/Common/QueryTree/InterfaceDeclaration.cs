@@ -58,7 +58,17 @@ namespace MUTDOD.Server.Common.QueryTree
             };
             parameters.Subquery = new QueryDTO { QueryClass = classDef };
 
-            foreach(var attr in AllElements(ElementType.ATTRIBUTE_DECLARATION))
+            if (TryGetElement(ElementType.PARENT_CLASSES, out IQueryElement parentClassesElement))
+            {
+                var parentClasses = parentClassesElement.Execute(parameters);
+                if(parentClasses.Result != null)
+                {
+                    return parentClasses;
+                }
+                classDef.Parent = parentClasses.Value;
+            }
+
+            foreach (var attr in AllElements(ElementType.ATTRIBUTE_DECLARATION))
             {
                 attr.Execute(parameters);
             }

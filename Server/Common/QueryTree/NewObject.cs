@@ -26,6 +26,17 @@ namespace MUTDOD.Server.Common.QueryTree
                 return classResult;
             }
             var objectClass = classResult.QueryClass;
+            if (objectClass.Interface)
+            {
+                return new QueryDTO
+                {
+                    Result = new DTOQueryResult()
+                    {
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Can't create object from the interface!"
+                    }
+                };
+            }
             List<Property> propeteries = parameters.Database.Schema.ClassProperties(objectClass);
 
             var oid = new Oid(Guid.NewGuid(), parameters.Database.DatabaseId.Dli);
