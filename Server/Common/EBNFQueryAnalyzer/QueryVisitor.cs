@@ -40,6 +40,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement classDeclaration = Visit(context.class_delcaration());
                 return classDeclaration;
             }
+            else if(context.interface_declaration() != null)
+            {
+                IQueryElement interfaceDeclaration = Visit(context.interface_declaration());
+                return interfaceDeclaration;
+            }
             else if(context.drop_stmt() != null)
             {
                 IQueryElement dropStatement = Visit(context.drop_stmt());
@@ -162,6 +167,12 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             IQueryElement className = Visit(context.class_name());
             classDeclaration.Add(className);
 
+            if (context.parent_type() != null)
+            {
+                IQueryElement parentClasses = Visit(context.parent_type());
+                classDeclaration.Add(parentClasses);
+            }
+
             foreach (var attribute in context.cls_attribute_dec_stm())
             {
                 IQueryElement attributeDeclaration = Visit(attribute);
@@ -171,7 +182,46 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             return classDeclaration;
         }
 
+        public override IQueryElement VisitParent_type([NotNull] QueryGrammarParser.Parent_typeContext context)
+        {
+            ParentClasses parentClasses = new ParentClasses();
+
+            foreach( var className in context.NAME())
+            {
+                ClassName parentClassName = new ClassName();
+                parentClassName.Name = className.GetText();
+                parentClasses.Add(parentClassName);
+            }
+
+            return parentClasses;
+        }
+
         public override IQueryElement VisitCls_attribute_dec_stm([NotNull] QueryGrammarParser.Cls_attribute_dec_stmContext context)
+        {
+            AttributeDeclaration attribute = new AttributeDeclaration();
+            attribute.Name = context.NAME().GetText();
+
+            IQueryElement dateType = Visit(context.dataType());
+            attribute.Add(dateType);
+
+            return attribute;
+        }
+
+        public override IQueryElement VisitInterface_declaration([NotNull] QueryGrammarParser.Interface_declarationContext context)
+        {
+            InterfaceDeclaration interfaceDeclaration = new InterfaceDeclaration();
+            interfaceDeclaration.Name = context.NAME().GetText();
+
+            foreach (var attribute in context.attribute_dec_stm())
+            {
+                IQueryElement attributeDeclaration = Visit(attribute);
+                interfaceDeclaration.Add(attributeDeclaration);
+            }
+
+            return interfaceDeclaration;
+        }
+
+        public override IQueryElement VisitAttribute_dec_stm([NotNull] QueryGrammarParser.Attribute_dec_stmContext context)
         {
             AttributeDeclaration attribute = new AttributeDeclaration();
             attribute.Name = context.NAME().GetText();

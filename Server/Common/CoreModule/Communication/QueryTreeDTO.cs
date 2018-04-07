@@ -20,6 +20,8 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(RenameDatabase))]
     [KnownType(typeof(DropDatabase))]
     [KnownType(typeof(ClassDeclaration))]
+    [KnownType(typeof(InterfaceDeclaration))]
+    [KnownType(typeof(ParentClasses))]
     [KnownType(typeof(AttributeDeclaration))]
     [KnownType(typeof(DropClass))]
     [KnownType(typeof(NewObject))]

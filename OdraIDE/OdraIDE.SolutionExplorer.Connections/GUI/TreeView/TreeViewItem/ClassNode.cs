@@ -1,5 +1,8 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using ICSharpCode.TreeView;
 using OdraIDE.Utilities;
 
@@ -10,10 +13,14 @@ namespace OdraIDE.SolutionExplorer.Connections
     public class ClassNode : SharpTreeNode
     {
         private string m_className;
+        private bool m_interface;
+        private List<string> m_parentClasses;
 
-        public ClassNode(string className)
+        public ClassNode(string className, bool isInterface, List<string> parentClasses)
         {
             m_className = className;
+            m_interface = isInterface;
+            m_parentClasses = parentClasses;
             ShowIcon = true;
         }
 
@@ -21,7 +28,16 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return m_className;
+                string visableName = m_className;
+                if (m_interface)
+                {
+                    visableName = "(I) " + visableName;
+                }
+                if(m_parentClasses.Any())
+                {
+                    visableName += " :" + String.Join(" ,", m_parentClasses);
+                }
+                return visableName;
             }
         }
 

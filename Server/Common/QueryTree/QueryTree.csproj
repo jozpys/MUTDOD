@@ -46,6 +46,7 @@
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
     <Compile Include="AttributeDeclaration.cs" />
+    <Compile Include="InterfaceDeclaration.cs" />
     <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />
     <Compile Include="ClassProperty.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="DropDatabase.cs" />
     <Compile Include="NewObject.cs" />
     <Compile Include="ObjectInitializationElement.cs" />
+    <Compile Include="ParentClasses.cs" />
     <Compile Include="RenameDatabase.cs" />
     <Compile Include="CreateDatabase.cs" />
     <Compile Include="LeftOperand.cs" />

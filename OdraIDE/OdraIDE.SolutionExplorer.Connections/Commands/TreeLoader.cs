@@ -43,7 +43,7 @@ namespace OdraIDE.SolutionExplorer.Connections.Commands
                 if (database.Classes != null)
                     foreach (var @class in database.Classes.OrderBy(c => c.Name))
                     {
-                        var cn = new ClassNode(@class.Name);
+                        var cn = new ClassNode(@class.Name, @class.Interface, @class.ParentClasses);
                         foreach (var f in @class.Fields.OrderBy(f => f.Name))
                         {
                             var fn = new FieldNode(f.Name, f.Type);

@@ -14,6 +14,8 @@ namespace MUTDOD.Common.ModuleBase.Communication
         RENAME_DATABASE,
         DROP_DATABASE,
         CLASS_DECLARATION,
+        INTERFACE_DECLARATION,
+        PARENT_CLASSES,
         ATTRIBUTE_DECLARATION,
         DROP_CLASS,
         DROP_INTERFACE,

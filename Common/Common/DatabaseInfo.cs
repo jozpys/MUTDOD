@@ -19,6 +19,8 @@ namespace MUTDOD.Common
     public class DatabaseClass
     {
         public string Name { get; set; }
+        public bool Interface { get; set; }
+        public List<string> ParentClasses { get; set; }
         public List<Field> Fields { get; set; }
         public List<string> Methods { get; set; }
     }

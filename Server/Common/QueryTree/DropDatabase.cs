@@ -42,7 +42,8 @@ namespace MUTDOD.Server.Common.QueryTree
                                new DatabaseClass
                                {
                                    Name = c.Value.Name,
-                                   Fields = d.Schema.Properties.Values.Where(p => p.ParentClassId == c.Value.ClassId.Id).Select(f => new Field { Name = f.Name, Type = f.Type }).ToList(),
+                                   Interface = c.Value.Interface,
+                                   Fields = d.Schema.ClassProperties(c.Value).Select(f => new Field { Name = f.Name, Type = f.Type }).ToList(),
                                    Methods = d.Schema.Methods.ContainsKey(c.Key) ? d.Schema.Methods[c.Key] : new List<string>()
                                }).ToList()
                 }).ToList();

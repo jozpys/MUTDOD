@@ -50,7 +50,7 @@ object_initialization_attributes_list: object_initialization_element (COMMA obje
 object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
 
 
-interface_declaration: K_INTERFACE K_TEMPORAL? NAME (COLON NAME)* O_CURLY attribute_dec_stm* method_params* relation_dec_stm* C_CURLY;
+interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_params* relation_dec_stm* C_CURLY;
 
 attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
 
@@ -63,7 +63,7 @@ method_param: (K_IN|K_OUT) dataType NAME;
 relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
 
 
-class_delcaration: K_CLASS classType? K_TEMPORAL? cardinalyty? class_name (COLON NAME)* O_CURLY cls_attribute_dec_stm* cls_method_dec_stm* cls_relation_dec_stm* C_CURLY;
+class_delcaration: K_CLASS classType? K_TEMPORAL? cardinalyty? class_name parent_type? O_CURLY cls_attribute_dec_stm* cls_method_dec_stm* cls_relation_dec_stm* C_CURLY;
 
 cls_attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
 
@@ -74,6 +74,8 @@ method_body: O_CURLY operation* (K_RETURN operation)? C_CURLY;
 cls_relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
 
 drop_stmt: K_DROP (K_CLASS|K_INTERFACE) class_name;
+
+parent_type: COLON NAME (COMMA NAME)*;
 
 
 operation: (math_operation | assign_operation) SEMICOLON;

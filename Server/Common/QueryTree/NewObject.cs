@@ -26,8 +26,7 @@ namespace MUTDOD.Server.Common.QueryTree
                 return classResult;
             }
             var objectClass = classResult.QueryClass;
-            List<Property> propeteries = parameters.Database.Schema.Properties.Select(p => p.Value)
-                .Where(p => p.ParentClassId == objectClass.ClassId.Id).ToList();
+            List<Property> propeteries = parameters.Database.Schema.ClassProperties(objectClass);
 
             var oid = new Oid(Guid.NewGuid(), parameters.Database.DatabaseId.Dli);
             var toStore = new Storable { Oid = oid };

@@ -52,6 +52,7 @@
 			<Word>all</Word>
 			<Word>new</Word>
 			<Word>class</Word>
+      <Word>interface</Word>
       <Word>attribute</Word>
 			<Word>delete</Word>
 			<Word>foreach</Word>

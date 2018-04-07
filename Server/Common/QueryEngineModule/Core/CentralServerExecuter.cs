@@ -95,6 +95,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 Classes = db.Schema.Classes.Select(c => new DatabaseClass
                                 {
                                     Name = c.Value.Name,
+                                    Interface = c.Value.Interface,
                                     Fields =
                                         db.Schema.Properties.Values.Where(p => p.ParentClassId == c.Value.ClassId.Id)
                                         .Select(f => new Field { Name = f.Name, Type = f.Type })
