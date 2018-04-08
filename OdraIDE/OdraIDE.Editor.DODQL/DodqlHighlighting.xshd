@@ -54,6 +54,8 @@
 			<Word>class</Word>
       <Word>interface</Word>
       <Word>attribute</Word>
+      <Word>alter</Word>
+      <Word>add</Word>
 			<Word>delete</Word>
 			<Word>foreach</Word>
       <Word>endforeach</Word>

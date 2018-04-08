@@ -70,7 +70,11 @@ namespace MUTDOD.Server.Common.QueryTree
 
             foreach (var attr in AllElements(ElementType.ATTRIBUTE_DECLARATION))
             {
-                attr.Execute(parameters);
+                var attributeResult = attr.Execute(parameters);
+                if (attributeResult.Result != null)
+                {
+                    return attributeResult;
+                }
             }
 
             /*

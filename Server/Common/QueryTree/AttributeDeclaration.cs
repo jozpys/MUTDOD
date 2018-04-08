@@ -27,14 +27,17 @@ namespace MUTDOD.Server.Common.QueryTree
                 Name = Name,
                 ParentClassId = parameters.Subquery.QueryClass.ClassId.Id
             };
-            Boolean success = parameters.Database.Schema.Properties.TryAdd(propertyId, new Property
+
+            var property = new Property
             {
                 ParentClassId = parameters.Subquery.QueryClass.ClassId.Id,
                 Name = Name,
                 PropertyId = propertyId,
                 Type = typeDao.Value,
                 IsValueType = typeDao.AdditionalValue
-            });
+            };
+
+            Boolean success = parameters.Database.Schema.Properties.TryAdd(propertyId, property);
 
             if (!success)
             {
@@ -46,12 +49,7 @@ namespace MUTDOD.Server.Common.QueryTree
                 return new QueryDTO() { Result = errorMessage };
             }
 
-            var result = new DTOQueryResult()
-            {
-                QueryResultType = ResultType.StringResult,
-                StringOutput = "New attribute: " + Name + " created."
-            };
-            return new QueryDTO() { Result = result };
+            return new QueryDTO() { Value = property };
         }
     }
 }

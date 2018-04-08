@@ -37,13 +37,23 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             }
             else if(context.class_delcaration() != null)
             {
-                IQueryElement classDeclaration = Visit(context.class_delcaration());
-                return classDeclaration;
+                IQueryElement interfaceDeclaration = Visit(context.class_delcaration());
+                return interfaceDeclaration;
             }
             else if(context.interface_declaration() != null)
             {
                 IQueryElement interfaceDeclaration = Visit(context.interface_declaration());
                 return interfaceDeclaration;
+            }
+            else if(context.alter_class() != null)
+            {
+                IQueryElement alterClass = Visit(context.alter_class());
+                return alterClass;
+            }
+            else if(context.alter_interface() != null)
+            {
+                IQueryElement alterInterface = Visit(context.alter_interface());
+                return alterInterface;
             }
             else if(context.drop_stmt() != null)
             {
@@ -237,6 +247,58 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             attribute.Add(dateType);
 
             return attribute;
+        }
+
+        public override IQueryElement VisitAlter_class([NotNull] QueryGrammarParser.Alter_classContext context)
+        {
+            AlterClass alterClass = new AlterClass();
+
+            IQueryElement className = Visit(context.class_name());
+            alterClass.Add(className);
+
+            foreach (var addAttribute in context.add_cls_attribute_dec_stm())
+            {
+                IQueryElement attributeDeclaration = Visit(addAttribute.cls_attribute_dec_stm());
+                alterClass.Add(attributeDeclaration);
+            }
+
+            foreach (var dropAttribute in context.drop_cls_attribute_dec_stm())
+            {
+                IQueryElement attributeDeclaration = Visit(dropAttribute);
+                alterClass.Add(attributeDeclaration);
+            }
+
+            return alterClass;
+        }
+
+        public override IQueryElement VisitAlter_interface([NotNull] QueryGrammarParser.Alter_interfaceContext context)
+        {
+            AlterInterface alterInterface = new AlterInterface();
+
+            IQueryElement className = Visit(context.class_name());
+            alterInterface.Add(className);
+
+            foreach (var addAttribute in context.add_attribute_dec_stm())
+            {
+                IQueryElement attributeDeclaration = Visit(addAttribute.attribute_dec_stm());
+                alterInterface.Add(attributeDeclaration);
+            }
+
+            foreach (var dropAttribute in context.drop_attribute_dec_stm())
+            {
+                IQueryElement attributeDeclaration = Visit(dropAttribute);
+                alterInterface.Add(attributeDeclaration);
+            }
+
+            return alterInterface;
+        }
+
+        public override IQueryElement VisitDrop_attribute_dec_stm([NotNull] QueryGrammarParser.Drop_attribute_dec_stmContext context)
+        {
+            AttributeDrop attributeDrop = new AttributeDrop();
+            attributeDrop.Name = context.NAME().GetText();
+
+            return attributeDrop;
         }
 
         public override IQueryElement VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)

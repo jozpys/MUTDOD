@@ -45,7 +45,10 @@
     <Compile Include="AbstractComposite.cs" />
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
+    <Compile Include="AlterClass.cs" />
+    <Compile Include="DropAttribute.cs" />
     <Compile Include="AttributeDeclaration.cs" />
+    <Compile Include="AlterInterface.cs" />
     <Compile Include="InterfaceDeclaration.cs" />
     <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />

@@ -12,9 +12,10 @@ using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 namespace MUTDOD.Server.Common.QueryTree
 {
     [DataContract]
-    public class ClassDeclaration : AbstractComposite
+    public class AlterInterface : AbstractComposite
     {
-        public ClassDeclaration() : base(ElementType.CLASS_DECLARATION) { }
+        public AlterInterface() : base(ElementType.ALTER_INTERFACE) { }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             if (parameters.Database == null)
@@ -25,54 +26,45 @@ namespace MUTDOD.Server.Common.QueryTree
                     NextResult = null,
                     QueryResults = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Error ocured while class creation"
+                    StringOutput = "Error ocured while interface creation"
                 };
                 return new QueryDTO() { Result = errorResult };
             }
 
             IQueryElement classNameElement = Element(ElementType.CLASS_NAME);
             QueryDTO classResult = classNameElement.Execute(parameters);
-            String newClassName = classResult.QueryClass.Name;
-            if (classResult.Result == null)
+            if (classResult.Result != null || !classResult.QueryClass.Interface )
             {
-                var classExistsResult = new DTOQueryResult()
+                var noInterfaceResult = new DTOQueryResult()
                 {
                     NextResult = null,
                     QueryResults = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Class or interface with name: " + newClassName + " arleady exists!"
+                    StringOutput = "No interface with name: " + classResult.QueryClass.Name
                 };
-                return new QueryDTO() { Result = classExistsResult };
+                return new QueryDTO() { Result = noInterfaceResult };
             }
 
-            var classId = new ClassId
-            {
-                Name = newClassName,
-                Id = (parameters.Database.Schema.Classes.Max(d => (long?)d.Key.Id) ?? 0) + 1
-            };
-            var classDef = new Class
-            {
-                ClassId = classId,
-                Name = newClassName
-            };
+            var classDef = classResult.QueryClass;
+            var classId = classDef.ClassId;
+            var interfaceName = classDef.Name;
             parameters.Subquery = new QueryDTO { QueryClass = classDef };
 
-            if (TryGetElement(ElementType.PARENT_CLASSES, out IQueryElement parentClassesElement))
-            {
-                var parentClasses = parentClassesElement.Execute(parameters);
-                if(parentClasses.Result != null)
-                {
-                    return parentClasses;
-                }
-                classDef.Parent = parentClasses.Value;
-            }
-
-            foreach (IQueryElement attr in AllElements(ElementType.ATTRIBUTE_DECLARATION))
+            foreach (var attr in AllElements(ElementType.ATTRIBUTE_DECLARATION))
             {
                 var attributeResult = attr.Execute(parameters);
-                if(attributeResult.Result != null)
+                if (attributeResult.Result != null)
                 {
                     return attributeResult;
+                }
+            }
+
+            foreach (var attr in AllElements(ElementType.DROP_ATTRIBUTE))
+            {
+                var dropAttributeResult = attr.Execute(parameters);
+                if (dropAttributeResult.Result != null)
+                {
+                    return dropAttributeResult;
                 }
             }
 
@@ -110,22 +102,12 @@ namespace MUTDOD.Server.Common.QueryTree
                 });
             }
             */
-            if (!parameters.Database.Schema.Classes.TryAdd(classId, classDef))
-            {
-                parameters.Log("Could not define new class", MessageLevel.Error);
-                var errorResult = new DTOQueryResult()
-                {
-                    QueryResultType = ResultType.StringResult,
-                    StringOutput = "Error ocured while class creation"
-                };
-                return new QueryDTO { Result = errorResult };
-            }
             parameters.Storage.SaveSchema(parameters.Database.Schema);
-            parameters.Log("Defined new class: " + newClassName, MessageLevel.QueryExecution);
+            parameters.Log("Altered interface: " + interfaceName, MessageLevel.QueryExecution);
             var result = new DTOQueryResult()
             {
                 QueryResultType = ResultType.StringResult,
-                StringOutput = "New class: " + newClassName + " created."
+                StringOutput = "Alter interface: " + interfaceName + " complited."
             };
             return new QueryDTO() { Result = result };
         }

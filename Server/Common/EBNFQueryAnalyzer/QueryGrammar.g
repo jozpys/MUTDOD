@@ -7,6 +7,8 @@ statement: PARAM system_operation
 		 | new_object
 		 | interface_declaration
 		 | class_delcaration
+		 | alter_interface
+		 | alter_class
 		 | drop_stmt
 		 ;
 
@@ -50,7 +52,7 @@ object_initialization_attributes_list: object_initialization_element (COMMA obje
 object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
 
 
-interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_params* relation_dec_stm* C_CURLY;
+interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_dec_stm* relation_dec_stm* C_CURLY;
 
 attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
 
@@ -73,9 +75,42 @@ method_body: O_CURLY operation* (K_RETURN operation)? C_CURLY;
 
 cls_relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
 
+parent_type: COLON NAME (COMMA NAME)*;
+
+
+alter_interface: K_ALTER K_INTERFACE class_name O_CURLY (add_attribute_dec_stm | drop_attribute_dec_stm)* (add_method_dec_stm | drop_method_dec_stm)* (add_relation_dec_stm | drop_relation_dec_stm)* C_CURLY;
+
+add_attribute_dec_stm: K_ADD attribute_dec_stm;
+
+drop_attribute_dec_stm: K_DROP K_ATTRIBUTE NAME SEMICOLON;
+
+add_method_dec_stm: K_ADD method_dec_stm;
+
+drop_method_dec_stm: K_DROP K_METHOD NAME method_params SEMICOLON;
+
+add_relation_dec_stm: K_ADD relation_dec_stm;
+
+drop_relation_dec_stm: K_RELATION cardinalyty? NAME SEMICOLON;
+
+
+alter_class: K_ALTER K_CLASS class_name O_CURLY (add_cls_attribute_dec_stm | drop_cls_attribute_dec_stm)* (add_cls_method_dec_stm | drop_cls_method_dec_stm)* (add_cls_relation_dec_stm | drop_cls_relation_dec_stm )* C_CURLY;
+
+add_cls_attribute_dec_stm: K_ADD cls_attribute_dec_stm;
+
+drop_cls_attribute_dec_stm: K_DROP K_ATTRIBUTE NAME SEMICOLON;
+
+add_cls_method_dec_stm: K_ADD cls_method_dec_stm;
+
+drop_cls_method_dec_stm: K_DROP K_METHOD NAME method_params SEMICOLON;
+
+add_cls_relation_dec_stm: K_ADD cls_relation_dec_stm;
+
+drop_cls_relation_dec_stm: K_RELATION cardinalyty? NAME SEMICOLON;
+
+
+
 drop_stmt: K_DROP (K_CLASS|K_INTERFACE) class_name;
 
-parent_type: COLON NAME (COMMA NAME)*;
 
 
 operation: (math_operation | assign_operation) SEMICOLON;
@@ -143,6 +178,7 @@ INVARIANT_CLS:		'INVARIANT'|'invariant';
 
 K_ADD:		'ADD'|'add';
 K_ALL:		'ALL'|'all';
+K_ALTER:	'ALTER'|'alter';
 K_ARRAY:	'ARRAY'|'array';
 K_AS:		'AS'|'as';
 K_ASC:		'ASC'|'acs';
