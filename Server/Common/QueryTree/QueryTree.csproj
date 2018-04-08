@@ -49,6 +49,7 @@
     <Compile Include="DropAttribute.cs" />
     <Compile Include="AttributeDeclaration.cs" />
     <Compile Include="AlterInterface.cs" />
+    <Compile Include="DropInterface.cs" />
     <Compile Include="InterfaceDeclaration.cs" />
     <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />

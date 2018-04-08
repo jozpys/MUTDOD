@@ -303,11 +303,25 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public override IQueryElement VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)
         {
-            DropClass dropClass = new DropClass();
 
-            IQueryElement className = Visit(context.class_name());
-            dropClass.Add(className);
-            return dropClass;
+            if (context.K_CLASS() != null)
+            {
+                DropClass dropClass = new DropClass();
+
+                IQueryElement className = Visit(context.class_name());
+                dropClass.Add(className);
+                return dropClass;
+            }
+            else if(context.K_INTERFACE() != null)
+            {
+                DropInterface dropInterface = new DropInterface();
+
+                IQueryElement className = Visit(context.class_name());
+                dropInterface.Add(className);
+                return dropInterface;
+            }
+
+            throw new SyntaxException("Unsupported object type.");
         }
 
         public override IQueryElement VisitWhere_clause([NotNull] QueryGrammarParser.Where_clauseContext context)

@@ -12,9 +12,9 @@ using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 namespace MUTDOD.Server.Common.QueryTree
 {
     [DataContract]
-    public class DropClass : AbstractComposite
+    public class DropInterface : AbstractComposite
     {
-        public DropClass() : base(ElementType.DROP_CLASS) { }
+        public DropInterface() : base(ElementType.DROP_INTERFACE) { }
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
@@ -35,14 +35,14 @@ namespace MUTDOD.Server.Common.QueryTree
 
             IQueryElement classNameElement = Element(ElementType.CLASS_NAME);
             QueryDTO classResult = classNameElement.Execute(parameters);
-            if (classResult.Result != null || classResult.QueryClass.Interface)
+            if (classResult.Result != null || !classResult.QueryClass.Interface)
             {
                 var noInterfaceResult = new DTOQueryResult()
                 {
                     NextResult = null,
                     QueryResults = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "No class with name: " + classResult.QueryClass.Name
+                    StringOutput = "No interface with name: " + classResult.QueryClass.Name
                 };
                 return new QueryDTO() { Result = noInterfaceResult };
             }
@@ -57,14 +57,14 @@ namespace MUTDOD.Server.Common.QueryTree
                     NextResult = null,
                     QueryResults = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Can't drop class with childs: " + String.Join(", ", childClasses.Select( c => c.Name)) + ". Drop childs first."
+                    StringOutput = "Can't drop interface with childs: " + String.Join(", ", childClasses.Select( c => c.Name)) + ". Drop childs first."
                 };
                 return new QueryDTO() { Result = noInterfaceResult };
             }
 
             if (!parameters.Database.Schema.Classes.TryRemove(classToDrop.ClassId, out Class dropedClass))
             {
-                parameters.Log("Could not drop class", MessageLevel.Error);
+                parameters.Log("Could not drop interface", MessageLevel.Error);
                 return new QueryDTO()
                 {
                     Result = new DTOQueryResult()
@@ -72,13 +72,13 @@ namespace MUTDOD.Server.Common.QueryTree
                         NextResult = null,
                         QueryResults = null,
                         QueryResultType = ResultType.StringResult,
-                        StringOutput = "Error ocured while class droping"
+                        StringOutput = "Error ocured while interface droping"
                     }
                 };
             }
             parameters.Storage.SaveSchema(parameters.Database.Schema);
 
-            parameters.Log("Droped class: " + dropedClass.Name, MessageLevel.QueryExecution);
+            parameters.Log("Droped interface: " + dropedClass.Name, MessageLevel.QueryExecution);
             return new QueryDTO()
             {
                 Result = new DTOQueryResult()
@@ -86,7 +86,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     NextResult = null,
                     QueryResults = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Class:" + dropedClass.Name + " droped."
+                    StringOutput = "Interface:" + dropedClass.Name + " droped."
                 }
             };
         }

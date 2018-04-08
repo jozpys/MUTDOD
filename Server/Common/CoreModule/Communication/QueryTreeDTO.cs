@@ -27,6 +27,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(AlterInterface))]
     [KnownType(typeof(AttributeDrop))]
     [KnownType(typeof(DropClass))]
+    [KnownType(typeof(DropInterface))]
     [KnownType(typeof(NewObject))]
     [KnownType(typeof(ObjectInitializationElement))]
     [KnownType(typeof(SelectStatement))]
