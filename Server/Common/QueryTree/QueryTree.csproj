@@ -57,6 +57,7 @@
     <Compile Include="DropClass.cs" />
     <Compile Include="DropDatabase.cs" />
     <Compile Include="ObjectUpdateElement.cs" />
+    <Compile Include="DeleteObject.cs" />
     <Compile Include="UpdateObject.cs" />
     <Compile Include="NewObject.cs" />
     <Compile Include="ObjectInitializationElement.cs" />

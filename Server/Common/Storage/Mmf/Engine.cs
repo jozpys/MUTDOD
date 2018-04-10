@@ -56,6 +56,20 @@ namespace MUTDOD.Server.Common.Storage.Strategies.Mmf
             }
         }
 
+        public void Remove(Did did, SerializedStorable storable)
+        {
+            _storages[did].Remove(storable.Oid);
+        }
+
+        public void Remove(Did did, List<SerializedStorable> storables)
+        {
+            var database = _storages[did];
+            foreach (var serializedStorable in storables)
+            {
+                database.Remove(serializedStorable.Oid);
+            }
+        }
+
         public byte[] Read(Did did, Oid oid)
         {
             if (!_storages[did].ContainsKey(oid))

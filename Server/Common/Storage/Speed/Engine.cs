@@ -52,6 +52,20 @@ namespace MUTDOD.Server.Common.Storage.Strategies.Speed
             }
         }
 
+        public void Remove(Did did, SerializedStorable storable)
+        {
+            _storages[did].Remove(storable.Oid);
+        }
+
+        public void Remove(Did did, List<SerializedStorable> storables)
+        {
+            var database = _storages[did];
+            foreach (var serializedStorable in storables)
+            {
+                database.Remove(serializedStorable.Oid);
+            }
+        }
+
         public Dictionary<Oid,byte[]> ReadAll(Did did)
         {
             return _storages[did].ToDictionary(pair => pair.Key,pair => pair.Value);

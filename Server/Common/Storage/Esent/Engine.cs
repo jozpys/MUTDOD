@@ -52,6 +52,23 @@ namespace MUTDOD.Server.Common.Storage.Strategies.Esent
             _storages[did].CommitTransaction();
         }
 
+        public void Remove(Did did, SerializedStorable storable)
+        {
+            _storages[did].BeginTransaction();
+            _storages[did].Delete(storable.Oid);
+            _storages[did].CommitTransaction();
+        }
+
+        public void Remove(Did did, List<SerializedStorable> storables)
+        {
+            _storages[did].BeginTransaction();
+            foreach (var serializedStorable in storables)
+            {
+                _storages[did].Delete(serializedStorable.Oid);
+            }
+            _storages[did].CommitTransaction();
+        }
+
 
         public byte[] Read(Did did, Oid oid)
         {

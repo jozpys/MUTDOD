@@ -14,6 +14,9 @@ namespace MUTDOD.Common.ModuleBase.Storage.Strategy
         void Save(Did did, SerializedStorable storable);
         void Save(Did did, List<SerializedStorable> storables);
 
+        void Remove(Did did, SerializedStorable storable);
+        void Remove(Did did, List<SerializedStorable> storables);
+
         byte[] Read(Did did, Oid oid);
         Dictionary<Oid, byte[]> ReadAll(Did did);
     }

@@ -32,6 +32,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(ObjectInitializationElement))]
     [KnownType(typeof(UpdateObject))]
     [KnownType(typeof(ObjectUpdateElement))]
+    [KnownType(typeof(DeleteObject))]
     [KnownType(typeof(SelectStatement))]
     [KnownType(typeof(ClassName))]
     [KnownType(typeof(WhereStatement))]

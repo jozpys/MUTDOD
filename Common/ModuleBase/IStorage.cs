@@ -10,6 +10,8 @@ namespace MUTDOD.Common.ModuleBase
     {
         Oid Save(Did dbId, IStorable toStore);
         IEnumerable<Oid> Save(Did dbId, IEnumerable<IStorable> toStore);
+        Oid Delete(Did dbId, IStorable toStore);
+        IEnumerable<Oid> Delete(Did dbId, IEnumerable<IStorable> toStore);
         IStorable Get(Did dbId, Oid oid);
         IEnumerable<IStorable> GetAll(Did dbId);
         IStorable[] Find(Did dbId, ISearchCriteria searchCriteria);

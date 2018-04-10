@@ -90,7 +90,19 @@ namespace MUTDOD.Server.Common.Storage
             return oids;
         }
 
-        public IEnumerable<Oid> Remove(Did dbId, IEnumerable<IStorable> toStore)
+        public Oid Delete(Did dbId, IStorable toStore)
+        {
+            var serialized = _serializer.Serialize(toStore);
+
+            foreach (var serializedStorable in serialized)
+            {
+                _engine.Remove(dbId, serializedStorable);
+            }
+
+            return serialized.Count == 0 ? null : serialized[0].Oid;
+        }
+
+        public IEnumerable<Oid> Delete(Did dbId, IEnumerable<IStorable> toStore)
         {
             List<SerializedStorable> storables = new List<SerializedStorable>();
             var oids = new List<Oid>();
@@ -100,7 +112,7 @@ namespace MUTDOD.Server.Common.Storage
                 oids.Add(tmp[0].Oid);
                 storables.AddRange(tmp);
             }
-            _engine.Save(dbId, storables);
+            _engine.Remove(dbId, storables);
             return oids;
         }
 

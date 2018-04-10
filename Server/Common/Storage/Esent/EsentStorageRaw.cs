@@ -132,6 +132,13 @@ namespace MUTDOD.Server.Common.Storage.Strategies.Esent
             //}
         }
 
+        public void Delete(Oid oid)
+        {
+            SeekToKey(oid);
+
+            Api.JetDelete(_sesid, _tableid);
+        }
+
         public byte[] Read(Oid oid)
         {
             return ReadRecord(oid);

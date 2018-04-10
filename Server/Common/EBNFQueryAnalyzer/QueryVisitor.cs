@@ -70,6 +70,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement updateObject = Visit(context.update_object());
                 return updateObject;
             }
+            else if(context.delete_object() != null)
+            {
+                IQueryElement deleteObject = Visit(context.delete_object());
+                return deleteObject;
+            }
 
 
             return null;
@@ -200,6 +205,16 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             objectElement.Add(attributeValue);
 
             return objectElement;
+        }
+
+        public override IQueryElement VisitDelete_object([NotNull] QueryGrammarParser.Delete_objectContext context)
+        {
+            DeleteObject deleteObject = new DeleteObject();
+
+            IQueryElement selectObjects = Visit(context.get_stmt());
+            deleteObject.Add(selectObjects);
+
+            return deleteObject;
         }
 
         private IParseTree GetElementValue([NotNull] QueryGrammarParser.Object_update_elementContext context)

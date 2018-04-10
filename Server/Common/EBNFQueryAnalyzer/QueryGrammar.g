@@ -6,6 +6,7 @@ statement: PARAM system_operation
 		 | get_stmt
 		 | new_object
 		 | update_object
+		 | delete_object
 		 | interface_declaration
 		 | class_delcaration
 		 | alter_interface
@@ -58,6 +59,9 @@ update_object: K_UPDATE O_PAREN get_stmt C_PAREN K_SET O_CURLY object_update_att
 object_update_attributes_list: object_update_element (COMMA object_update_element)* ;
 
 object_update_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
+
+
+delete_object: K_DELETE O_PAREN get_stmt C_PAREN;
 
 
 interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_dec_stm* relation_dec_stm* C_CURLY;
