@@ -41,14 +41,14 @@ namespace MUTDOD.Server.Common.Storage.Strategies.Speed
 
         public void Save(Did did, SerializedStorable storable)
         {
-            _storages[did].Add(storable.Oid, storable.Data);
+            _storages[did].AddOrUpdate(storable.Oid, storable.Data);
         }
 
         public void Save(Did did, List<SerializedStorable> storables)
         {
             foreach (var serializedStorable in storables)
             {
-                _storages[did].Add(serializedStorable.Oid, serializedStorable.Data);
+                _storages[did].AddOrUpdate(serializedStorable.Oid, serializedStorable.Data);
             }
         }
 

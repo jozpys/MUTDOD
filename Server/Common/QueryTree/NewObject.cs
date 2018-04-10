@@ -53,14 +53,14 @@ namespace MUTDOD.Server.Common.QueryTree
             }
 
             parameters.Storage.Save(parameters.Database.DatabaseId, toStore);
-            parameters.Log("new object saved with id: " + oid, MessageLevel.QueryExecution);
+            parameters.Log("New object saved with id: " + oid, MessageLevel.QueryExecution);
             return new QueryDTO()
             {
                 Result = new DTOQueryResult
                 {
                     NextResult = null,
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "new object saved with id: " + oid
+                    StringOutput = "New object saved with id: " + oid
                 }
             };
         }

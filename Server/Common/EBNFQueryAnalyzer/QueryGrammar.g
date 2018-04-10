@@ -5,6 +5,7 @@ start: statement SEMICOLON;
 statement: PARAM system_operation
 		 | get_stmt
 		 | new_object
+		 | update_object
 		 | interface_declaration
 		 | class_delcaration
 		 | alter_interface
@@ -50,6 +51,13 @@ new_object: K_NEW class_name O_CURLY object_initialization_attributes_list C_CUR
 object_initialization_attributes_list: object_initialization_element (COMMA object_initialization_element)* ;
 
 object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
+
+
+update_object: K_UPDATE O_PAREN get_stmt C_PAREN K_SET O_CURLY object_update_attributes_list C_CURLY;
+
+object_update_attributes_list: object_update_element (COMMA object_update_element)* ;
+
+object_update_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
 
 
 interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_dec_stm* relation_dec_stm* C_CURLY;

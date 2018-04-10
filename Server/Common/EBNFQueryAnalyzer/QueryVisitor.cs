@@ -65,6 +65,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement newObject = Visit(context.new_object());
                 return newObject;
             }
+            else if (context.update_object() != null)
+            {
+                IQueryElement updateObject = Visit(context.update_object());
+                return updateObject;
+            }
 
 
             return null;
@@ -163,6 +168,47 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 return context.literal();
             }
             else if(context.get_stmt() != null)
+            {
+                return context.get_stmt();
+            }
+
+            throw new SyntaxException("Attribute literal or statement");
+        }
+
+        public override IQueryElement VisitUpdate_object([NotNull] QueryGrammarParser.Update_objectContext context)
+        {
+            UpdateObject updateObject = new UpdateObject();
+
+            IQueryElement selectObjects = Visit(context.get_stmt());
+            updateObject.Add(selectObjects);
+
+            foreach (var element in context.object_update_attributes_list().object_update_element())
+            {
+                IQueryElement objectElement = Visit(element);
+                updateObject.Add(objectElement);
+            }
+
+            return updateObject;
+        }
+
+        public override IQueryElement VisitObject_update_element([NotNull] QueryGrammarParser.Object_update_elementContext context)
+        {
+            ObjectUpdateElement objectElement = new ObjectUpdateElement();
+            objectElement.FieldName = context.NAME().GetText();
+
+            IQueryElement attributeValue = Visit(GetElementValue(context));
+            objectElement.Add(attributeValue);
+
+            return objectElement;
+        }
+
+        private IParseTree GetElementValue([NotNull] QueryGrammarParser.Object_update_elementContext context)
+        {
+            if (context.literal() != null)
+            {
+                return context.literal();
+            }
+            else if (context.get_stmt() != null)
             {
                 return context.get_stmt();
             }

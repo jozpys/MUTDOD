@@ -32,8 +32,9 @@ namespace MUTDOD.Server.Common.QueryTree
                 return classResult;
             }
             var classToGet = classResult.QueryClass;
+            var classParameter = parameters.Database.Schema.ClassProperties(classToGet);
             var objs = parameters.Storage.GetAll(parameters.Database.DatabaseId);
-            objs = objs.Where(s => s.Properties.All(p => p.Key.ParentClassId == classToGet.ClassId.Id));
+            objs = objs.Where(s => s.Properties.All(p => classParameter.Any(cp => cp.PropertyId.Id == p.Key.PropertyId.Id)));
             var selectDto = new QueryDTO { QueryClass = classToGet, QueryObjects = objs };
 
             if (TryGetElement(ElementType.WHERE, out IQueryElement searchCriteria))
@@ -55,6 +56,8 @@ namespace MUTDOD.Server.Common.QueryTree
                     StringOutput = ToXml(objs, classToGet).OuterXml
                 };
                 selectDto.Result = derefResult;
+                selectDto.QueryClass = classToGet;
+                selectDto.QueryObjects = objs;
                 return selectDto;
             }
 
@@ -65,6 +68,8 @@ namespace MUTDOD.Server.Common.QueryTree
                 QueryResults = objs.Select(o => o.Oid).ToList()
             };
             selectDto.Result = getDto;
+            selectDto.QueryClass = classToGet;
+            selectDto.QueryObjects = objs;
             return selectDto;
         }
 
