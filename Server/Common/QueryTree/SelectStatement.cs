@@ -36,16 +36,25 @@ namespace MUTDOD.Server.Common.QueryTree
             var objs = parameters.Storage.GetAll(parameters.Database.DatabaseId);
             objs = objs.Where(s => s.Properties.All(p => classParameter.Any(cp => cp.PropertyId.Id == p.Key.PropertyId.Id)));
             var selectDto = new QueryDTO { QueryClass = classToGet, QueryObjects = objs };
+            parameters.Subquery = selectDto;
 
             if (TryGetElement(ElementType.WHERE, out IQueryElement searchCriteria))
             {
-                parameters.Subquery = selectDto;
                 QueryDTO whereDto = searchCriteria.Execute(parameters);
                 if(whereDto.Result?.QueryResultType == ResultType.StringResult)
                 {
                     return whereDto;
                 }
                 objs = whereDto.QueryObjects;
+            }
+            if(TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement property))
+            {
+                var propertyValueDto = property.Execute(parameters);
+                if (propertyValueDto.Result?.QueryResultType == ResultType.StringResult)
+                {
+                    return propertyValueDto;
+                }
+                objs = propertyValueDto.QueryObjects;
             }
 
             if (Deref) {

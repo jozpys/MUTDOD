@@ -21,8 +21,8 @@ namespace MUTDOD.Server.Common.QueryTree
             IQueryElement valueElement = SingleElement();
             Func<IStorable, bool> expression = delegate (IStorable databaseObject)
             {
-                QueryDTO subquery = new QueryDTO { QueryObjects = new List<IStorable> { databaseObject } };
-                QueryParameters singleParameter = new QueryParameters { Subquery = subquery };
+                QueryDTO subquery = new QueryDTO { QueryClass=parameters.Subquery.QueryClass, QueryObjects = new List<IStorable> { databaseObject } };
+                QueryParameters singleParameter = new QueryParameters { Database = parameters.Database, Storage = parameters.Storage, Subquery = subquery };
                 return valueElement.Execute(singleParameter).Value == null;
             };
 

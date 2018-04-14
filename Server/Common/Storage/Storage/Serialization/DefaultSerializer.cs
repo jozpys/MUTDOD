@@ -35,13 +35,9 @@ namespace MUTDOD.Server.Common.Storage.Serialization
             var ms = new MemoryStream();
             foreach (var property in objectToStore.Properties)
             {
-
-                if (property.Key.IsValueType)
-                {
-                    var propertyValue = SerializeValueType(property.Key, property.Value);
-                    var propertyFullData = GetPreparedPropertyData(property.Key, propertyValue);
-                    ms.Write(propertyFullData, 0, propertyFullData.Length);
-                }
+                var propertyValue = SerializeValueType(property.Key, property.Value);
+                var propertyFullData = GetPreparedPropertyData(property.Key, propertyValue);
+                ms.Write(propertyFullData, 0, propertyFullData.Length);
 
             }
             list.Add(new SerializedStorable { Oid = objectToStore.Oid, Data = ms.ToArray() });
@@ -90,10 +86,7 @@ namespace MUTDOD.Server.Common.Storage.Serialization
                 position += _longSize + _intSize + length;
 
                 var property = _metadata.Databases[dbId].Schema.Properties.Single(p => p.Key.Id == id).Value;
-                if (property.IsValueType)
-                {
-                    storable.Properties.Add(property, DeserializeValueType(property,data)); 
-                }
+                storable.Properties.Add(property, DeserializeValueType(property,data)); 
             }
 
             return storable;

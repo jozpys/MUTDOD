@@ -12,7 +12,7 @@ using MUTDOD.Common.Types;
 namespace MUTDOD.Server.Common.QueryTree
 {
     [DataContract]
-    public class ClassProperty : AbstractLeaf
+    public class ClassProperty : AbstractComposite
     {
         public ClassProperty() : base (ElementType.CLASS_PROPERTY){}
         [DataMember]
@@ -23,9 +23,42 @@ namespace MUTDOD.Server.Common.QueryTree
             var objectProperty = databaseObject.Properties.Where(p => p.Key.Name == Name);
             if(!objectProperty.Any())
             {
-                throw new NoClassPropertyException { PropertyName = Name};
+                var parentClass = parameters.Subquery.QueryClass;
+                var classProperties = parameters.Database.Schema.ClassProperties(parentClass);
+                var classProperty = classProperties.Where(p => p.Name == Name);
+
+                if (!classProperty.Any())
+                {
+                    throw new NoClassPropertyException { PropertyName = Name };
+                }
+
+                return new QueryDTO { Value = null };
             }
-            var propertyDto = new QueryDTO { Value = objectProperty.Single().Value };
+
+            var propertyValue = objectProperty.Single().Value;
+            if (!objectProperty.Single().Key.IsValueType)
+            {
+                var propertyObject = parameters.Storage.Get(parameters.Database.DatabaseId, (Guid)propertyValue);
+                parameters.Subquery.QueryObjects = new List<IStorable> { propertyObject };
+
+                if (TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement childProperty))
+                {
+                    return childProperty.Execute(parameters);
+                }
+
+                var result = parameters.Subquery;
+                result.Result = new DTOQueryResult { QueryResultType = ResultType.ReferencesOnly };
+                return result;
+            }
+
+            var propertyDto = new QueryDTO {
+                Result = new DTOQueryResult
+                {
+                    QueryResultType = ResultType.StringResult,
+                    StringOutput = "Property " + Name + ": " + propertyValue
+                },
+                Value = propertyValue
+            };
             return propertyDto;
         }
     }

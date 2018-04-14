@@ -16,8 +16,14 @@ namespace MUTDOD.Server.Common.QueryTree.Operator
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            var left = Expression.Constant(parameters.Subquery.Value);
-            var right = Expression.Constant(parameters.Subquery.AdditionalValue);
+            var leftValue = parameters.Subquery.Value;
+            var rightValue = parameters.Subquery.AdditionalValue;
+            if (leftValue == null || rightValue == null)
+            {
+                return new QueryDTO { Value = false };
+            }
+            var left = Expression.Constant(leftValue);
+            var right = Expression.Constant(rightValue);
             var greaterThanExpr = Expression.GreaterThanOrEqual(left, right);
             Boolean result = Expression.Lambda<Func<bool>>(greaterThanExpr).Compile()();
             return new QueryDTO { Value = result };

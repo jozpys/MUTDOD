@@ -35,9 +35,19 @@ namespace MUTDOD.Server.Common.QueryTree
                         StringOutput = "Unknown field: " + FieldName
                     }
                 };
-            var literalElement = SingleElement();
-            var literal = literalElement.Execute(parameters).Value;
-            toStore.Properties.Add(property, literal);
+
+            var valueElement = SingleElement();
+            if(valueElement.ElementType == ElementType.LITERAL)
+            {
+                var literal = valueElement.Execute(parameters).Value;
+                toStore.Properties.Add(property, literal);
+            }
+            else if(valueElement.ElementType == ElementType.SELECT)
+            {
+                var objects = valueElement.Execute(parameters).QueryObjects;
+                var objectId = objects.Single().Oid.Id;
+                toStore.Properties.Add(property, objectId);
+            }
 
             return new QueryDTO() { Value = property };
         }

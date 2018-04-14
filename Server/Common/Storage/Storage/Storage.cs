@@ -122,6 +122,13 @@ namespace MUTDOD.Server.Common.Storage
             return _serializer.Deserialize(dbId, new SerializedStorable {Oid = oid, Data = data});
         }
 
+        public IStorable Get(Did dbId, Guid guid)
+        {
+            var oid = new Oid(guid, dbId.Dli);
+            var data = _engine.Read(dbId, oid);
+            return _serializer.Deserialize(dbId, new SerializedStorable { Oid = oid, Data = data });
+        }
+
         public IEnumerable<IStorable> GetAll(Did dbId)
         {
             foreach (var read in _engine.ReadAll(dbId))

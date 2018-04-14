@@ -113,6 +113,18 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public override IQueryElement VisitGet_stmt([NotNull] QueryGrammarParser.Get_stmtContext context)
         {
+            if(context.get_stmt() != null)
+            {
+                SelectStatement parentSelect = (SelectStatement)Visit(context.get_stmt());
+                if (context.child_value() != null)
+                {
+                    IQueryElement property = Visit(context.child_value());
+                    parentSelect.Add(property);
+                }
+
+                return parentSelect;
+            }
+
             SelectStatement select = new SelectStatement();
             IQueryElement className = Visit(context.get_header().class_name());
             select.Add(className);
@@ -444,11 +456,35 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             else if(context.NAME() != null)
             {
                 ClassProperty property = new ClassProperty();
-                property.Name = context.GetText();
+                property.Name = context.NAME().GetText();
+
+                if(context.child_value() != null)
+                {
+                    IQueryElement propertyChild = Visit(context.child_value());
+                    property.Add(propertyChild);
+                }
                 return property;
             }
 
             return null;
+        }
+
+        public override IQueryElement VisitChild_value([NotNull] QueryGrammarParser.Child_valueContext context)
+        {
+            var firstPropertyName = context.NAME().First();
+            ClassProperty property = new ClassProperty();
+            property.Name = firstPropertyName.GetText();
+
+            ClassProperty parentProperty = property;
+            foreach (var propertyName in context.NAME().Skip(1))
+            {
+                ClassProperty childProperty = new ClassProperty();
+                childProperty.Name = propertyName.GetText();
+
+                parentProperty.Add(childProperty);
+                parentProperty = childProperty;
+            }
+            return property;
         }
 
         public override IQueryElement VisitDataType([NotNull] QueryGrammarParser.DataTypeContext context)

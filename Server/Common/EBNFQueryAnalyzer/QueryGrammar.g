@@ -20,7 +20,9 @@ system_operation: op = SYS_INFO
 				| op = DROP_DB db_name = NAME
 				;
 
-get_stmt: K_DEREF? get_header where_clause?;
+get_stmt: K_DEREF? get_header where_clause?
+		| O_PAREN get_stmt C_PAREN child_value
+		;
 
 get_header: class_name;
 
@@ -35,7 +37,9 @@ clause: where_operation and_or_clause?
 where_operation: left=where_value where_operator right=where_value?;
 
 where_value: literal
-		   | NAME (SELECTION NAME)*;
+		   | NAME child_value?;
+
+child_value: (SELECTION NAME)+;
 
 literal: NUMBER 
 	   | STRING_VALUE 

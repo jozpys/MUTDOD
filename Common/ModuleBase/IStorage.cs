@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MUTDOD.Common.ModuleBase.Storage;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using MUTDOD.Common.Settings;
@@ -13,6 +14,7 @@ namespace MUTDOD.Common.ModuleBase
         Oid Delete(Did dbId, IStorable toStore);
         IEnumerable<Oid> Delete(Did dbId, IEnumerable<IStorable> toStore);
         IStorable Get(Did dbId, Oid oid);
+        IStorable Get(Did dbId, Guid guid);
         IEnumerable<IStorable> GetAll(Did dbId);
         IStorable[] Find(Did dbId, ISearchCriteria searchCriteria);
         IDatabaseParameters[] GetDatabases();

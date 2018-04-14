@@ -14,13 +14,17 @@ namespace MUTDOD.Common.Types
         public const String CHAR = "char";
         public const String STRING = "string";
         public const String BOOL = "bool";
-        public const String GUID = "guid";
         public string Type { get; set; }
 
         public Type DotNetType
         {
             get
             {
+                if (!IsValueType)
+                {
+                    return typeof(Guid);
+                }
+
                 switch (Type.ToLower())
                 {
                     case FLOAT:
@@ -41,8 +45,6 @@ namespace MUTDOD.Common.Types
                         return typeof (string);
                     case BOOL:
                         return typeof (bool);
-                    case GUID:
-                        return typeof (Guid);
                     default:
                         throw new Exception("Unknown value type: " + Type);
                 }
