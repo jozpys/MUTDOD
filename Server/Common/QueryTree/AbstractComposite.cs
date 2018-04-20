@@ -47,7 +47,7 @@ namespace MUTDOD.Server.Common.QueryTree
             if (elements.ContainsKey(elementType))
             {
                 var typeElements = elements[elementType];
-                if(typeElements.Take(2).Count() == 1)
+                if (typeElements.Take(2).Count() == 1)
                 {
                     searchedElement = typeElements.Single();
                     return true;
@@ -79,9 +79,15 @@ namespace MUTDOD.Server.Common.QueryTree
             return null;
         }
 
+        public IDictionary<ElementType, ISet<IQueryElement>> GetElements()
+        {
+            return elements;
+        }
+
         public override string ToString()
         {
             return ElementType + " (" + String.Join(", ", elements.Values) + ")";
         }
+
     }
 }

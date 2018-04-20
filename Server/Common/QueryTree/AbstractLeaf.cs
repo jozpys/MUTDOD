@@ -22,5 +22,11 @@ namespace MUTDOD.Server.Common.QueryTree
         {
             return ElementType.ToString();
         }
+
+        public virtual string GetValue()
+        {
+            return ToString();
+        }
+
     }
 }
