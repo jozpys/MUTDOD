@@ -79,9 +79,15 @@ namespace MUTDOD.Server.Common.QueryTree
             return null;
         }
 
+        public IDictionary<ElementType, ISet<IQueryElement>> GetElements()
+        {
+            return elements;
+        }
+        
         public override string ToString()
         {
             return ElementType + " (" + String.Join(", ", elements.Values) + ")";
         }
+
     }
 }

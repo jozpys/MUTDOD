@@ -18,9 +18,19 @@ namespace MUTDOD.Server.Common.QueryTree
         }
         public abstract QueryDTO Execute(QueryParameters parameters);
         public abstract IQueryCompositeElement GetComposite();
+
         [DataMember]
         private readonly ElementType elementType;
         public ElementType ElementType => elementType;
+        
+        public virtual int GetCost()
+        {
+            return 0;
+        }
+        public virtual int GetCardinality()
+        {
+            return 0;
+        }
     }
 
 }
