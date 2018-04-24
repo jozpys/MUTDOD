@@ -409,7 +409,33 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public override IQueryElement VisitClause([NotNull] QueryGrammarParser.ClauseContext context)
         {
-            return Visit(context.where_operation());
+            IQueryElement operation = Visit(context.where_operation());
+            if(context.and_or_clause() != null)
+            {
+                IQueryElement clasule = Visit(context.and_or_clause().clause());
+
+                IQueryCompositeElement operatorElement = GetLogicalElement(context.and_or_clause()).GetComposite();
+                operatorElement.Add(operation);
+                operatorElement.Add(clasule);
+
+                return operatorElement;
+            }
+
+            return operation;
+        }
+
+        private IQueryElement GetLogicalElement(QueryGrammarParser.And_or_clauseContext operatorContext)
+        {
+            if(operatorContext.AND() != null)
+            {
+                return new LogicalOperatorAnd();
+            }
+            else if(operatorContext.OR() != null)
+            {
+                return new LogicalOperatorOr();
+            }
+
+            return null;
         }
 
         public override IQueryElement VisitWhere_operation([NotNull] QueryGrammarParser.Where_operationContext context)

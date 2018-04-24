@@ -28,7 +28,7 @@ get_header: class_name;
 
 where_clause: K_WHERE clause;
 
-and_or_clause: (AND|OR) clause and_or_clause*;
+and_or_clause: (AND|OR) clause;
 
 clause: where_operation and_or_clause?
 	  | O_PAREN clause C_PAREN

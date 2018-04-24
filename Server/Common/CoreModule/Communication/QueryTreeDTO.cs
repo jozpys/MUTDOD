@@ -36,6 +36,8 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(SelectStatement))]
     [KnownType(typeof(ClassName))]
     [KnownType(typeof(WhereStatement))]
+    [KnownType(typeof(LogicalOperatorAnd))]
+    [KnownType(typeof(LogicalOperatorOr))]
     [KnownType(typeof(OperationIsNull))]
     [KnownType(typeof(OperationIsNotNull))]
     [KnownType(typeof(OperationComperision))]

@@ -15,7 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
     [DataContract]
     public class OperationIsNull : AbstractComposite
     {
-        public OperationIsNull() : base(ElementType.IS_NULL){}
+        public OperationIsNull() : base(ElementType.WHERE_OPERATION){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
             IQueryElement valueElement = SingleElement();
@@ -28,9 +28,14 @@ namespace MUTDOD.Server.Common.QueryTree
 
             try
             {
-                QueryDTO query = parameters.Subquery;
-                IEnumerable<IStorable> objects = query.QueryObjects;
-                query.QueryObjects = objects.Where(obj => expression(obj)).ToList();
+                IEnumerable<IStorable> objects = parameters.Subquery.QueryObjects;
+
+                QueryDTO query = new QueryDTO()
+                {
+                    QueryClass = parameters.Subquery.QueryClass,
+                    QueryObjects = objects.Where(obj => expression(obj)).ToList()
+            };
+
                 return query;
             }
             catch(NoClassPropertyException exc)
