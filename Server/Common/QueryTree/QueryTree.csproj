@@ -58,6 +58,8 @@
     <Compile Include="DropDatabase.cs" />
     <Compile Include="ObjectUpdateElement.cs" />
     <Compile Include="DeleteObject.cs" />
+    <Compile Include="LogicalOperatorAnd.cs" />
+    <Compile Include="LogicalOperatorOr.cs" />
     <Compile Include="UpdateObject.cs" />
     <Compile Include="NewObject.cs" />
     <Compile Include="ObjectInitializationElement.cs" />
