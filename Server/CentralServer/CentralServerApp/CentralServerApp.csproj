@@ -114,13 +114,17 @@
       <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
       <Name>EBNFQueryAnalyzer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\ExecutionPlanner\DummyQueryOptimizer.csproj">
+    <ProjectReference Include="..\..\Common\ExecutionPlanner\QueryOptimizer.csproj">
       <Project>{e53da5fa-e552-4bb2-ba6c-11d406cbd264}</Project>
-      <Name>DummyQueryOptimizer</Name>
+      <Name>QueryOptimizer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
       <Project>{f60f8089-adb9-4d93-bf8a-059af83e3193}</Project>
       <Name>IndexMechanism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\IndexMechanism\IndexPlugin\IndexPlugin.csproj">
+      <Project>{c2e17710-7c4f-45a3-89d9-d8d467c84b6f}</Project>
+      <Name>IndexPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\MetamodelModule\MetamodelModule.csproj">
       <Project>{3bee2a4a-2fb1-4157-a778-cfbcc7b94019}</Project>

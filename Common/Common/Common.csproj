@@ -48,8 +48,10 @@
     <Compile Include="InternalQueries.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryPlan.cs" />
+    <Compile Include="IQueryPlanReslult.cs" />
     <Compile Include="IQueryResult.cs" />
     <Compile Include="IQueryTree.cs" />
+    <Compile Include="QueryPlan.cs" />
     <Compile Include="ServerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultType.cs" />

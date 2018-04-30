@@ -32,7 +32,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         StringOutput = "Database named '" + dbName + "' not exists!"
                     };
                 
-                queryTree = _queryOptimizer.OptimizeQueryPlan(queryTree);
+                queryTree = _queryOptimizer.OptimizeQueryPlan(queryTree, new QueryParameters());
                 var executer = new EngineExecuter(db, _storage,
                     (s, level) => _logger.Log(Name, s, level));
                 return executer.Execute(queryTree);

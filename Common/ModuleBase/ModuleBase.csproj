@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\AccessType.cs" />
     <Compile Include="Communication\ElementType.cs" />
     <Compile Include="Communication\IQueryElement.cs" />
     <Compile Include="Communication\QueryDTO.cs" />
     <Compile Include="Communication\QueryParameters.cs" />
+    <Compile Include="Communication\QueryPlanTree.cs" />
+    <Compile Include="Communication\QueryPlanTreeResult.cs" />
     <Compile Include="Indexing\CompareType.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="IQueryOptimizer.cs" />

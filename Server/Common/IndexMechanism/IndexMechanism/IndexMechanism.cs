@@ -5,9 +5,11 @@ using IndexMechanism.IndexManager;
 using IndexPlugin;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Indexing;
 using MUTDOD.Common.Types;
 using CompareType = MUTDOD.Common.ModuleBase.Indexing.CompareType;
+using System.Linq;
 
 namespace MUTDOD.Server.Common.IndexMechanism
 {
@@ -73,11 +75,11 @@ namespace MUTDOD.Server.Common.IndexMechanism
             }
         }
 
-        public bool IndexObject(int indexID, Oid obj)
+        public bool IndexObject(int indexID, Oid obj, QueryParameters queryParameters)
         {
             try
             {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), new Oid[] {obj}, null);
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), new Oid[] {obj}, null, queryParameters);
             }
             catch (Exception ex)
             {
@@ -88,11 +90,11 @@ namespace MUTDOD.Server.Common.IndexMechanism
             return true;
         }
 
-        public bool IndexObjects(int indexID, Oid[] obj)
+        public bool IndexObjects(int indexID, Oid[] obj, QueryParameters queryParameters)
         {
             try
             {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, null);
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, null, queryParameters);
             }
             catch (Exception ex)
             {
@@ -103,11 +105,11 @@ namespace MUTDOD.Server.Common.IndexMechanism
             return true;
         }
 
-        public bool IndexObjects(int indexID, Oid[] obj, String[] attributes)
+        public bool IndexObjects(int indexID, Oid[] obj, String[] attributes, QueryParameters queryParameters)
         {
             try
             {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, attributes);
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, attributes, queryParameters);
             }
             catch (Exception ex)
             {
@@ -250,15 +252,15 @@ namespace MUTDOD.Server.Common.IndexMechanism
             return true;
         }
 
-        protected void indexObjects(int indexID, IIndex index, Oid[] obj, String[] attributes)
+        protected void indexObjects(int indexID, IIndex<object> index, Oid[] obj, String[] attributes, QueryParameters queryParameters)
         {
             if (attributes == null)
-                _objectIndexer.AddObjects(indexID, index, obj);
+                _objectIndexer.AddObjects(indexID, index, obj, queryParameters);
             else
-                _objectIndexer.AddObjects(indexID, index, obj, attributes);
+                _objectIndexer.AddObjects(indexID, index, obj, attributes, queryParameters);
         }
 
-        protected void indexObjectsRoles(int indexID, IIndex index, Oid[] obj, DynamicRole role,
+        protected void indexObjectsRoles(int indexID, IIndex<object> index, Oid[] obj, DynamicRole role,
                                          String[] attributes)
         {
             if (attributes == null)
@@ -478,6 +480,50 @@ namespace MUTDOD.Server.Common.IndexMechanism
                                   int? theoreticalIndexSize)
         {
             return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetStatistic(indexID, src, type, info, theoreticalIndexSize);
+        }
+
+        public List<string> GetTypesNameIndexedObjects(int indexId)
+        {
+            return new List<string>(_objectIndexer.GetTypesNameIndexedObjects(indexId, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId)));
+        }
+
+        public List<string> GetIndexedAttribiutesForType(int indexId, string type)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId).GetIndexedAttribiutesForType(type);
+        }
+        public string GetIndex(int indexId)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId).Name;
+        }
+
+        public int GetAvarageObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).AverageCost;
+        }
+
+        public int GetPessimisticObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).PessimisticCost;
+        }
+
+        public int GetOptimisticObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).OptimisticCost;
+
+        }
+
+        public Dictionary<int, string> GetIndexesForClass(String className)
+        {
+            return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className))
+                               .ToDictionary(r => r.Key, r => r.Value);
+        }
+
+        public Dictionary<int, string> getIndexesForAttributes(string className, List<string> attributes)
+        {
+
+            return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className) &&
+                                       GetIndexedAttribiutesForType(p.Key, className).All(s => attributes.Contains(s)))
+                                  .ToDictionary(r => r.Key, r => r.Value);
         }
 
         public string Name { get { return "IndexMechanism"; } }

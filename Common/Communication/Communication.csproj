@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOQueryPlanResult.cs" />
     <Compile Include="IExecutionServerContract.cs" />
     <Compile Include="DTOQueryResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

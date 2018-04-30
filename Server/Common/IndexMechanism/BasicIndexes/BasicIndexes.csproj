@@ -135,11 +135,16 @@
     <Compile Include="BinaryTree\binaryTree.cs" />
     <Compile Include="IntDumpIndex.cs" />
     <Compile Include="IntIndex.cs" />
+    <Compile Include="IntIndexMUTDOD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringDumpIndex.cs" />
     <Compile Include="StringIndex.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\ModuleBase\ModuleBase.csproj">
+      <Project>{02c7d2e4-48b6-4c3e-89f4-f15a09dee23f}</Project>
+      <Name>ModuleBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Common\Types\Types.csproj">
       <Project>{6f59e8e0-d8c9-438c-ae4c-7f5c08a99db4}</Project>
       <Name>Types</Name>

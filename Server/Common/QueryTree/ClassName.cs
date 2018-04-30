@@ -17,6 +17,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public ClassName() : base(ElementType.CLASS_NAME) { }
         [DataMember]
         public String Name {get; set;}
+        public Dictionary<int, string> indexes;
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
@@ -34,6 +35,11 @@ namespace MUTDOD.Server.Common.QueryTree
                 return new QueryDTO { Result = errorResult, QueryClass = errorClass };
             }
             return new QueryDTO { QueryClass = selectedClass };
+        }
+        
+        public void Optimize(QueryParameters queryParameters)
+        {
+            indexes = queryParameters.IndexMechanism.GetIndexesForClass(Name);
         }
     }
 }

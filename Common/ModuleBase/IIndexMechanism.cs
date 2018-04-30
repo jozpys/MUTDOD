@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Indexing;
 using MUTDOD.Common.Types;
 
@@ -11,9 +12,9 @@ namespace MUTDOD.Common.ModuleBase
         bool Remomveindex(int id);
         Dictionary<int, string> GetIndexes();
         Type[] GetIndexingTypes(int indexId);
-        bool IndexObject(int indexID, Oid obj);
-        bool IndexObjects(int indexID, Oid[] obj);
-        bool IndexObjects(int indexID, Oid[] obj, String[] attributes);
+        bool IndexObject(int indexID, Oid obj, QueryParameters queryParameters);
+        bool IndexObjects(int indexID, Oid[] obj, QueryParameters queryParameters);
+        bool IndexObjects(int indexID, Oid[] obj, String[] attributes, QueryParameters queryParameters);
         bool IndexObject(int indexID, Oid obj, DynamicRole role);
         bool IndexObjects(int indexID, Oid[] obj, DynamicRole role);
         bool IndexObjects(int indexID, Oid[] obj, DynamicRole role, String[] attributes);
@@ -44,5 +45,13 @@ namespace MUTDOD.Common.ModuleBase
 
         float GetStatistic(int indexID, IndexCostSource src, IndexCostType type, IndexCostInformation info,
             int? theoreticalIndexSize);
+        List<string> GetTypesNameIndexedObjects(int indexId);
+        List<string> GetIndexedAttribiutesForType(int indexId, string type);
+        int GetAvarageObjectFindCost(int indexId, int numberIndexedObject);
+        int GetPessimisticObjectFindCost(int indexId, int numberIndexedObject);
+        int GetOptimisticObjectFindCost(int indexId, int numberIndexedObject);
+        Dictionary<int, string> GetIndexesForClass(String className);
+        Dictionary<int, string> getIndexesForAttributes(string className, List<string> attributes);
+
     }
 }

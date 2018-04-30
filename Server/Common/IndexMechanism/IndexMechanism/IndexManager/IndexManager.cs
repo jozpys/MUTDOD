@@ -18,7 +18,7 @@ namespace IndexMechanism.IndexManager
     {
         private static IndexManager _instance = null;
         private List<IndexInfo> _indexes;
-        private Dictionary<IndexInfo, IndexPlugin.IIndex> _indexesObjects;
+        private Dictionary<IndexInfo, IndexPlugin.IIndex<object>> _indexesObjects;
         private AppDomain _pluginsDomain;
         private BackgroundWorker _statisticSaver;
 
@@ -40,7 +40,7 @@ namespace IndexMechanism.IndexManager
         private IndexManager()
         {
             LoadIndexes();
-            _indexesObjects = new Dictionary<IndexInfo, IIndex>();
+            _indexesObjects = new Dictionary<IndexInfo, IIndex<object>>();
             _pluginsDomain = AppDomain.CreateDomain("pluginsDomain");
             _statisticSaver = new BackgroundWorker();
             _statisticSaver.DoWork += new DoWorkEventHandler(_statisticSaver_DoWork);
@@ -121,11 +121,11 @@ namespace IndexMechanism.IndexManager
 
             foreach (Type type in assemblyTypes)
             {
-                if (type.IsClass && type.GetInterfaces().Contains(typeof (IndexPlugin.IIndex)))
+                if (type.IsClass && type.GetInterfaces().Contains(typeof (IndexPlugin.IIndex<object>)))
                 {
                     try
                     {
-                        IndexPlugin.IIndex i = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                        IndexPlugin.IIndex<object> i = (IndexPlugin.IIndex<object>) Activator.CreateInstance(type);
 
                         if (!i.EmptyIndexData.GetType().IsSerializable)
                             throw new Exception();
@@ -181,7 +181,7 @@ namespace IndexMechanism.IndexManager
         {
             Monitor.Enter(_instance);
 
-            foreach (KeyValuePair<IndexInfo, IIndex> indexesObject in _indexesObjects)
+            foreach (KeyValuePair<IndexInfo, IIndex<object>> indexesObject in _indexesObjects)
             {
                 indexesObject.Value.Dispose();
             }
@@ -240,7 +240,7 @@ namespace IndexMechanism.IndexManager
             return ret.ToList();
         }
 
-        internal IIndex GetIndex(int indexId)
+        internal IIndex<object> GetIndex(int indexId)
         {
             IndexInfo index;
 
@@ -283,7 +283,7 @@ namespace IndexMechanism.IndexManager
                 if (t.Count() == 1)
                 {
                     Type type = t.Single();
-                    IndexPlugin.IIndex ixi = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                    IndexPlugin.IIndex<object> ixi = (IndexPlugin.IIndex<object>) Activator.CreateInstance(type);
                     _indexesObjects.Add(index, ixi);
                     ixi.SettingsChanged += new settingsChangedHandler(IIndexSettingsChanged);
                     ixi.SetSettings(index.IndexSettings);
@@ -309,10 +309,10 @@ namespace IndexMechanism.IndexManager
             return GetIndex(indexId).AvailableIndexingTypes;
         }
 
-        public void IIndexSettingsChanged(IIndex sender, string XML)
+        public void IIndexSettingsChanged(IIndex<object> sender, string XML)
         {
             IndexInfo index = null;
-            foreach (KeyValuePair<IndexInfo, IIndex> keyValuePair in _indexesObjects)
+            foreach (KeyValuePair<IndexInfo, IIndex<object>> keyValuePair in _indexesObjects)
             {
                 if (keyValuePair.Value.Equals(sender))
                     index = keyValuePair.Key;
@@ -442,7 +442,7 @@ namespace IndexMechanism.IndexManager
             return ret;
         }
 
-        private float getTheoretical(IIndex index, IndexCostType type, IndexCostInformation info,
+        private float getTheoretical(IIndex<object> index, IndexCostType type, IndexCostInformation info,
                                      int? theoreticalIndexSize)
         {
             IndexOperationCost statisticInfo;
@@ -549,6 +549,16 @@ namespace IndexMechanism.IndexManager
             if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
                 MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("new index statistic {0} with value {1}", info.ToString(), value), MessageLevel.Info);
         }
+        /*public Type[] GetTypesIndexedObjects(int indexId)
+        {
+            return GetIndex(indexId).GetTypesIndexedObjects();
+        }
+
+        public List<string> GetIndexedAttribiutesForType(int indexId, Type type)
+        {
+            return GetIndex(indexId).GetIndexedAttribiutesForType(type);
+        }*/
+
 
         #region Implementation of IDisposable
 

@@ -22,10 +22,11 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         private SystemInfo _systemInfo;
         private readonly IStorage _storage;
         private readonly ISettingsManager _settingsManager;
+        private IIndexMechanism _indexMechanism;
 
         public CentralServerExecuter(IDatabaseParameters database, Action<IQueryElement> doOnDataServers,
             SystemInfo systemInfo, IStorage storage,
-            ISettingsManager settingsManager, Action<string, MessageLevel> log)
+            ISettingsManager settingsManager, Action<string, MessageLevel> log, IIndexMechanism indexMechanism)
             : base(database, storage, log)
         {
             _database = database;
@@ -34,11 +35,12 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             _storage = storage;
             _settingsManager = settingsManager;
             _log = log;
+            _indexMechanism = indexMechanism;
         }
 
         internal override DTOQueryResult Execute(IQueryElement queryTree)
         {
-            QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log };
+            QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log, IndexMechanism = _indexMechanism};
             if (_doOnDataServers != null)
                 _doOnDataServers(queryTree);
             QueryDTO result = queryTree.Execute(parameters);

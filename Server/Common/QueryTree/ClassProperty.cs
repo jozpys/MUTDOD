@@ -17,6 +17,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public ClassProperty() : base (ElementType.CLASS_PROPERTY){}
         [DataMember]
         public String Name { get; set; }
+        public Dictionary<int, string> indexesOnAttribute;
         public override QueryDTO Execute(QueryParameters parameters)
         {
             IStorable databaseObject = parameters.Subquery.QueryObjects.Single();
@@ -60,6 +61,13 @@ namespace MUTDOD.Server.Common.QueryTree
                 Value = propertyValue
             };
             return propertyDto;
+        }
+
+        public void Optimize(QueryParameters queryParameters)
+        {
+            List<string> attributes = new List<string>();
+            attributes.Add(Name);
+            indexesOnAttribute = queryParameters.IndexMechanism.getIndexesForAttributes(queryParameters.Subquery.QueryClass.Name, attributes);
         }
     }
 }

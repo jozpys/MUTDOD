@@ -139,7 +139,7 @@ namespace IndexMechanism.IndexManager
                 if (t.Count() == 1)
                 {
                     Type type = t.Single();
-                    IndexPlugin.IIndex i = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                    IndexPlugin.IIndex<object> i = (IndexPlugin.IIndex<object>) Activator.CreateInstance(type);
 
                     if (!i.EmptyIndexData.GetType().IsSerializable)
                         throw new Exception("IndexData must be serializable!");

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using IndexPlugin;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Types;
 
 namespace BasicIndexes
 {
-    public class IntDumpIndex : IIndex
+    public class IntDumpIndex : IIndex<Type>
     {
         #region Implementation of IDisposable
 
@@ -73,7 +74,7 @@ namespace BasicIndexes
                 return indexData as ListData<int>;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             ListData<int> ld = getStorageData(indexData);
 
@@ -99,11 +100,11 @@ namespace BasicIndexes
             return ld;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj)
+        public IndexData AddObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return AddObject(indexData, obj, attribiutes);
+            return AddObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -306,6 +307,16 @@ namespace BasicIndexes
         }
 
         public IndexOperationCost RoleFindCost(int indexedObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetTypesNameIndexedObjects(IndexData indexData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetIndexedAttribiutesForType(Type t)
         {
             throw new NotImplementedException();
         }

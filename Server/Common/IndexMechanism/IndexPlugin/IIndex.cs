@@ -1,12 +1,13 @@
 ﻿using MUTDOD.Common.Types;
 using System;
 using System.Collections.Generic;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace IndexPlugin
 {
-    public delegate void settingsChangedHandler(IIndex source, string newSettingsXML);
+    public delegate void settingsChangedHandler(IIndex<object> source, string newSettingsXML);
 
-    public interface IIndex : IDisposable
+    public interface IIndex<T> : IDisposable
     {
         string Name { get; }
         IndexData EmptyIndexData { get; }
@@ -28,9 +29,9 @@ namespace IndexPlugin
         IndexData rebuildIndex(IndexData indexData);
 
         //zindeksowanie podanych atrybutów w obiekcie
-        IndexData AddObject(IndexData indexData, Oid obj, String[] attributes);
+        IndexData AddObject(IndexData indexData, Oid obj, String[] attributes, QueryParameters parameters);
         //zindeksowanie wszystkich atrybutów w obiekcie
-        IndexData AddObject(IndexData indexData, Oid obj);
+        IndexData AddObject(IndexData indexData, Oid obj, QueryParameters parameters);
 
         //zindeksowanie podanych atrybutów dynamicznej roli związanej z podanym obiektem
         IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, String[] attributes);
@@ -56,9 +57,9 @@ namespace IndexPlugin
         Guid[] GetIndexedDynamicRoles(IndexData indexData, int? packageSize, int skipItemsCount);
 
         //zwrócenie OID obiektów które są danej klasy - complexExtension na true oznacza także obiekty które dziedziczą ze wskazanego typu
-        Guid[] FindObjects(IndexData indexData, Type OIDClass, bool complexExtension, out int? readedObjects);
+        Guid[] FindObjects(IndexData indexData, T OIDClass, bool complexExtension, out int? readedObjects);
         //zwrócenie OID obiektów które są danej klasy oraz mają wskazane atrybuty zgodne z porównywanymi wartosciami - complexExtension na true oznacza także obiekty które dziedziczą ze wskazanego typu
-        Guid[] FindObjects(IndexData indexData, Type OIDClass, bool complexExtension, String[] attributes,
+        Guid[] FindObjects(IndexData indexData, T OIDClass, bool complexExtension, String[] attributes,
                           object[] values, CompareType[] compareTypes, out int? readedObjects);
 
         //zwrócenie OID obiektów które posiadają podaną dynamiczną rolę
@@ -85,6 +86,10 @@ namespace IndexPlugin
         IndexOperationCost RoleIndexRemoveCost(int indexedObjects);
         //zwrócenie kosztu znalezienia zindeksowanych obiektów spełniających zadane warunki przy posiadaniu już podanej liczby zindeksowany obiektów
         IndexOperationCost RoleFindCost(int indexedObjects);
+        //zwraca typy zindeksowanych obiektów
+        string[] GetTypesNameIndexedObjects(IndexData indexData);
+        //zwraca atrybuty po których indeksowane są obiekty danego typu
+        List<string> GetIndexedAttribiutesForType(T t);
     }
 
     public enum CompareType

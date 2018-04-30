@@ -71,6 +71,14 @@
       <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
       <Name>ModuleBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
+      <Project>{f60f8089-adb9-4d93-bf8a-059af83e3193}</Project>
+      <Name>IndexMechanism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IndexMechanism\IndexPlugin\IndexPlugin.csproj">
+      <Project>{c2e17710-7c4f-45a3-89d9-d8d467c84b6f}</Project>
+      <Name>IndexPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

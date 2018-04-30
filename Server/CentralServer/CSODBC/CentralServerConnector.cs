@@ -60,6 +60,15 @@ namespace MUTDOD.Server.CentralServer.CSODBC
             _dataServers = new Dictionary<Guid, ServerInfo>();
         }
 
+        public IQueryPlanReslult GetQueryPlan(DatabaseInfo dbName, DTOQuery query)
+        {
+            //TODO obsługa wyjątku
+            _logger.Log("CentralServerConnector", string.Format("{0} {1}", dbName, query.QueryText),
+                MessageLevel.QueryPlan);
+
+            return _queryEngine.GetQueryPlan(dbName.Name, query);
+        }
+
         public DTOQueryResult ExecuteQuery(DatabaseInfo dbName, DTOQuery query)
         {
             _logger.Log("CentralServerConnector", string.Format("{0} {1}", dbName, query.QueryText),
@@ -74,6 +83,25 @@ namespace MUTDOD.Server.CentralServer.CSODBC
             {
                 return new DTOQueryResult() {QueryResultType = ResultType.StringResult, StringOutput = ex.ToString()};
             }
+        }
+
+        private void RunOnDataServersGetQueryPlan (DatabaseInfo dbName, IQueryElement queryTree)
+        {
+            _dataServers.Values.ToList().ForEach(s =>
+            {
+                var scf =
+                    new ChannelFactory<IDataServerContract>(_settingsManager.CentralServerRemoteBinding,
+                        s.ServerAddress);
+
+                var m_serverChanel = scf.CreateChannel();
+
+                (m_serverChanel as IContextChannel).OperationTimeout = TimeSpan.FromMinutes(1);
+                
+                //DTOQueryResult result = m_serverChanel.ExecuteQuery(dbName, new DTOQueryTree(queryTree));
+                _logger.Log("CentralServerConnector", String.Format("Response from {0}: {1}", s.ServerName,
+                    m_serverChanel.ExecuteQuery(dbName, new DTOQueryTree(queryTree)).StringOutput), MessageLevel.QueryExecution);
+                scf.Close();
+            });
         }
 
         private void RunOnDataServers(DatabaseInfo dbName, IQueryElement queryTree)

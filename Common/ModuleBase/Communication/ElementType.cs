@@ -36,6 +36,9 @@ namespace MUTDOD.Common.ModuleBase.Communication
         OPERATOR,
         CLASS_PROPERTY,
         LITERAL,
-        DATA_TYPE
+        DATA_TYPE,
+        CREATE_INDEX,
+        INDEX_ATTRIBUTE,
+        INDEX_NAME
     }
 }

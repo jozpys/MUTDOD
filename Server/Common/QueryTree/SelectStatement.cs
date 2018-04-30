@@ -82,6 +82,14 @@ namespace MUTDOD.Server.Common.QueryTree
             return selectDto;
         }
 
+        public IQueryElement Optimize(QueryParameters queryParameters)
+        {
+
+            TryGetElement(ElementType.CLASS_NAME, out IQueryElement className);
+            
+            return null;
+        }
+
         private XmlDocument ToXml(IEnumerable<IStorable> toSave, Class @class)
         {
             var doc = new XmlDocument();

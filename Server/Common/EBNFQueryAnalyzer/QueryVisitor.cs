@@ -75,7 +75,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 IQueryElement deleteObject = Visit(context.delete_object());
                 return deleteObject;
             }
-
+            else if(context.create_index() != null)
+            {
+                IQueryElement createIndex = Visit(context.create_index());
+                return createIndex;
+            }
 
             return null;
         }
@@ -618,6 +622,34 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
             throw new SyntaxException("Unsupported operator.");
         }
-        
+
+        public override IQueryElement VisitCreate_index([NotNull] QueryGrammarParser.Create_indexContext context) {
+
+            CreateIndex createIndex = new CreateIndex();
+            createIndex.Add(Visit(context.index_definition().class_name()));
+            createIndex.Add(Visit(context.index_name()));
+            context.index_definition().index_attribute()
+                .Select(VisitIndex_attribute)
+                .ToList()
+                .ForEach(createIndex.Add);
+
+            return createIndex;
+        }
+
+        public override IQueryElement VisitIndex_definition([NotNull] QueryGrammarParser.Index_definitionContext context) { return VisitChildren(context); }
+
+        public override IQueryElement VisitIndex_attribute([NotNull] QueryGrammarParser.Index_attributeContext context) {
+            IndexAttribute indexAttribute = new IndexAttribute();
+            indexAttribute.Name = context.NAME().GetText();
+            return indexAttribute;
+        }
+
+        public override IQueryElement VisitIndex_name([NotNull] QueryGrammarParser.Index_nameContext context)
+        {
+            IndexName indexName = new IndexName();
+            indexName.Name = context.NAME().GetText();
+            return indexName;
+        }
+
     }
 }

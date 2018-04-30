@@ -11,8 +11,10 @@ namespace MUTDOD.Common.ModuleBase.Communication
         QueryDTO Execute(QueryParameters parameters);
         IQueryCompositeElement GetComposite();
         ElementType ElementType { get; }
-        int GetCost();
-        int GetCardinality();
+        AccessType AccessType { get; }
+        int Cost { get; }
+        int Cardinality { get; }
+        void Optimize(QueryParameters parameters);
     }
 
     public interface IQueryCompositeElement : IQueryElement

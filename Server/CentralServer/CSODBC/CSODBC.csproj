@@ -76,6 +76,10 @@
       <Project>{125A2C8A-8F8C-4546-BB44-3688AA1CA7DD}</Project>
       <Name>CoreModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\IndexMechanism\IndexPlugin\IndexPlugin.csproj">
+      <Project>{c2e17710-7c4f-45a3-89d9-d8d467c84b6f}</Project>
+      <Name>IndexPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\ODBCModule\ODBCModule.csproj">
       <Project>{C61B42B5-5A51-4533-BB7E-ECE5743621DB}</Project>
       <Name>ODBCModule</Name>

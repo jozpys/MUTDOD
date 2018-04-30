@@ -5,11 +5,12 @@ using System.Reflection;
 using System.Text;
 using BasicIndexes.BinaryTree;
 using IndexPlugin;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Types;
 
 namespace BasicIndexes
 {
-    public class StringIndex : IIndex
+    public class StringIndex : IIndex<Type>
     {
         private string _settings = string.Empty;
 
@@ -77,7 +78,7 @@ namespace BasicIndexes
                 return indexData as StringBinaryTree;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             StringBinaryTree BT = getStorageData(indexData);
 
@@ -102,11 +103,11 @@ namespace BasicIndexes
             return BT;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj)
+        public IndexData AddObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return AddObject(indexData, obj, attribiutes);
+            return AddObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -324,6 +325,16 @@ namespace BasicIndexes
         }
 
         public IndexOperationCost RoleFindCost(int indexedObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetTypesNameIndexedObjects(IndexData indexData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetIndexedAttribiutesForType(Type t)
         {
             throw new NotImplementedException();
         }

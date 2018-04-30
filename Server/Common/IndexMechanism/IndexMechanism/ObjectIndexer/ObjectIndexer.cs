@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IndexPlugin;
 using MUTDOD.Common;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Indexing;
 using MUTDOD.Common.Types;
 using CompareType = MUTDOD.Common.ModuleBase.Indexing.CompareType;
@@ -11,13 +12,13 @@ namespace IndexMechanism.ObjectIndexer
 {
     internal class ObjectIndexer
     {
-        internal void AddObject(int IndexID, IIndex index, Oid obj, String[] attributes)
+        internal void AddObject(int IndexID, IIndex<object> index, Oid obj, String[] attributes, QueryParameters queryParameters)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, attributes);
+                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, attributes, queryParameters);
                 IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexAdd,
                     (float)
@@ -35,7 +36,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void AddObjects(int IndexID, IIndex index, Oid[] obj, String[] attributes)
+        internal void AddObjects(int IndexID, IIndex<object> index, Oid[] obj, String[] attributes, QueryParameters queryParameters)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -43,7 +44,7 @@ namespace IndexMechanism.ObjectIndexer
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
-                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, attributes);
+                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, attributes, queryParameters);
                     IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneObjectIndexAdd,
                         (float)
@@ -62,13 +63,13 @@ namespace IndexMechanism.ObjectIndexer
             IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddObject(int IndexID, IIndex index, Oid obj)
+        internal void AddObject(int IndexID, IIndex<object> index, Oid obj, QueryParameters queryParameters)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj);
+                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, queryParameters);
                 IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexAdd,
                     (float)
@@ -86,7 +87,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void AddObjects(int IndexID, IIndex index, Oid[] obj)
+        internal void AddObjects(int IndexID, IIndex<object> index, Oid[] obj, QueryParameters queryParameters)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -94,7 +95,7 @@ namespace IndexMechanism.ObjectIndexer
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
-                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid);
+                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, queryParameters);
                     IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneObjectIndexAdd,
                         (float)
@@ -113,7 +114,7 @@ namespace IndexMechanism.ObjectIndexer
             IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role)
+        internal void AddDynamicRole(int IndexID, IIndex<object> index, Oid obj, DynamicRole role)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -137,7 +138,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void AddDynamicRoles(int IndexID, IIndex index, Oid[] obj, DynamicRole role)
+        internal void AddDynamicRoles(int IndexID, IIndex<object> index, Oid[] obj, DynamicRole role)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -164,7 +165,7 @@ namespace IndexMechanism.ObjectIndexer
             IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role, String[] attributes)
+        internal void AddDynamicRole(int IndexID, IIndex<object> index, Oid obj, DynamicRole role, String[] attributes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -189,7 +190,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void AddDynamicRoles(int IndexID, IIndex index, Oid[] obj, DynamicRole role, String[] attributes)
+        internal void AddDynamicRoles(int IndexID, IIndex<object> index, Oid[] obj, DynamicRole role, String[] attributes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -216,7 +217,7 @@ namespace IndexMechanism.ObjectIndexer
             IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void RemoveObject(int IndexID, IIndex index, Oid obj, String[] attributes)
+        internal void RemoveObject(int IndexID, IIndex<object> index, Oid obj, String[] attributes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -240,7 +241,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void RemoveObject(int IndexID, IIndex index, Oid obj)
+        internal void RemoveObject(int IndexID, IIndex<object> index, Oid obj)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -264,7 +265,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void RemoveDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role, String[] attributes)
+        internal void RemoveDynamicRole(int IndexID, IIndex<object> index, Oid obj, DynamicRole role, String[] attributes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -289,7 +290,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void RemoveDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role)
+        internal void RemoveDynamicRole(int IndexID, IIndex<object> index, Oid obj, DynamicRole role)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -313,7 +314,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal void ClearIndexedObjects(int IndexID, IIndex index)
+        internal void ClearIndexedObjects(int IndexID, IIndex<object> index)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -331,7 +332,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] GetIndexedObjects(int IndexID, IIndex index, int? packageSize, int skipItemsCount)
+        internal Guid[] GetIndexedObjects(int IndexID, IIndex<object> index, int? packageSize, int skipItemsCount)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -348,7 +349,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] GetIndexedDynamicRoles(int IndexID, IIndex index, int? packageSize, int skipItemsCount)
+        internal Guid[] GetIndexedDynamicRoles(int IndexID, IIndex<object> index, int? packageSize, int skipItemsCount)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -365,7 +366,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, Type type, bool complexExtension)
+        internal Guid[] FindObjects(int IndexID, IIndex<object> index, Type type, bool complexExtension)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -396,7 +397,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, Type type, bool complexExtension, String[] attributes,
+        internal Guid[] FindObjects(int IndexID, IIndex<object> index, Type type, bool complexExtension, String[] attributes,
             object[] values, CompareType[] compareTypes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
@@ -428,7 +429,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, DynamicRole dynamicRole)
+        internal Guid[] FindObjects(int IndexID, IIndex<object> index, DynamicRole dynamicRole)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -457,7 +458,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, DynamicRole dynamicRole, String[] attributes,
+        internal Guid[] FindObjects(int IndexID, IIndex<object> index, DynamicRole dynamicRole, String[] attributes,
             object[] values, CompareType[] compareTypes)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
@@ -488,7 +489,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal bool CheckIndexValid(int IndexID, IIndex index)
+        internal bool CheckIndexValid(int IndexID, IIndex<object> index)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -505,7 +506,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal bool RebuildIndex(int IndexID, IIndex index)
+        internal bool RebuildIndex(int IndexID, IIndex<object> index)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -525,7 +526,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal bool RebuildIndexWithObjects(int IndexID, IIndex index, Oid[] objects)
+        internal bool RebuildIndexWithObjects(int IndexID, IIndex<object> index, Oid[] objects)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -551,7 +552,7 @@ namespace IndexMechanism.ObjectIndexer
             }
         }
 
-        internal bool RebuildIndexWithRoles(int IndexID, IIndex index, Dictionary<Oid, DynamicRole[]> objects)
+        internal bool RebuildIndexWithRoles(int IndexID, IIndex<object> index, Dictionary<Oid, DynamicRole[]> objects)
         {
             IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
             try
@@ -600,6 +601,12 @@ namespace IndexMechanism.ObjectIndexer
                 default:
                     throw new ApplicationException(string.Format("Unknown compare type: {0}", t));
             }
+        }
+        public string[] GetTypesNameIndexedObjects(int IndexID, IIndex<object> index)
+        {
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            return index.GetTypesNameIndexedObjects(indexStorage);
+
         }
     }
 }

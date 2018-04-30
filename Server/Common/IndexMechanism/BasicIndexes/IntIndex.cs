@@ -5,10 +5,11 @@ using System.Reflection;
 using IndexPlugin;
 using BasicIndexes.BinaryTree;
 using MUTDOD.Common.Types;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace BasicIndexes
 {
-    public class IntIndex : IndexPlugin.IIndex
+    public class IntIndex : IIndex<Type>
     {
         private string _settings = string.Empty;
 
@@ -76,11 +77,11 @@ namespace BasicIndexes
                 return indexData as IntBinaryTree;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             IntBinaryTree BT = getStorageData(indexData);
 
-            FieldInfo[] objFields = obj.GetType().GetFields();
+           /* FieldInfo[] objFields = obj.GetType().GetFields();
 
             foreach (String attribute in attributes)
             {
@@ -90,22 +91,22 @@ namespace BasicIndexes
                 else if (objFields.Single(p => p.Name == attribute).GetValue(obj).GetType() != typeof (int))
                     throw new WrongTypeToIndexException(objFields.Single(p => p.Name == attribute).GetType(),
                                                         string.Format("Unnsupported type of attribiute {0}", attribute));
-            }
+            }*/
 
             foreach (String attribute in attributes)
             {
-                int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
-                BT.AddToBTvalue(obj, attribute, attributeValue);
+               // int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
+                BT.AddToBTvalue(obj, attribute, 1);
             }
 
             return BT;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj)
+        public IndexData AddObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return AddObject(indexData, obj, attribiutes);
+            return AddObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -323,6 +324,16 @@ namespace BasicIndexes
         }
 
         public IndexOperationCost RoleFindCost(int indexedObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetTypesNameIndexedObjects(IndexData indexData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetIndexedAttribiutesForType(Type t)
         {
             throw new NotImplementedException();
         }
