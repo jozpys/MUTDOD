@@ -22,6 +22,9 @@ namespace MUTDOD.Server.Common.QueryTree
         }
         [DataMember]
         public Boolean Deref { get; set; }
+        public Dictionary<int, string> index { get; set; }
+        public override bool IsOpenStackScope => true;
+        
         public override QueryDTO Execute(QueryParameters parameters)
         {
 
@@ -95,5 +98,6 @@ namespace MUTDOD.Server.Common.QueryTree
             }
             return doc;
         }
+
     }
 }

@@ -75,10 +75,6 @@
       <Project>{eea8a3c5-c1ff-44fa-bbe6-c72603c8c69d}</Project>
       <Name>EBNFQueryAnalyzer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\ExecutionPlanner\DummyQueryOptimizer.csproj">
-      <Project>{E53DA5FA-E552-4BB2-BA6C-11D406CBD264}</Project>
-      <Name>DummyQueryOptimizer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Common\Settings\Settings.csproj">
       <Project>{6ECCC095-72CF-442B-AA12-2041B8BE3B68}</Project>
       <Name>Settings</Name>

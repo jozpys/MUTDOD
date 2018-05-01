@@ -145,7 +145,6 @@ namespace OdraIDE.Core
             {
                 InvalidPluginException e = new InvalidPluginException("Wrong plugin definition in file: " + fileName+ex.Message);
                 throw e;
-                Console.WriteLine(e.StackTrace);
             }
                 
             try

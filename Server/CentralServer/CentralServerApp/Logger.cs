@@ -5,7 +5,7 @@ using MUTDOD.Server.Common.Tools.Logger;
 
 namespace MTDOD.CentralServerApp
 {
-    internal class Logger : ILogger
+    public class Logger : ILogger
     {
         private readonly Action<LogItem> _guiLogAction;
         private ILogger _logger;

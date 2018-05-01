@@ -8,23 +8,23 @@ using IndexPlugin;
 
 namespace IndexMechanism.IndexStorageManager
 {
-    internal class IndexStorageManager
+    internal class IndexStorageManager<T>
     {
-        private static IndexStorageManager _instance = null;
+        private static IndexStorageManager<T> _instance = null;
 
-        protected static IndexStorageManager Instance
+        protected static IndexStorageManager<T> Instance
         {
-            get { return _instance ?? (_instance = new IndexStorageManager()); }
+            get { return _instance ?? (_instance = new IndexStorageManager<T>()); }
         }
 
         private static string _storageDirectory
         {
             get
             {
-                if (!Directory.Exists(CORE.Settings.GetInstance().IndexesDataStorageDirectory))
-                    Directory.CreateDirectory(CORE.Settings.GetInstance().IndexesDataStorageDirectory);
+                if (!Directory.Exists(CORE.Settings<T>.GetInstance().IndexesDataStorageDirectory))
+                    Directory.CreateDirectory(CORE.Settings<T>.GetInstance().IndexesDataStorageDirectory);
 
-                return CORE.Settings.GetInstance().IndexesDataStorageDirectory;
+                return CORE.Settings<T>.GetInstance().IndexesDataStorageDirectory;
             }
         }
 
@@ -37,7 +37,7 @@ namespace IndexMechanism.IndexStorageManager
             using (
                 Stream stream =
                     File.Open(
-                        String.Format("{0}{1}.dat", CORE.Settings.GetInstance().IndexesDataStorageDirectory, index),
+                        String.Format("{0}{1}.dat", CORE.Settings<T>.GetInstance().IndexesDataStorageDirectory, index),
                         FileMode.Open))
             {
                 BinaryFormatter bFormatter = new BinaryFormatter();

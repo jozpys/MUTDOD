@@ -46,10 +46,13 @@
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
     <Compile Include="AlterClass.cs" />
+    <Compile Include="CreateIndex.cs" />
     <Compile Include="DropAttribute.cs" />
     <Compile Include="AttributeDeclaration.cs" />
     <Compile Include="AlterInterface.cs" />
     <Compile Include="DropInterface.cs" />
+    <Compile Include="IndexAttribute.cs" />
+    <Compile Include="IndexName.cs" />
     <Compile Include="InterfaceDeclaration.cs" />
     <Compile Include="ClassDeclaration.cs" />
     <Compile Include="ClassName.cs" />
@@ -58,6 +61,8 @@
     <Compile Include="DropDatabase.cs" />
     <Compile Include="ObjectUpdateElement.cs" />
     <Compile Include="DeleteObject.cs" />
+    <Compile Include="LogicalOperatorAnd.cs" />
+    <Compile Include="LogicalOperatorOr.cs" />
     <Compile Include="UpdateObject.cs" />
     <Compile Include="NewObject.cs" />
     <Compile Include="ObjectInitializationElement.cs" />
@@ -117,6 +122,10 @@
     <ProjectReference Include="..\..\..\Common\Types\Types.csproj">
       <Project>{6F59E8E0-D8C9-438C-AE4C-7F5C08A99DB4}</Project>
       <Name>Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
+      <Project>{F60F8089-ADB9-4D93-BF8A-059AF83E3193}</Project>
+      <Name>IndexMechanism</Name>
     </ProjectReference>
     <ProjectReference Include="..\Storage\Storage\Storage.csproj">
       <Project>{ECA1C184-3217-464E-A32E-48132CAE47BB}</Project>

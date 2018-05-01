@@ -17,6 +17,9 @@ namespace MUTDOD.Server.Common.QueryTree
         public ClassProperty() : base (ElementType.CLASS_PROPERTY){}
         [DataMember]
         public String Name { get; set; }
+
+        private static string PROPERTY = "PROPERTY: ";
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             IStorable databaseObject = parameters.Subquery.QueryObjects.Single();
@@ -61,5 +64,47 @@ namespace MUTDOD.Server.Common.QueryTree
             };
             return propertyDto;
         }
+
+        public override Boolean Optimize(QueryParameters queryParameters, QueryStack queryElementsStack)
+        {
+            Boolean treeChanged = false;
+
+            if(queryElementsStack.HasElementOnPeek(ElementType.WHERE) && 
+               queryElementsStack.FindLastAncestorOnPeekMatchType(ElementType.WHERE_OPERATION) is OperationComperision)
+            {
+                var className = (ClassName)queryElementsStack.FindLastAncestorOnPeekMatchType(ElementType.CLASS_NAME);
+                
+                queryParameters.IndexMechanism.getIndexesForAttribute(className.Value, Name)
+                     ?.ToList()
+                     .ForEach(p => {
+                              if (className.Indexes == null)
+                                  className.Indexes = new Dictionary<int,string>();
+                             if (!className.Indexes.ContainsKey(p.Key))
+                                 {
+                                      className.Indexes.Add(p.Key, p.Value);
+                                      treeChanged = true;
+                                 }
+                             });
+            }
+            
+            return treeChanged;
+        }
+
+        public override string AccessObject
+        {
+            get
+            {
+                return PROPERTY + Name;
+            }
+        }
+
+        public override int Cost
+        {
+            get
+            {
+                return 2;
+            }
+        }
     }
 }
+    

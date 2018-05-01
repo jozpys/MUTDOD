@@ -16,6 +16,7 @@ namespace MUTDOD.Server.Common.QueryTree
     public class SystemInformation : AbstractLeaf
     {
         public SystemInformation() : base(ElementType.SYSTEM_INFO) { }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             var sb = new StringBuilder();
@@ -31,5 +32,6 @@ namespace MUTDOD.Server.Common.QueryTree
             };
             return new QueryDTO { Result = result };
         }
+
     }
 }

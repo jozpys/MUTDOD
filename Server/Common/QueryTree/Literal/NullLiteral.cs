@@ -12,9 +12,15 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
     public class NullLiteral : AbstractLeaf
     {
         public NullLiteral() : base(ElementType.LITERAL){}
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             return null;
+        }
+
+        public override string GetValue()
+        {
+            return "NULL";
         }
     }
 }

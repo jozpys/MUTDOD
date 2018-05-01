@@ -14,6 +14,7 @@ namespace MUTDOD.Server.Common.QueryTree.Operator
     {
         public OperatorLessEqual() : base(ElementType.OPERATOR) { }
 
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             var leftValue = parameters.Subquery.Value;

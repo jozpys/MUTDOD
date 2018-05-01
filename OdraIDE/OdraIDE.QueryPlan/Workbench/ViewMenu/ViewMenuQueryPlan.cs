@@ -13,16 +13,16 @@ namespace OdraIDE.QueryPlan.Workbench.ViewMenu
     public class ViewMenuQueryPlan : AbstractMenuItem
     {
         [Import(OdraIDE.Core.Services.Layout.LayoutManager, typeof(ILayoutManager))]
-        private Lazy<ILayoutManager> layoutManager { get; set; }
+        private Lazy<ILayoutManager> LayoutManager { get; set; }
 
         [Import(OdraIDE.QueryPlan.CompositionPoints.Workbench.Pads.TreeResultPad, typeof(TreeResultPad))]
-        private Lazy<TreeResultPad> resultsPad { get; set; }
+        private Lazy<TreeResultPad> ResultsPad { get; set; }
 
         public ViewMenuQueryPlan()
         {
-            ID = "ViewMenuStringResultsPad";
-            Header = "Results1";
-            ToolTip = "Show Results";
+            ID = "ViewMenuQueryPlan";
+            Header = "Query plan";
+            ToolTip = "Show query plan";
             BeforeOrAfter = RelativeDirection.After;
             InsertRelativeToID = "ViewMenuGridTasksPad";
             SetIconFromBitmap(Resources.Images.tree);
@@ -30,7 +30,7 @@ namespace OdraIDE.QueryPlan.Workbench.ViewMenu
 
         protected override void Run()
         {
-            layoutManager.Value.ShowPad(resultsPad.Value);
+            LayoutManager.Value.ShowPad(ResultsPad.Value);
         }
     }
 }

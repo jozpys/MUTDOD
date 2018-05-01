@@ -9,7 +9,7 @@ namespace MUTDOD.Server.Common.CoreModule
     {
         private readonly ILogger _logger;
 
-        public Core(IModuleManager moduleManager, IStorage storage, IQueryEngine queryEngine, IOdbc odbc, IQueryOptimizer queryOptimizer, IIndexMechanism indexMechanism, ILogger logger)
+        public Core(IModuleManager moduleManager, IStorage storage, IQueryEngine queryEngine, IOdbc odbc, IQueryOptimizer queryOptimizer, IIndexMechanism<string> indexMechanism, ILogger logger)
         {
             _logger = logger;
             IndexMechanism = indexMechanism;
@@ -24,7 +24,7 @@ namespace MUTDOD.Server.Common.CoreModule
             get { return Constant.Name; }
         }
 
-        public IIndexMechanism IndexMechanism { get; private set; }
+        public IIndexMechanism<string> IndexMechanism { get; private set; }
         public IStorage Storage { get; private set; }
 
         public IQueryEngine QueryEngine { get; private set; }

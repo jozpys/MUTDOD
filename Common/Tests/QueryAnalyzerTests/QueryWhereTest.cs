@@ -16,9 +16,9 @@ namespace QueryAnalyzerTests
         {
             DTOQuery inputQuery = new DTOQuery();
 
-            inputQuery.QueryText = "Student where name is null;";
+            inputQuery.QueryText = "Student.name;";
             IQueryAnalyzer analizer = new EBNFQueryAnalyzer();
-
+            analizer.ParseQuery(inputQuery);
         }
 
         public void TestIsNotNull()

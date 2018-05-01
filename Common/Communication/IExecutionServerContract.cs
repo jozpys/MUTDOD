@@ -11,4 +11,11 @@ namespace MUTDOD.Common.Communication
         [OperationContract]
         bool IsAvailable();
     }
+    [ServiceContract(Namespace = "Mutdod.Server")]
+    public interface IQueryPlanServerContract
+    {
+        [OperationContract]
+        DTOQueryPlanResult GetQueryPlan(DatabaseInfo dbName, DTOQuery query);
+
+    }
 }

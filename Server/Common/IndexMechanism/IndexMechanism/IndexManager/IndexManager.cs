@@ -14,11 +14,11 @@ using MUTDOD.Common.ModuleBase.Indexing;
 
 namespace IndexMechanism.IndexManager
 {
-    internal class IndexManager : IDisposable
+    internal class IndexManager<T> : IDisposable
     {
-        private static IndexManager _instance = null;
-        private List<IndexInfo> _indexes;
-        private Dictionary<IndexInfo, IndexPlugin.IIndex> _indexesObjects;
+        private static IndexManager<T> _instance = null;
+        private List<IndexInfo<T>> _indexes;
+        private Dictionary<IndexInfo<T>, IndexPlugin.IIndex<T>> _indexesObjects;
         private AppDomain _pluginsDomain;
         private BackgroundWorker _statisticSaver;
 
@@ -26,21 +26,21 @@ namespace IndexMechanism.IndexManager
         {
             get
             {
-                if (!Directory.Exists(CORE.Settings.GetInstance().IndexesStorageDirectory))
-                    Directory.CreateDirectory(CORE.Settings.GetInstance().IndexesStorageDirectory);
-                return CORE.Settings.GetInstance().IndexesStorageDirectory;
+                if (!Directory.Exists(CORE.Settings<T>.GetInstance().IndexesStorageDirectory))
+                    Directory.CreateDirectory(CORE.Settings<T>.GetInstance().IndexesStorageDirectory);
+                return CORE.Settings<T>.GetInstance().IndexesStorageDirectory;
             }
         }
 
-        public static IndexManager GetInstance()
+        public static IndexManager<T> GetInstance()
         {
-            return _instance ?? (_instance = new IndexManager());
+            return _instance ?? (_instance = new IndexManager<T>());
         }
 
         private IndexManager()
         {
             LoadIndexes();
-            _indexesObjects = new Dictionary<IndexInfo, IIndex>();
+            _indexesObjects = new Dictionary<IndexInfo<T>, IIndex<T>>();
             _pluginsDomain = AppDomain.CreateDomain("pluginsDomain");
             _statisticSaver = new BackgroundWorker();
             _statisticSaver.DoWork += new DoWorkEventHandler(_statisticSaver_DoWork);
@@ -52,8 +52,8 @@ namespace IndexMechanism.IndexManager
         {
             while (!e.Cancel)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(Settings.GetInstance().StatisticSaveSecoundsInterval));
-                foreach (IndexInfo index in _indexes)
+                Thread.Sleep(TimeSpan.FromSeconds(Settings<T>.GetInstance().StatisticSaveSecoundsInterval));
+                foreach (IndexInfo<T> index in _indexes)
                 {
                     if (index.StatisticChanged)
                         index.saveStatistics();
@@ -63,22 +63,22 @@ namespace IndexMechanism.IndexManager
 
         private void LoadIndex(string path)
         {
-            IndexInfo i;
-            if ((i = IndexInfo.Load(path)) != null)
+            IndexInfo<T> i;
+            if ((i = IndexInfo<T>.Load(path)) != null)
                 if (i.IsValid())
                     _indexes.Add(i);
-                else if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", string.Format("Unable to load index plugin: {0}", i.IndexClassName), MessageLevel.Warning);
+                else if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Unable to load index plugin: {0}", i.IndexClassName), MessageLevel.Warning);
         }
 
         private void LoadIndexes()
         {
-            _indexes = new List<IndexInfo>();
+            _indexes = new List<IndexInfo<T>>();
             foreach (string filePath in Directory.GetFiles(this._indexesStoragePath).Where(p => p.EndsWith("xml")))
                 this.LoadIndex(filePath);
 
-            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",String.Format("Loaded {0} indexes", _indexes.Count),
+            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", String.Format("Loaded {0} indexes", _indexes.Count),
                                                      MessageLevel.Info);
         }
 
@@ -106,39 +106,39 @@ namespace IndexMechanism.IndexManager
             }
             catch (ReflectionTypeLoadException ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", string.Format("Iterating types in new index plugin assembly failed\n{0}", ex.LoaderExceptions.First().Message),
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Iterating types in new index plugin assembly failed\n{0}", ex.LoaderExceptions.First().Message),
                                                          MessageLevel.Warning);
                 return false;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", string.Format("Iterating types in new index plugin assembly failed\n{0}", ex.Message),
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Iterating types in new index plugin assembly failed\n{0}", ex.Message),
                                                          MessageLevel.Warning);
                 return false;
             }
 
             foreach (Type type in assemblyTypes)
             {
-                if (type.IsClass && type.GetInterfaces().Contains(typeof (IndexPlugin.IIndex)))
+                if (type.IsClass && type.GetInterfaces().Contains(typeof(IndexPlugin.IIndex<object>)))
                 {
                     try
                     {
-                        IndexPlugin.IIndex i = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                        IndexPlugin.IIndex<object> i = (IndexPlugin.IIndex<object>)Activator.CreateInstance(type);
 
                         if (!i.EmptyIndexData.GetType().IsSerializable)
                             throw new Exception();
 
-                        IndexInfo ixi = new IndexInfo
-                                            {
-                                                IndexFileName = newIndexFileName,
-                                                IndexName = i.Name,
-                                                IndexClassName = type.FullName,
-                                                IndexID = CORE.Settings.GetInstance().NextIndexesIdentity
-                                            };
+                        IndexInfo<T> ixi = new IndexInfo<T>
+                        {
+                            IndexFileName = newIndexFileName,
+                            IndexName = i.Name,
+                            IndexClassName = type.FullName,
+                            IndexID = CORE.Settings<T>.GetInstance().NextIndexesIdentity
+                        };
 
-                        if (IndexInfo.Save(ixi,
+                        if (IndexInfo<T>.Save(ixi,
                                            string.Format("{0}\\{1}-{2}.xml", this._indexesStoragePath, type.GUID,
                                                          newIndexFileName)))
                         {
@@ -160,14 +160,14 @@ namespace IndexMechanism.IndexManager
                     File.Copy(dllPath, string.Format("{0}\\{1}", this._indexesStoragePath, newIndexFileName));
                     File.SetAttributes(string.Format("{0}\\{1}", this._indexesStoragePath, newIndexFileName),
                                        FileAttributes.Normal);
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", string.Format("Added new index plugin assembly: {0}", newIndexFileName),
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Added new index plugin assembly: {0}", newIndexFileName),
                                                              MessageLevel.Info);
                 }
                 catch (Exception ex)
                 {
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", string.Format("Unable to add new index plugin assebly {0}", dllPath),
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Unable to add new index plugin assebly {0}", dllPath),
                                                              MessageLevel.Error);
                     ret = false;
                 }
@@ -181,7 +181,7 @@ namespace IndexMechanism.IndexManager
         {
             Monitor.Enter(_instance);
 
-            foreach (KeyValuePair<IndexInfo, IIndex> indexesObject in _indexesObjects)
+            foreach (KeyValuePair<IndexInfo<T>, IIndex<T>> indexesObject in _indexesObjects)
             {
                 indexesObject.Value.Dispose();
             }
@@ -194,7 +194,7 @@ namespace IndexMechanism.IndexManager
 
         internal bool RemoveIndex(int indexIdToRemove)
         {
-            IndexInfo toRemove;
+            IndexInfo<T> toRemove;
 
             var i = _indexes.Where(p => p.IndexID == indexIdToRemove);
             if (i.Count() != 1)
@@ -214,16 +214,16 @@ namespace IndexMechanism.IndexManager
             {
                 if (_indexes.Where(p => p.IndexFileName == toRemove.IndexFileName).Count() == 0)
                     File.Delete(string.Format("{0}\\{1}", this._indexesStoragePath, toRemove.IndexFileName));
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
                         string.Format("Removed index plugin assembly file {0}", toRemove.IndexFileName),
                         MessageLevel.Info);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
-                        string.Format("Unable to remove index plugin assembly file {0}\n{1}", toRemove.IndexFileName,ex),
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
+                        string.Format("Unable to remove index plugin assembly file {0}\n{1}", toRemove.IndexFileName, ex),
                         MessageLevel.Error);
                 ret = false;
             }
@@ -233,16 +233,16 @@ namespace IndexMechanism.IndexManager
             return ret;
         }
 
-        public List<IndexInfo> GetIndexes()
+        public List<IndexInfo<T>> GetIndexes()
         {
-            IndexInfo[] ret = new IndexInfo[_indexes.Count];
+            IndexInfo<T>[] ret = new IndexInfo<T>[_indexes.Count];
             _indexes.CopyTo(ret);
             return ret.ToList();
         }
 
-        internal IIndex GetIndex(int indexId)
+        internal IIndex<T> GetIndex(int indexId)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -268,8 +268,8 @@ namespace IndexMechanism.IndexManager
                 }
                 catch (Exception ex)
                 {
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
                             string.Format("Iterating types in index plugin {0} failed\n{1}", index.IndexFileName, ex.Message),
                             MessageLevel.Error);
                     Monitor.Exit(_instance);
@@ -283,18 +283,18 @@ namespace IndexMechanism.IndexManager
                 if (t.Count() == 1)
                 {
                     Type type = t.Single();
-                    IndexPlugin.IIndex ixi = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                    IndexPlugin.IIndex<T> ixi = (IndexPlugin.IIndex<T>)Activator.CreateInstance(type);
                     _indexesObjects.Add(index, ixi);
-                    ixi.SettingsChanged += new settingsChangedHandler(IIndexSettingsChanged);
+                    ixi.SettingsChanged += new settingsChangedHandler<T>(IIndexSettingsChanged);
                     ixi.SetSettings(index.IndexSettings);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
                         string.Format("Unable to read index assembly {0} from file {1}\n{2}", index.IndexClassName,
-                                      index.IndexFileName,ex), MessageLevel.Error);
+                                      index.IndexFileName, ex), MessageLevel.Error);
 
                 Monitor.Exit(_instance);
                 return null;
@@ -309,10 +309,10 @@ namespace IndexMechanism.IndexManager
             return GetIndex(indexId).AvailableIndexingTypes;
         }
 
-        public void IIndexSettingsChanged(IIndex sender, string XML)
+        public void IIndexSettingsChanged(IIndex<T> sender, string XML)
         {
-            IndexInfo index = null;
-            foreach (KeyValuePair<IndexInfo, IIndex> keyValuePair in _indexesObjects)
+            IndexInfo<T> index = null;
+            foreach (KeyValuePair<IndexInfo<T>, IIndex<T>> keyValuePair in _indexesObjects)
             {
                 if (keyValuePair.Value.Equals(sender))
                     index = keyValuePair.Key;
@@ -325,7 +325,7 @@ namespace IndexMechanism.IndexManager
 
         internal void SetIndexSettings(int indexId, string XML)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -339,7 +339,7 @@ namespace IndexMechanism.IndexManager
 
         internal string GetIndexSettings(int indexId)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -352,7 +352,7 @@ namespace IndexMechanism.IndexManager
 
         internal void ResetStatistics(int indexId)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -366,7 +366,7 @@ namespace IndexMechanism.IndexManager
         internal float GetStatistic(int indexId, IndexCostSource src, IndexCostType type, IndexCostInformation info,
                                     int? theoreticalIndexSize)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -385,7 +385,7 @@ namespace IndexMechanism.IndexManager
             }
         }
 
-        private float getStatistics(IndexInfo index, IndexCostType type, IndexCostInformation info)
+        private float getStatistics(IndexInfo<T> index, IndexCostType type, IndexCostInformation info)
         {
             StatisticInfo statisticInfo;
 
@@ -442,7 +442,7 @@ namespace IndexMechanism.IndexManager
             return ret;
         }
 
-        private float getTheoretical(IIndex index, IndexCostType type, IndexCostInformation info,
+        private float getTheoretical(IIndex<T> index, IndexCostType type, IndexCostInformation info,
                                      int? theoreticalIndexSize)
         {
             IndexOperationCost statisticInfo;
@@ -450,33 +450,33 @@ namespace IndexMechanism.IndexManager
             switch (info)
             {
                 case IndexCostInformation.OneObjectSearch:
-                    statisticInfo = index.ObjectFindCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                    statisticInfo = index.ObjectFindCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneObjectIndexAdd:
                     statisticInfo =
-                        index.ObjectIndexingCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                        index.ObjectIndexingCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneObjectIndexRemove:
                     statisticInfo =
-                        index.ObjectIndexRemoveCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                        index.ObjectIndexRemoveCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneObjectIndexRefresh:
                     statisticInfo =
-                        index.ObjectIndexRefreshCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                        index.ObjectIndexRefreshCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneRoleIndexRefresh:
                     statisticInfo =
-                        index.RoleIndexRefreshCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                        index.RoleIndexRefreshCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneRoleIndexRemove:
                     statisticInfo =
-                        index.RoleIndexRemoveCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                        index.RoleIndexRemoveCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneRoleIndexing:
-                    statisticInfo = index.RoleIndexingCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                    statisticInfo = index.RoleIndexingCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 case IndexCostInformation.OneRoleSearch:
-                    statisticInfo = index.RoleFindCost(theoreticalIndexSize == null ? 0 : (int) theoreticalIndexSize);
+                    statisticInfo = index.RoleFindCost(theoreticalIndexSize == null ? 0 : (int)theoreticalIndexSize);
                     break;
                 default:
                     throw new UnexpectedStatisticRequestException(info);
@@ -503,7 +503,7 @@ namespace IndexMechanism.IndexManager
 
         internal void includeInStatistics(int indexId, IndexCostInformation info, float value)
         {
-            IndexInfo index;
+            IndexInfo<T> index;
 
             var i = _indexes.Where(p => p.IndexID == indexId);
             if (i.Count() != 1)
@@ -546,9 +546,24 @@ namespace IndexMechanism.IndexManager
                     break;
             }
 
-            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("new index statistic {0} with value {1}", info.ToString(), value), MessageLevel.Info);
+            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("new index statistic {0} with value {1}", info.ToString(), value), MessageLevel.Info);
         }
+       /* public Dictionary<int, string> GetIndexesForClass(string className)
+        {
+            GetIndexes().Where(i => GetIndex(i.IndexID).GetTypesNameIndexedObjects(IndexStorageManager.IndexStorageManager<T>.GetIndexData(i.IndexID)).Contains(className)).ToDictionary(p => p.)
+                return null;
+        }*/
+        /*public Type[] GetTypesIndexedObjects(int indexId)
+        {
+            return GetIndex(indexId).GetTypesIndexedObjects();
+        }
+
+        public List<string> GetIndexedAttribiutesForType(int indexId, Type type)
+        {
+            return GetIndex(indexId).GetIndexedAttribiutesForType(type);
+        }*/
+
 
         #region Implementation of IDisposable
 

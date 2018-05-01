@@ -22,10 +22,11 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
         private SystemInfo _systemInfo;
         private readonly IStorage _storage;
         private readonly ISettingsManager _settingsManager;
+        private IIndexMechanism<string> _indexMechanism;
 
         public CentralServerExecuter(IDatabaseParameters database, Action<IQueryElement> doOnDataServers,
             SystemInfo systemInfo, IStorage storage,
-            ISettingsManager settingsManager, Action<string, MessageLevel> log)
+            ISettingsManager settingsManager, Action<string, MessageLevel> log, IIndexMechanism<string> indexMechanism)
             : base(database, storage, log)
         {
             _database = database;
@@ -34,11 +35,12 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
             _storage = storage;
             _settingsManager = settingsManager;
             _log = log;
+            _indexMechanism = indexMechanism;
         }
 
         internal override DTOQueryResult Execute(IQueryElement queryTree)
         {
-            QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log };
+            QueryParameters parameters = new QueryParameters { Database = _database, SystemInfo = _systemInfo, Storage = _storage, SettingsManager = _settingsManager, Log = _log, IndexMechanism = _indexMechanism };
             if (_doOnDataServers != null)
                 _doOnDataServers(queryTree);
             QueryDTO result = queryTree.Execute(parameters);
@@ -69,7 +71,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                 case TokenName.GET_SYSTEM_INFO:
                     var sb = new StringBuilder();
                     var sw = new StringWriter(sb);
-                    var xmlSerializer = new XmlSerializer(typeof (SystemInfo));
+                    var xmlSerializer = new XmlSerializer(typeof(SystemInfo));
                     xmlSerializer.Serialize(sw, _systemInfo);
                     return new DTOQueryResult()
                     {
@@ -86,7 +88,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                         _log(string.Format("new database created as {0}", did), MessageLevel.Info);
                         var sb2 = new StringBuilder();
                         var sw2 = new StringWriter(sb2);
-                        var xmlSerializer2 = new XmlSerializer(typeof (DatabaseInfo));
+                        var xmlSerializer2 = new XmlSerializer(typeof(DatabaseInfo));
                         var db = _storage.GetDatabase(did);
                         xmlSerializer2.Serialize(sw2,
                             new DatabaseInfo()
@@ -157,7 +159,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                     var classId = new ClassId
                     {
                         Name = newClassName,
-                        Id = (_database.Schema.Classes.Max(d => (long?) d.Key.Id) ?? 0) + 1
+                        Id = (_database.Schema.Classes.Max(d => (long?)d.Key.Id) ?? 0) + 1
                     };
                     var classDef = new Class
                     {
@@ -176,7 +178,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 .ProductionsList.Single();
                         var propertyId = new PropertyId
                         {
-                            Id = 1 + _database.Schema.Properties.Max(p => (long?) p.Key.Id) ?? 0,
+                            Id = 1 + _database.Schema.Properties.Max(p => (long?)p.Key.Id) ?? 0,
                             Name = attrName,
                             ParentClassId = classId.Id
                         };
@@ -207,7 +209,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                 .TokenValue;
                         var propertyId = new PropertyId
                         {
-                            Id = 1 + (_database.Schema.Properties.Max(p => (long?) p.Key.Id) ?? 0),
+                            Id = 1 + (_database.Schema.Properties.Max(p => (long?)p.Key.Id) ?? 0),
                             Name = attrName,
                             ParentClassId = classId.Id
                         };

@@ -28,10 +28,10 @@ namespace OdraIDE.QueryPlan.Workbench.ToolBar
         private Lazy<IFileService> fileService { get; set; }
 
         [Export(QueryPlan.ExtensionPoints.Workbench.ToolBars.QueryPlan, typeof(IToolBarItem))]
-        public class QueryPlanViewToolbar: AbstractToolBarButton, IPartImportsSatisfiedNotification
+        public class QueryPlanViewToolbar : AbstractToolBarButton, IPartImportsSatisfiedNotification
         {
-            //[Import(QueryPlan.CompositionPoints.Workbench.Commands.GenerateQueryPlan, typeof(ICustomCommand))]
-            //private ICustomCommand command { get; set; }
+            [Import(QueryPlan.CompositionPoints.Workbench.Commands.GenerateQueryPlan, typeof(ICustomCommand))]
+            private ICustomCommand command { get; set; }
 
             public QueryPlanViewToolbar()
             {
@@ -44,8 +44,8 @@ namespace OdraIDE.QueryPlan.Workbench.ToolBar
 
             public void OnImportsSatisfied()
             {
-               
-               // Command = command;
+
+                Command = command;
             }
 
             #endregion

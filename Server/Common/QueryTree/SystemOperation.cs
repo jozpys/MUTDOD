@@ -13,6 +13,7 @@ namespace MUTDOD.Server.Common.QueryTree
     public class SystemOperation : AbstractComposite
     {
         public SystemOperation() : base(ElementType.SYSTEM_OPERATION) { }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             return SingleElement().Execute(parameters);

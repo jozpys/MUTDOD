@@ -15,11 +15,17 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public IntegerLiteral() : base(ElementType.LITERAL){}
         [DataMember]
         public String Value { get; set; }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             int integerValue = Int32.Parse(Value, NumberStyles.Number, CultureInfo.InvariantCulture);
             var literalDto = new QueryDTO { Value = integerValue };
             return literalDto;
+        }
+
+        public override string GetValue()
+        {
+            return Value;
         }
     }
 }

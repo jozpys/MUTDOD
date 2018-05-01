@@ -19,7 +19,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             AntlrInputStream input = new AntlrInputStream(inputQuery.QueryText);
             QueryGrammarLexer lexer = new QueryGrammarLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
-
+            
             QueryGrammarParser parser = new QueryGrammarParser(tokens);
             parser.AddErrorListener(new QueryParserErrorListener());
             IParseTree tree = parser.start();

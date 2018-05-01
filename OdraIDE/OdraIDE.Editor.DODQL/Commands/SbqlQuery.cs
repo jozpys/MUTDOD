@@ -2,7 +2,7 @@
 
 namespace OdraIDE.Editor.Sbql.Commands
 {
-    internal class SbqlQuery : IQuery
+    public class SbqlQuery : IQuery
     {
         public SbqlQuery(string query)
         {

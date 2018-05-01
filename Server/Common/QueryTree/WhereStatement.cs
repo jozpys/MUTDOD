@@ -12,6 +12,7 @@ namespace MUTDOD.Server.Common.QueryTree
     public class WhereStatement : AbstractComposite
     {
         public WhereStatement() : base(ElementType.WHERE){}
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             return SingleElement().Execute(parameters);

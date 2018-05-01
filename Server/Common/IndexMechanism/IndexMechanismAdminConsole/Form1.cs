@@ -16,7 +16,7 @@ namespace IndexMechanismAdminConsole
 
     public partial class Form1 : Form, ILogger
     {
-        private IIndexMechanism im;
+        private IIndexMechanism<Type> im;
         private obiekty _obiekty;
         private AddMessageToGrid _logMessageInGrid;
 
@@ -41,7 +41,7 @@ namespace IndexMechanismAdminConsole
             _logMessageInGrid += new AddMessageToGrid(LogMessageToGrid);
             _obiekty = new obiekty();
             _obiekty.Closed += new EventHandler(_obiekty_Closed);
-            im = new MUTDOD.Server.Common.IndexMechanism.IndexMechanism(this);
+            im = new MUTDOD.Server.Common.IndexMechanism.IndexMechanism<Type>(this);
             button3_Click(null, null);
             _obiekty.Show();
             this.Focus();

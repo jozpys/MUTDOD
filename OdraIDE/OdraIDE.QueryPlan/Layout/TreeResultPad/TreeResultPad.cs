@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using OdraIDE.Core;
 using System.ComponentModel.Composition;
 using OdraIDE.Utilities;
-using OdraIDE.Core.GUI.DynamicListView;
-using OdraIDE.Core.GUI.TreeItem;
 using System.Collections.ObjectModel;
-using Telerik.Windows.Controls;
 using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
@@ -19,10 +16,10 @@ namespace OdraIDE.QueryPlan
 {
     [Export(OdraIDE.Core.ExtensionPoints.Workbench.Pads, typeof(IPad))]
     [Export(OdraIDE.QueryPlan.CompositionPoints.Workbench.Pads.TreeResultPad, typeof(TreeResultPad))]
-    [Pad(Name = TreeResultPad.RP_NAME)]
+    [Pad(Name = TreeResultPad.QP_NAME)]
     public class TreeResultPad : AbstractPad
     {
-        public const string RP_NAME = "TreeResultPad";
+        public const string QP_NAME = "QueryPlanPad";
 
         [Import(OdraIDE.Core.Services.Layout.LayoutManager, typeof(ILayoutManager))]
         private Lazy<ILayoutManager> layoutManager { get; set; }
@@ -31,14 +28,14 @@ namespace OdraIDE.QueryPlan
 
         public TreeResultPad()
         {
-            Name = RP_NAME;
+            Name = QP_NAME;
             Title = "Query plan";
             Location = PadLocation.Bottom;
             Icon = ImageHelper.GetImageFromResources(Resources.Images.tree);
-            queryPlanTreeModel = new QueryPlanTreeModel(); 
+            queryPlanTreeModel = new QueryPlanTreeModel();
         }
 
-        public QueryPlanTreeModel Model1
+        public QueryPlanTreeModel Model
         {
             get
             {
@@ -46,16 +43,21 @@ namespace OdraIDE.QueryPlan
             }
         }
 
-        public void ShowResult(List<TreeTest> lista)
+        public void ShowResult(List<MUTDOD.Common.QueryPlan> queryPlan)
         {
             layoutManager.Value.ShowPad(this);
-            queryPlanTreeModel.QueryTree = lista;
+            queryPlanTreeModel.QueryPlan = queryPlan;
         }
-
+        public void ShowErrorMessage(string errorMessage)
+        {
+            layoutManager.Value.ShowPad(this);
+            queryPlanTreeModel.ErrorMessage = errorMessage;
+        }
         public void Clear()
         {
-           // m_TreeView.DataSource = new List<TreeNode>();
+            queryPlanTreeModel.QueryPlan = null;
+            queryPlanTreeModel.ErrorMessage = null;
         }
-       
+
     }
 }

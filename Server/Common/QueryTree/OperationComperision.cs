@@ -15,7 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
     [DataContract]
     public class OperationComperision : AbstractComposite
     {
-        public OperationComperision() : base(ElementType.COMPERISION){}
+        public OperationComperision() : base(ElementType.WHERE_OPERATION){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
             IQueryElement leftElement = Element(ElementType.LEFT_OPERAND);
@@ -34,13 +34,19 @@ namespace MUTDOD.Server.Common.QueryTree
 
             try
             {
-                QueryDTO query = parameters.Subquery;
-                IEnumerable<IStorable> objects = query.QueryObjects;
-                query.QueryObjects = objects.Where(obj => expression(obj)).ToList();
+                IEnumerable<IStorable> objects = parameters.Subquery.QueryObjects;
+
+                QueryDTO query = new QueryDTO()
+                {
+                    QueryClass = parameters.Subquery.QueryClass,
+                    QueryObjects = objects.Where(obj => expression(obj)).ToList()
+                };
+
                 return query;
             }
             catch(NoClassPropertyException exc)
             {
+                new DTOQueryResult { };
                 DTOQueryResult errorResult = new DTOQueryResult
                 {
                     NextResult = null,

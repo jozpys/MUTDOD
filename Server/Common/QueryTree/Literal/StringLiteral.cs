@@ -14,10 +14,12 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public StringLiteral() : base(ElementType.LITERAL){}
         [DataMember]
         public String Value { get; set; }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             var literalDto = new QueryDTO { Value = Value };
             return literalDto;
         }
+
     }
 }

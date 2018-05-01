@@ -4,41 +4,98 @@
                     x:Class="OdraIDE.QueryPlan.TreeResultPadView">
 
     <DataTemplate DataType="{x:Type local:TreeResultPad}">
-        <local:TreeListView DataContext="{Binding Model1 }" ItemsSource="{Binding QueryTree}" AllowsColumnReorder="True">
+        <StackPanel>
+            <local:TreeListView DataContext="{Binding Model }" ItemsSource="{Binding QueryPlan}" AllowsColumnReorder="True">
                 <!--Create an item template to specify the ItemsSource-->
                 <local:TreeListView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children }" />
+                    <HierarchicalDataTemplate ItemsSource="{Binding Childrens }" />
                 </local:TreeListView.ItemTemplate>
                 <local:TreeListView.Columns>
                     <!--Create the first column containing the expand button and the type name.-->
-                    <GridViewColumn Header="Name" Width="200">
+                    <GridViewColumn Header="Id" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <!--The Expander Button (can be used in any column (typically the first one))-->
                                     <local:TreeListViewExpander/>
                                     <!--Display the name of the DataElement-->
-                                    <TextBlock Text="{Binding name }"/>
+                                    <TextBlock Text="{Binding Id }"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!--Create a second column containing the number of children.-->
-                    <GridViewColumn Header="Children" Width="100">
+                    <GridViewColumn Header="ParentId" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <!--Display the size of the DataElement-->
-                                <TextBlock Text="{Binding id}" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding ParentId}" HorizontalAlignment="Right"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!--Create a third column containing the brush of the material.-->
+                    <GridViewColumn Header="ElementType" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding ElementType}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Create column-->
+                    <GridViewColumn Header="AccessType" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding AccessType}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Create column-->
+                    <GridViewColumn Header="AccessObject" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding AccessObject}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Create column-->
+                    <GridViewColumn Header="Value" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding Value}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Create column-->
+                    <GridViewColumn Header="Cost" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding Cost}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--Create column-->
+                    <GridViewColumn Header="Cardinality" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--Display the size of the DataElement-->
+                                <TextBlock Text="{Binding Cardinality}" HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </local:TreeListView.Columns>
                 <!--Create some sample data-->
             </local:TreeListView>
+            <Label DataContext="{Binding Model }" Content="{Binding ErrorMessage}"></Label>
+        </StackPanel>
+
     </DataTemplate>
 
-    
-    
-   
+
+
+
 </ResourceDictionary>

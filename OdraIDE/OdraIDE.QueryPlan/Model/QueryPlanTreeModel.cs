@@ -1,47 +1,52 @@
-﻿using OdraIDE.QueryPlan.Model;
+﻿using OdraIDE.QueryPlan;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MUTDOD.Common;
 
-namespace OdraIDE.QueryPlan
+namespace OdraIDE.QueryPlan.Model
 {
     public class QueryPlanTreeModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public QueryPlanTreeModel()
         {
-            TreeTest t1 = new TreeTest();
-            t1.id = 1;
-            t1.name = "pierwszy";
-
-            TreeTest t2 = new TreeTest();
-            t2.id = 2;
-            t2.name = "drugi";
-            t1.Children = new List<TreeTest>();
-            t1.Children.Add(t2);
-            OnPropertyChanged("QueryTree");
-
-            treeTest = new List<TreeTest>();
-            treeTest.Add(t1);
             
 
         }
-        private List<TreeTest> treeTest;
-        public List<TreeTest> QueryTree
+
+        private List<MUTDOD.Common.QueryPlan> queryPlan;
+        private string errorMessage;
+
+        public string ErrorMessage
         {
             get
             {
-                return treeTest;
+                return errorMessage;
             }
             set
-            {   
-                treeTest = value;
-                OnPropertyChanged("QueryTree");
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
             }
         }
+
+        public List<MUTDOD.Common.QueryPlan> QueryPlan
+        {
+            get
+            {
+                return queryPlan;
+            }
+            set
+            {
+                queryPlan = value;
+                OnPropertyChanged("QueryPlan");
+            }
+        }
+
         virtual protected void OnPropertyChanged(string propName)
         {
             if (PropertyChanged != null)

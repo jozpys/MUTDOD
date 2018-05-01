@@ -74,7 +74,7 @@ namespace OdraIDE.QueryPlan
     /// </summary>
     public class TreeListViewConverter : IValueConverter
     {
-        public const double Indentation = 10;
+        public const double Indentation = 20;
 
         #region IValueConverter Members
 

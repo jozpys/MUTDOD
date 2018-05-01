@@ -13,9 +13,11 @@ namespace MUTDOD.Server.Common.QueryTree
     {
         public RightOperand() : base(ElementType.RIGHT_OPERAND){}
 
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             return SingleElement().Execute(parameters);
         }
+
     }
 }

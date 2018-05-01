@@ -1,12 +1,13 @@
 ﻿using MUTDOD.Common.Types;
 using System;
 using System.Collections.Generic;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace IndexPlugin
 {
-    public delegate void settingsChangedHandler(IIndex source, string newSettingsXML);
+    public delegate void settingsChangedHandler<T>(IIndex<T> source, string newSettingsXML);
 
-    public interface IIndex : IDisposable
+    public interface IIndex<T> : IDisposable
     {
         string Name { get; }
         IndexData EmptyIndexData { get; }
@@ -14,7 +15,7 @@ namespace IndexPlugin
         Type[] AvailableIndexingTypes { get; }
 
         //delegat wywolywany jeżeli zarządca indeksów ma zapisać ustawienia tego indeksu
-        settingsChangedHandler SettingsChanged { get; set; }
+        settingsChangedHandler<T> SettingsChanged { get; set; }
         //przekazani zapisanych ustawień z zarzadcy indeksami
         void SetSettings(string xml);
 
@@ -28,9 +29,9 @@ namespace IndexPlugin
         IndexData rebuildIndex(IndexData indexData);
 
         //zindeksowanie podanych atrybutów w obiekcie
-        IndexData AddObject(IndexData indexData, Oid obj, String[] attributes);
+        IndexData AddObject(IndexData indexData, Oid obj, String[] attributes, QueryParameters parameters);
         //zindeksowanie wszystkich atrybutów w obiekcie
-        IndexData AddObject(IndexData indexData, Oid obj);
+        IndexData AddObject(IndexData indexData, Oid obj, QueryParameters parameters);
 
         //zindeksowanie podanych atrybutów dynamicznej roli związanej z podanym obiektem
         IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, String[] attributes);
@@ -38,9 +39,9 @@ namespace IndexPlugin
         IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role);
 
         //usunięcie podanych zindeksowanych atrybutów obiektu
-        IndexData RemoveObject(IndexData indexData, Oid obj, String[] attributes);
+        IndexData RemoveObject(IndexData indexData, Oid obj, String[] attributes, QueryParameters parameters);
         //usuniecie wszystkich zindeksowanych atrybutów obiektu
-        IndexData RemoveObject(IndexData indexData, Oid obj);
+        IndexData RemoveObject(IndexData indexData, Oid obj, QueryParameters parameters);
 
         //usunięcie podanych zindeksowanych atrybutów dynamicznej roli związanej z podanym obiektem
         IndexData RemoveDynamicRole(IndexData indexData, Oid obj, DynamicRole role, String[] attributes);
@@ -56,9 +57,9 @@ namespace IndexPlugin
         Guid[] GetIndexedDynamicRoles(IndexData indexData, int? packageSize, int skipItemsCount);
 
         //zwrócenie OID obiektów które są danej klasy - complexExtension na true oznacza także obiekty które dziedziczą ze wskazanego typu
-        Guid[] FindObjects(IndexData indexData, Type OIDClass, bool complexExtension, out int? readedObjects);
+        Guid[] FindObjects(IndexData indexData, T OIDClass, bool complexExtension, out int? readedObjects);
         //zwrócenie OID obiektów które są danej klasy oraz mają wskazane atrybuty zgodne z porównywanymi wartosciami - complexExtension na true oznacza także obiekty które dziedziczą ze wskazanego typu
-        Guid[] FindObjects(IndexData indexData, Type OIDClass, bool complexExtension, String[] attributes,
+        Guid[] FindObjects(IndexData indexData, T OIDClass, bool complexExtension, String[] attributes,
                           object[] values, CompareType[] compareTypes, out int? readedObjects);
 
         //zwrócenie OID obiektów które posiadają podaną dynamiczną rolę
@@ -85,6 +86,10 @@ namespace IndexPlugin
         IndexOperationCost RoleIndexRemoveCost(int indexedObjects);
         //zwrócenie kosztu znalezienia zindeksowanych obiektów spełniających zadane warunki przy posiadaniu już podanej liczby zindeksowany obiektów
         IndexOperationCost RoleFindCost(int indexedObjects);
+        //zwraca typy zindeksowanych obiektów
+        string[] GetTypesNameIndexedObjects(IndexData indexData);
+        //zwraca atrybuty po których indeksowane są obiekty danego typu
+        string[] GetIndexedAttribiutesForType(IndexData indexData, string type);
     }
 
     public enum CompareType
@@ -162,13 +167,13 @@ namespace IndexPlugin
         }
     }
 
-    public class WrongAttributeException : Exception
+    public class WrongAttributeException<T> : Exception
     {
         private string _msg;
-        private Type _objcetType;
+        private T _objcetType;
         private String _wrongAttribute;
 
-        public WrongAttributeException(Type objcetType, String wrongAttribute, string msg)
+        public WrongAttributeException(T objcetType, String wrongAttribute, string msg)
             : base()
         {
             _wrongAttribute = wrongAttribute;
@@ -181,7 +186,7 @@ namespace IndexPlugin
             get
             {
                 return string.Format("{0}. Unable to find {1} attribiute in {2} class", _msg, _wrongAttribute,
-                                     _objcetType.FullName);
+                                     _objcetType.ToString());
             }
         }
     }

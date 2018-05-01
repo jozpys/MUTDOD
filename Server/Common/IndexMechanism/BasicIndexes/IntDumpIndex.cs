@@ -4,11 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using IndexPlugin;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Types;
 
 namespace BasicIndexes
 {
-    public class IntDumpIndex : IIndex
+    public class IntDumpIndex : IIndex<Type>
     {
         #region Implementation of IDisposable
 
@@ -32,10 +33,10 @@ namespace BasicIndexes
 
         public Type[] AvailableIndexingTypes
         {
-            get { return new Type[] {typeof (int)}; }
+            get { return new Type[] { typeof(int) }; }
         }
 
-        public settingsChangedHandler SettingsChanged { get; set; }
+        public settingsChangedHandler<Type> SettingsChanged { get; set; }
 
         public void SetSettings(string xml)
         {
@@ -67,13 +68,13 @@ namespace BasicIndexes
             if (indexData == null)
                 return new ListData<int>();
             else if (!(indexData is ListData<int>))
-                throw new WrongIndexDataException(typeof (ListData<int>), indexData.GetType(),
+                throw new WrongIndexDataException(typeof(ListData<int>), indexData.GetType(),
                                                   "Nieoczekiwany typ danych o indeksie");
             else
                 return indexData as ListData<int>;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             ListData<int> ld = getStorageData(indexData);
 
@@ -82,28 +83,28 @@ namespace BasicIndexes
             foreach (String attribute in attributes)
             {
                 if (objFields.Count(p => p.Name == attribute) != 1)
-                    throw new WrongAttributeException(obj.GetType(), attribute,
+                    throw new WrongAttributeException<Type>(obj.GetType(), attribute,
                                                       "Nie odnaleziono podanego atrybutu w wskazanym obiekcie");
-                else if (objFields.Single(p => p.Name == attribute).GetValue(obj).GetType() != typeof (int))
+                else if (objFields.Single(p => p.Name == attribute).GetValue(obj).GetType() != typeof(int))
                     throw new WrongTypeToIndexException(objFields.Single(p => p.Name == attribute).GetType(),
                                                         string.Format("Unnsupported type of attribiute {0}", attribute));
             }
 
             foreach (String attribute in attributes)
             {
-                int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
+                int attributeValue = (int)objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
                 ld.Data.Add(new storeItem<int>
-                                {val = attributeValue, attribiute = attribute, type = obj.GetType(), ID = obj.Id});
+                { val = attributeValue, attribiute = attribute, type = obj.GetType(), ID = obj.Id });
             }
 
             return ld;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj)
+        public IndexData AddObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return AddObject(indexData, obj, attribiutes);
+            return AddObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -191,7 +192,7 @@ namespace BasicIndexes
             for (int i = 0; i < values.Count(); i++)
             {
                 List<Guid> r =
-                    (ld.Data.Where(p => p.type == OIDClass && p.attribiute == attributes[i] && isTrue(p.val, (int) values[i], compareTypes[i])).Select(
+                    (ld.Data.Where(p => p.type == OIDClass && p.attribiute == attributes[i] && isTrue(p.val, (int)values[i], compareTypes[i])).Select(
                         p => p.ID).Distinct().ToList());
                 readedObjects += r.Count();
                 ret.AddRange(r);
@@ -306,6 +307,31 @@ namespace BasicIndexes
         }
 
         public IndexOperationCost RoleFindCost(int indexedObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetTypesNameIndexedObjects(IndexData indexData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetIndexedAttribiutesForType(string t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IndexData RemoveObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IndexData RemoveObject(IndexData indexData, Oid obj, QueryParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetIndexedAttribiutesForType(IndexData indexData, string type)
         {
             throw new NotImplementedException();
         }

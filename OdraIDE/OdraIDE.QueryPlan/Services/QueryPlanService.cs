@@ -1,5 +1,4 @@
 ﻿using OdraIDE.Core;
-using OdraIDE.QueryPlan.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -16,14 +15,20 @@ namespace OdraIDE.QueryPlan.Services
         private TreeResultPad treeResultPad { get; set; }
 
 
-        public void ShowQueryPlan(List<TreeTest> lista)
+        public void ShowQueryPlan(List<MUTDOD.Common.QueryPlan> queryPlan)
         {
-            treeResultPad.ShowResult(lista);
+            treeResultPad.ShowResult(queryPlan);
         }
+          
 
         public void Clear()
         {
             treeResultPad.Clear();
+        }
+
+        public void ShowErrorMessage(string errorMessage)
+        {
+            treeResultPad.ShowErrorMessage(errorMessage);
         }
     }
 }

@@ -8,7 +8,7 @@ using MUTDOD.Common;
 namespace IndexMechanism.IndexManager
 {
     [Serializable]
-    public class IndexInfo
+    public class IndexInfo<T>
     {
         public IndexInfo()
         {
@@ -44,7 +44,7 @@ namespace IndexMechanism.IndexManager
 
         #region Serialization methods
 
-        internal static bool Save(IndexInfo ixi, string path)
+        internal static bool Save(IndexInfo<T> ixi, string path)
         {
             bool ret = false;
 
@@ -52,45 +52,45 @@ namespace IndexMechanism.IndexManager
             {
                 using (TextWriter textWriter = new StreamWriter(path))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof (IndexInfo));
+                    XmlSerializer serializer = new XmlSerializer(typeof(IndexInfo<T>));
                     serializer.Serialize(textWriter, ixi);
                     textWriter.Close();
                     ret = true;
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Saved IndexInfo: {0}", ixi.IndexClassName), MessageLevel.Info);
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Saved IndexInfo: {0}", ixi.IndexClassName), MessageLevel.Info);
                     ixi._xmlFileLoacation = path;
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Unable to save IndexInfo\n{0}", ex), MessageLevel.Warning);
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Unable to save IndexInfo\n{0}", ex), MessageLevel.Warning);
             }
 
             return ret;
         }
 
-        internal static IndexInfo Load(string path)
+        internal static IndexInfo<T> Load(string path)
         {
-            IndexInfo ixi = null;
+            IndexInfo<T> ixi = null;
 
             try
             {
                 using (TextReader textReader = new StreamReader(path))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof (IndexInfo));
-                    ixi = serializer.Deserialize(textReader) as IndexInfo;
+                    XmlSerializer serializer = new XmlSerializer(typeof(IndexInfo<T>));
+                    ixi = serializer.Deserialize(textReader) as IndexInfo<T>;
                     textReader.Close();
                     ixi._xmlFileLoacation = path;
                     ixi.IndexStatistic.StatisticsChangedHandler += new StatisticsChanged(ixi.saveAfterStatisticsChanged);
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism", message: "Loaded IndexInfo: " + ixi.IndexClassName, messageLevel: MessageLevel.Info);
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", message: "Loaded IndexInfo: " + ixi.IndexClassName, messageLevel: MessageLevel.Info);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Unable to load IndexInfo\n{0}", ex), MessageLevel.Error);
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Unable to load IndexInfo\n{0}", ex), MessageLevel.Error);
             }
 
             return ixi;
@@ -125,9 +125,9 @@ namespace IndexMechanism.IndexManager
                 }
                 catch (Exception ex)
                 {
-                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
-                            string.Format("Iterating types in index plugin {0} failed\n{1}", this.IndexFileName,ex.Message),
+                    if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                        MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
+                            string.Format("Iterating types in index plugin {0} failed\n{1}", this.IndexFileName, ex.Message),
                             MessageLevel.Error);
                     return false;
                 }
@@ -139,7 +139,7 @@ namespace IndexMechanism.IndexManager
                 if (t.Count() == 1)
                 {
                     Type type = t.Single();
-                    IndexPlugin.IIndex i = (IndexPlugin.IIndex) Activator.CreateInstance(type);
+                    IndexPlugin.IIndex<string> i = (IndexPlugin.IIndex<string>)Activator.CreateInstance(type);
 
                     if (!i.EmptyIndexData.GetType().IsSerializable)
                         throw new Exception("IndexData must be serializable!");
@@ -150,8 +150,8 @@ namespace IndexMechanism.IndexManager
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",
                         string.Format("Unable to read index assembly {0} from file {1}\n{2}", this.IndexClassName,
                                       this.IndexFileName, ex), MessageLevel.Error);
             }
@@ -169,13 +169,13 @@ namespace IndexMechanism.IndexManager
                 File.Delete(this._xmlFileLoacation);
                 ret = true;
 
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism","Removed IndexInfo XML file", MessageLevel.Info);
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", "Removed IndexInfo XML file", MessageLevel.Info);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Unable to remove IndexInfo XML file\n{0}", ex), MessageLevel.Error);
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism", string.Format("Unable to remove IndexInfo XML file\n{0}", ex), MessageLevel.Error);
             }
             return ret;
         }

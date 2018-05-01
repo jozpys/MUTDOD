@@ -204,5 +204,10 @@ namespace IndexMechanismAdminConsole
             search.Enabled = enable;
             SearchObjectsNOAttribiutesNeeded.Enabled = enable;
         }
+
+        private void SearchForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

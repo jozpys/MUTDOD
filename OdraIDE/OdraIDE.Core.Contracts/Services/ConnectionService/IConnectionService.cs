@@ -25,8 +25,11 @@ namespace OdraIDE.Core
         void CancelExecutingQuery();
         IList Databases { get; }
         SystemInfo SystemInfo { get; }
+
+        void GetQueryPlan(DatabaseInfo dbName, IQuery query, GetQueryPlanCompleted getQueryPlanCompleted);
     }
 
+    public delegate void GetQueryPlanCompleted(ExecuteQueryStatus status, IQueryPlanReslult result);
     public delegate void ExecuteQueryCompleted(ExecuteQueryStatus status, IQueryResult result);
     public delegate void GetSystemInfoCompleted(ExecuteQueryStatus status, SystemInfo systemInfo, IQueryResult result);
     public delegate void CreateNewDatabasCompleted(ExecuteQueryStatus status, DatabaseInfo database, IQueryResult result);

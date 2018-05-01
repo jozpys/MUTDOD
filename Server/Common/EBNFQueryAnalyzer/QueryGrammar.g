@@ -12,7 +12,13 @@ statement: PARAM system_operation
 		 | alter_interface
 		 | alter_class
 		 | drop_stmt
+         | create_index
 		 ;
+
+create_index: K_CREATE K_INDEX index_name K_ON index_definition;
+index_definition: class_name O_PAREN index_attribute (COMMA index_attribute)* C_PAREN;
+index_attribute: NAME;
+index_name: NAME;
 
 system_operation: op = SYS_INFO
 				| op = CREATE_DB db_name = NAME
@@ -28,7 +34,7 @@ get_header: class_name;
 
 where_clause: K_WHERE clause;
 
-and_or_clause: (AND|OR) clause and_or_clause*;
+and_or_clause: (AND|OR) clause;
 
 clause: where_operation and_or_clause?
 	  | O_PAREN clause C_PAREN
@@ -248,6 +254,9 @@ K_UNIQUE:	'UNIQUE'|'unique';
 K_UPDATE:	'UPDATE'|'update';
 K_WHERE:	'WHERE'|'where';
 K_WHILE:	'WHILE'|'while';
+K_CREATE:   'CREATE'|'create';
+K_INDEX:    'INDEX'|'index';
+K_ON:       'ON'|'on';
 
 k_add_dr:	K_ADD K_DYNAMIC K_ROLE;
 k_drole:	K_DYNAMIC K_ROLE;

@@ -15,5 +15,6 @@ namespace MUTDOD.Common
         ModuleOperation = 2 << 3,
         QueryExecution = 2 << 4,
         Operations = 2 << 5,
+        QueryPlan = 2 << 6,
     }
 }

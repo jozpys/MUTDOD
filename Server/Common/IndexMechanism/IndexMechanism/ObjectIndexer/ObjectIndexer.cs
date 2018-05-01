@@ -3,574 +3,575 @@ using System.Collections.Generic;
 using System.Linq;
 using IndexPlugin;
 using MUTDOD.Common;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Indexing;
 using MUTDOD.Common.Types;
 using CompareType = MUTDOD.Common.ModuleBase.Indexing.CompareType;
 
 namespace IndexMechanism.ObjectIndexer
 {
-    internal class ObjectIndexer
+    internal class ObjectIndexer<T>
     {
-        internal void AddObject(int IndexID, IIndex index, Oid obj, String[] attributes)
+        internal void AddObject(int IndexID, IIndex<T> index, Oid obj, String[] attributes, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, attributes);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, attributes, queryParameters);
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexAdd,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void AddObjects(int IndexID, IIndex index, Oid[] obj, String[] attributes)
+        internal void AddObjects(int IndexID, IIndex<T> index, Oid[] obj, String[] attributes, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
-                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, attributes);
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, attributes, queryParameters);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneObjectIndexAdd,
                         (float)
-                            (DateTime.Now.Ticks - indexStart.Ticks)/
+                            (DateTime.Now.Ticks - indexStart.Ticks) /
                         10000000);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
-            IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
+            IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddObject(int IndexID, IIndex index, Oid obj)
+        internal void AddObject(int IndexID, IIndex<T> index, Oid obj, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexData newIndexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, obj, queryParameters);
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexAdd,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void AddObjects(int IndexID, IIndex index, Oid[] obj)
+        internal void AddObjects(int IndexID, IIndex<T> index, Oid[] obj, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
-                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid);
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                    indexStorage = index.AddObject(indexStorage ?? index.EmptyIndexData, oid, queryParameters);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneObjectIndexAdd,
                         (float)
-                            (DateTime.Now.Ticks - indexStart.Ticks)/
+                            (DateTime.Now.Ticks - indexStart.Ticks) /
                         10000000);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
-            IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
+            IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role)
+        internal void AddDynamicRole(int IndexID, IIndex<T> index, Oid obj, DynamicRole role)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.AddDynamicRole(indexStorage ?? index.EmptyIndexData, obj, role);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneRoleIndexing,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void AddDynamicRoles(int IndexID, IIndex index, Oid[] obj, DynamicRole role)
+        internal void AddDynamicRoles(int IndexID, IIndex<T> index, Oid[] obj, DynamicRole role)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
                     indexStorage = index.AddDynamicRole(indexStorage ?? index.EmptyIndexData, oid, role);
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneRoleIndexing,
                         (float)
-                            (DateTime.Now.Ticks - indexStart.Ticks)/
+                            (DateTime.Now.Ticks - indexStart.Ticks) /
                         10000000);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
-            IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
+            IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void AddDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role, String[] attributes)
+        internal void AddDynamicRole(int IndexID, IIndex<T> index, Oid obj, DynamicRole role, String[] attributes)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.AddDynamicRole(indexStorage ?? index.EmptyIndexData, obj, role,
                     attributes);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneRoleIndexing,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void AddDynamicRoles(int IndexID, IIndex index, Oid[] obj, DynamicRole role, String[] attributes)
+        internal void AddDynamicRoles(int IndexID, IIndex<T> index, Oid[] obj, DynamicRole role, String[] attributes)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 foreach (Oid oid in obj)
                 {
                     DateTime indexStart = DateTime.Now;
                     indexStorage = index.AddDynamicRole(indexStorage ?? index.EmptyIndexData, oid, role, attributes);
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                         IndexCostInformation.OneRoleIndexing,
                         (float)
-                            (DateTime.Now.Ticks - indexStart.Ticks)/
+                            (DateTime.Now.Ticks - indexStart.Ticks) /
                         10000000);
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
-            IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, indexStorage);
+            IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, indexStorage);
         }
 
-        internal void RemoveObject(int IndexID, IIndex index, Oid obj, String[] attributes)
+        internal void RemoveObject(int IndexID, IIndex<T> index, Oid obj, String[] attributes, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.RemoveObject(indexStorage ?? index.EmptyIndexData, obj, attributes);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexData newIndexStorage = index.RemoveObject(indexStorage ?? index.EmptyIndexData, obj, attributes, queryParameters);
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexRemove,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void RemoveObject(int IndexID, IIndex index, Oid obj)
+        internal void RemoveObject(int IndexID, IIndex<T> index, Oid obj, QueryParameters queryParameters)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
-                IndexData newIndexStorage = index.RemoveObject(indexStorage ?? index.EmptyIndexData, obj);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexData newIndexStorage = index.RemoveObject(indexStorage ?? index.EmptyIndexData, obj, queryParameters);
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexRemove,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void RemoveDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role, String[] attributes)
+        internal void RemoveDynamicRole(int IndexID, IIndex<T> index, Oid obj, DynamicRole role, String[] attributes)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.RemoveDynamicRole(indexStorage ?? index.EmptyIndexData, obj, role,
                     attributes);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneRoleIndexRemove,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void RemoveDynamicRole(int IndexID, IIndex index, Oid obj, DynamicRole role)
+        internal void RemoveDynamicRole(int IndexID, IIndex<T> index, Oid obj, DynamicRole role)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.RemoveDynamicRole(indexStorage ?? index.EmptyIndexData, obj, role);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneRoleIndexRemove,
                     (float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
                     10000000);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal void ClearIndexedObjects(int IndexID, IIndex index)
+        internal void ClearIndexedObjects(int IndexID, IIndex<T> index)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 IndexData newIndexStorage = index.RemoveObjects(indexStorage ?? index.EmptyIndexData);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] GetIndexedObjects(int IndexID, IIndex index, int? packageSize, int skipItemsCount)
+        internal Guid[] GetIndexedObjects(int IndexID, IIndex<T> index, int? packageSize, int skipItemsCount)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 return index.GetIndexedObjects(indexStorage, packageSize, skipItemsCount);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] GetIndexedDynamicRoles(int IndexID, IIndex index, int? packageSize, int skipItemsCount)
+        internal Guid[] GetIndexedDynamicRoles(int IndexID, IIndex<T> index, int? packageSize, int skipItemsCount)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 return index.GetIndexedDynamicRoles(indexStorage, packageSize, skipItemsCount);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, Type type, bool complexExtension)
+        internal Guid[] FindObjects(int IndexID, IIndex<T> index, T type, bool complexExtension)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 int? operations;
                 Guid[] ret = index.FindObjects(indexStorage ?? index.EmptyIndexData, type, complexExtension,
                     out operations);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectSearch,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/ret.Length == 0
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / ret.Length == 0
                         ? 1
                         : ret.Length);
                 if ((operations ?? 0) > 0)
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
-                        ret.Length/(float) operations);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
+                        ret.Length / (float)operations);
                 return ret;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, Type type, bool complexExtension, String[] attributes,
+        internal Guid[] FindObjects(int IndexID, IIndex<T> index, T type, bool complexExtension, String[] attributes,
             object[] values, CompareType[] compareTypes)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 int? operations;
                 Guid[] ret = index.FindObjects(indexStorage ?? index.EmptyIndexData, type, complexExtension, attributes,
                     values, compareTypes.ToList().Select(convert).ToArray(), out operations);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectSearch,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/ret.Length == 0
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / ret.Length == 0
                         ? 1
                         : ret.Length);
                 if ((operations ?? 0) > 0)
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
-                        ret.Length/(float) operations);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
+                        ret.Length / (float)operations);
                 return ret;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, DynamicRole dynamicRole)
+        internal Guid[] FindObjects(int IndexID, IIndex<T> index, DynamicRole dynamicRole)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 int? operations;
                 Guid[] ret = index.FindObjects(indexStorage ?? index.EmptyIndexData, dynamicRole, out operations);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.OneRoleSearch,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.OneRoleSearch,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/ret.Length == 0
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / ret.Length == 0
                         ? 1
                         : ret.Length);
                 if ((operations ?? 0) > 0)
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
-                        ret.Length/(float) operations);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
+                        ret.Length / (float)operations);
                 return ret;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal Guid[] FindObjects(int IndexID, IIndex index, DynamicRole dynamicRole, String[] attributes,
+        internal Guid[] FindObjects(int IndexID, IIndex<T> index, DynamicRole dynamicRole, String[] attributes,
             object[] values, CompareType[] compareTypes)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 int? operations;
                 Guid[] ret = index.FindObjects(indexStorage ?? index.EmptyIndexData, dynamicRole, attributes, values,
                     compareTypes.ToList().Select(convert).ToArray(), out operations);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.OneRoleSearch,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.OneRoleSearch,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/ret.Length == 0
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / ret.Length == 0
                         ? 1
                         : ret.Length);
                 if ((operations ?? 0) > 0)
-                    IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
-                        ret.Length/(float) operations);
+                    IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID, IndexCostInformation.HitRatio,
+                        ret.Length / (float)operations);
                 return ret;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal bool CheckIndexValid(int IndexID, IIndex index)
+        internal bool CheckIndexValid(int IndexID, IIndex<T> index)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 return index.isValid(indexStorage ?? index.EmptyIndexData);
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal bool RebuildIndex(int IndexID, IIndex index)
+        internal bool RebuildIndex(int IndexID, IIndex<T> index)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 IndexData newIndexStorage = index.rebuildIndex(indexStorage ?? index.EmptyIndexData);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
 
                 return true;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal bool RebuildIndexWithObjects(int IndexID, IIndex index, Oid[] objects)
+        internal bool RebuildIndexWithObjects(int IndexID, IIndex<T> index, Oid[] objects)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.rebuildIndex(indexStorage ?? index.EmptyIndexData, objects);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexRefresh,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/objects.Length);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / objects.Length);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
 
                 return true;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
             }
         }
 
-        internal bool RebuildIndexWithRoles(int IndexID, IIndex index, Dictionary<Oid, DynamicRole[]> objects)
+        internal bool RebuildIndexWithRoles(int IndexID, IIndex<T> index, Dictionary<Oid, DynamicRole[]> objects)
         {
-            IndexData indexStorage = IndexStorageManager.IndexStorageManager.GetIndexData(IndexID);
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
             try
             {
                 DateTime indexStart = DateTime.Now;
                 IndexData newIndexStorage = index.rebuildIndex(indexStorage ?? index.EmptyIndexData, objects);
-                IndexManager.IndexManager.GetInstance().includeInStatistics(IndexID,
+                IndexManager.IndexManager<T>.GetInstance().includeInStatistics(IndexID,
                     IndexCostInformation.OneObjectIndexRefresh,
                     ((float)
-                        (DateTime.Now.Ticks - indexStart.Ticks)/
-                     10000000)/objects.Keys.Count);
-                IndexStorageManager.IndexStorageManager.UpdateIndexData(IndexID, newIndexStorage);
+                        (DateTime.Now.Ticks - indexStart.Ticks) /
+                     10000000) / objects.Keys.Count);
+                IndexStorageManager.IndexStorageManager<T>.UpdateIndexData(IndexID, newIndexStorage);
 
                 return true;
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger()
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger()
                         .Log("IndexMechanism", string.Format("Index {0} throwed exception\n{1}", index.GetType(), ex),
                             MessageLevel.Error);
                 throw ex;
@@ -600,6 +601,18 @@ namespace IndexMechanism.ObjectIndexer
                 default:
                     throw new ApplicationException(string.Format("Unknown compare type: {0}", t));
             }
+        }
+        public string[] GetTypesNameIndexedObjects(int IndexID, IIndex<T> index)
+        {
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(IndexID);
+            return index.GetTypesNameIndexedObjects(indexStorage);
+
+        }
+
+        public string[] GetIndexedAttribiutesForType(int indexId, IIndex<T> index, string className)
+        {
+            IndexData indexStorage = IndexStorageManager.IndexStorageManager<T>.GetIndexData(indexId);
+            return index.GetIndexedAttribiutesForType(indexStorage, className);
         }
     }
 }

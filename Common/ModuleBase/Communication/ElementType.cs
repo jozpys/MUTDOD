@@ -30,14 +30,15 @@ namespace MUTDOD.Common.ModuleBase.Communication
         SELECT,
         CLASS_NAME,
         WHERE,
-        IS_NULL,
-        IS_NOT_NULL,
-        COMPERISION,
+        WHERE_OPERATION,
         LEFT_OPERAND,
         RIGHT_OPERAND,
         OPERATOR,
         CLASS_PROPERTY,
         LITERAL,
-        DATA_TYPE
+        DATA_TYPE,
+        INDEX_NAME,
+        INDEX_ATTRIBUTE,
+        CREATE_INDEX
     }
 }

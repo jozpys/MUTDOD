@@ -13,7 +13,6 @@ using MUTDOD.Common.Communication;
 using MUTDOD.Common.Settings;
 using MUTDOD.Server.Common.CoreModule.Communication;
 using OdraIDE.Core.Services;
-using MUTDOD.Common.ModuleBase.Communication;
 
 namespace OdraIDE.Core.Connection
 {
@@ -23,7 +22,7 @@ namespace OdraIDE.Core.Connection
     {
         private static readonly ISettingsManager settingsManager = new HardcodedSettings();
         private static readonly IQuery _getSystemInfo = InternalQueries.SystemInfoQuery;
-        private static readonly DatabaseInfo _databaseInfoForSystemInfoQuery = new DatabaseInfo(){Name = string.Empty};
+        private static readonly DatabaseInfo _databaseInfoForSystemInfoQuery = new DatabaseInfo() { Name = string.Empty };
         public event EventHandler Connected;
         public event EventHandler Disconnected;
         public event EventHandler DatabasesChanged;
@@ -48,11 +47,11 @@ namespace OdraIDE.Core.Connection
         {
             if (m_serverChanel == null)
             {
-                
+
                 //EndpointAddress endPointAddress = FindMyServiceAddress();
 
                 ChannelFactory<ICentralServerContract> scf = new ChannelFactory<ICentralServerContract>(settingsManager.CentralServerRemoteBinding, settingsManager.CentralServerRemoteAdress);
-                
+
                 m_serverChanel = scf.CreateChannel();
 
                 //DiscoveryClient dicovery
@@ -108,7 +107,7 @@ namespace OdraIDE.Core.Connection
                 m_worker.WorkerSupportsCancellation = true;
                 m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
 
-                m_worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e)
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
                 {
                     var qr = e.Result as IQueryResult;
                     IsExecutingChanged(this, new IsExecutingEventArgs(false));
@@ -128,7 +127,7 @@ namespace OdraIDE.Core.Connection
                         if (qr.QueryResultType == ResultType.SystemInfo)
                         {
                             StringReader txtR = new StringReader(qr.StringOutput);
-                            XmlSerializer xmlSerializer = new XmlSerializer(typeof (SystemInfo));
+                            XmlSerializer xmlSerializer = new XmlSerializer(typeof(SystemInfo));
                             SystemInfo = xmlSerializer.Deserialize(txtR) as SystemInfo;
 
                             Databases = SystemInfo.Databases.Select(d => d.Name).ToList();
@@ -307,7 +306,8 @@ namespace OdraIDE.Core.Connection
             }
         }
 
-       /* public IQueryElement GetQueryPlan(IQuery query, ExecuteQueryCompleted executeQueryCompleted)
+
+        public void ExecuteQuery(DatabaseInfo dbName, IQuery query, ExecuteQueryCompleted executeQueryCompleted)
         {
             if (m_serverChanel == null)
             {
@@ -349,9 +349,47 @@ namespace OdraIDE.Core.Connection
                 IsExecutingChanged(this, new IsExecutingEventArgs(true));
                 m_worker.RunWorkerAsync(queryStruct);
             }
+        }
 
-        }*/
-        public void ExecuteQuery(DatabaseInfo dbName, IQuery query, ExecuteQueryCompleted executeQueryCompleted)
+        void DoExecuteQuery(object sender, DoWorkEventArgs e)
+        {
+            QueryStruct queryStruct = (QueryStruct)e.Argument;
+
+            try
+            {
+                e.Result = m_serverChanel.ExecuteQuery(new DatabaseInfo { Name = queryStruct.DbName.Name },
+                    new DTOQuery(queryStruct.Query));
+            }
+            catch (EndpointNotFoundException)
+            {
+                Disconnect();
+                throw;
+            }
+            catch (CommunicationException)
+            {
+                Disconnect();
+                throw;
+            }
+            if (m_worker.WorkerSupportsCancellation)
+            {
+                while (true)
+                {
+                    if (m_worker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    if (e.Result != null)
+                    {
+                        return;
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+
+        }
+
+        public void GetQueryPlan(DatabaseInfo dbName, IQuery query, GetQueryPlanCompleted getQueryPlanCompleted)
         {
             if (m_serverChanel == null)
             {
@@ -362,30 +400,37 @@ namespace OdraIDE.Core.Connection
             {
                 m_worker = new BackgroundWorker();
                 m_worker.WorkerSupportsCancellation = true;
-                m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
+                m_worker.DoWork += new DoWorkEventHandler(DoGetQueryPlan);
 
-                m_worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e)
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
                 {
 
                     IsExecutingChanged(this, new IsExecutingEventArgs(false));
-                    if (e.Error != null)
+                    var qr = e.Result as IQueryPlanReslult;
+                    IsExecutingChanged(this, new IsExecutingEventArgs(false));
+                    //TODO odbsluga wyjatkow
+                    if (qr == null || qr.QueryPlan == null)
+                    {
+                        getQueryPlanCompleted(ExecuteQueryStatus.Error, qr);
+                    }
+                    else if (e.Error != null)
                     {
                         messageService.ShowMessage(e.Error.Message, "Error");
-                        executeQueryCompleted(ExecuteQueryStatus.Error, null);
+                        getQueryPlanCompleted(ExecuteQueryStatus.Error, null);
                         Disconnected(this, EventArgs.Empty);
                     }
                     else if (e.Cancelled)
                     {
-                        executeQueryCompleted(ExecuteQueryStatus.Canceled, null);
+                        getQueryPlanCompleted(ExecuteQueryStatus.Canceled, null);
                     }
                     else
                     {
-                        var qr = e.Result as IQueryResult;
-                        executeQueryCompleted(ExecuteQueryStatus.Done, qr);
+                        getQueryPlanCompleted(ExecuteQueryStatus.Done, qr);
                     }
                 };
 
                 //wraps args to query structure
+
                 QueryStruct queryStruct = new QueryStruct();
                 queryStruct.DbName = dbName;
                 queryStruct.Query = query;
@@ -394,22 +439,22 @@ namespace OdraIDE.Core.Connection
                 m_worker.RunWorkerAsync(queryStruct);
             }
         }
+
         void DoGetQueryPlan(object sender, DoWorkEventArgs e)
         {
             QueryStruct queryStruct = (QueryStruct)e.Argument;
 
             try
             {
-                e.Result = m_serverChanel.ExecuteQuery(new DatabaseInfo { Name = queryStruct.DbName.Name },
+                e.Result = m_serverChanel.GetQueryPlan(new DatabaseInfo { Name = queryStruct.DbName.Name },
                     new DTOQuery(queryStruct.Query));
-               // e.Result = m_serverChanel.Get
             }
             catch (EndpointNotFoundException)
             {
                 Disconnect();
                 throw;
             }
-            catch (CommunicationException)
+            catch (CommunicationException ex)
             {
                 Disconnect();
                 throw;
@@ -432,43 +477,7 @@ namespace OdraIDE.Core.Connection
             }
 
         }
-        void DoExecuteQuery(object sender, DoWorkEventArgs e)
-        {
-            QueryStruct queryStruct = (QueryStruct)e.Argument;
 
-            try
-            {
-                e.Result = m_serverChanel.ExecuteQuery(new DatabaseInfo{Name = queryStruct.DbName.Name},
-                    new DTOQuery(queryStruct.Query));
-            }
-            catch (EndpointNotFoundException)
-            {
-                Disconnect();
-                throw;
-            }
-            catch (CommunicationException)
-            {
-                Disconnect();
-                throw;
-            }
-            if (m_worker.WorkerSupportsCancellation)
-            {
-                while (true)
-                {
-                    if (m_worker.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                    if (e.Result != null)
-                    {
-                        return;
-                    }
-                    Thread.Sleep(10);
-                }
-            }
-            
-        }
 
         public void CancelExecutingQuery()
         {
@@ -484,7 +493,7 @@ namespace OdraIDE.Core.Connection
 
         public IList Databases
         {
-            get 
+            get
             {
                 if (m_serverChanel == null)
                 {
@@ -501,6 +510,6 @@ namespace OdraIDE.Core.Connection
                     DatabasesChanged(this, EventArgs.Empty);
                 }
             }
-        }        
+        }
     }
 }

@@ -66,5 +66,10 @@ namespace MUTDOD.Server.Common.QueryTree
                 return new QueryDTO { Result = errorResult };
             }
         }
+
+        public override string GetValue()
+        {
+            return DatabaseName;
+        }
     }
 }

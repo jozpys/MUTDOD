@@ -37,12 +37,16 @@
       service="MUTDOD.Common.ModuleBase.IQueryAnalyzer, MUTDOD.Common.ModuleBase"
       type="MUTDOD.Server.Common.EBNFQueryAnalyzer.EBNFQueryAnalyzer, MUTDOD.Server.Common.EBNFQueryAnalyzer"/>
     <component
-      service="MUTDOD.Common.ModuleBase.IQueryOptimizer, MUTDOD.Common.ModuleBase"
-      type="MUTDOD.Server.Common.DummyQueryOptimizer.QueryOptimizer, MUTDOD.Server.Common.DummyQueryOptimizer"
+      service="MUTDOD.Common.ModuleBase.IqueryOptimizer, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.QueryOptimizer.QueryOptimizer, MUTDOD.Server.Common.QueryOptimizer"
       lifestyle="singleton"/>
     <component
-      service="MUTDOD.Common.ModuleBase.IIndexMechanism, MUTDOD.Common.ModuleBase"
-      type="MUTDOD.Server.Common.IndexMechanism.IndexMechanism, MUTDOD.Server.Common.IndexMechanism"
+      service="MUTDOD.Common.ModuleBase.IIndexMechanism`1[[System.String, mscorlib]], MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.IndexMechanism.IndexMechanism`1[[System.String, mscorlib]], MUTDOD.Server.Common.IndexMechanism"
+      lifestyle="singleton"/>
+    <component
+      service="MUTDOD.Common.ModuleBase.IServerSchemaStats, MUTDOD.Common.ModuleBase"
+      type="MUTDOD.Server.Common.ServerStats.ServerSchemaStats, MUTDOD.Server.Common.ServerStats"
       lifestyle="singleton"/>
   </components>
 </configuration>

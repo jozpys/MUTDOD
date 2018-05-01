@@ -5,10 +5,11 @@ using System.Reflection;
 using IndexPlugin;
 using BasicIndexes.BinaryTree;
 using MUTDOD.Common.Types;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace BasicIndexes
 {
-    public class IntIndex : IndexPlugin.IIndex
+    public class IntIndex : IIndex<Type>
     {
         private string _settings = string.Empty;
 
@@ -35,10 +36,10 @@ namespace BasicIndexes
 
         public Type[] AvailableIndexingTypes
         {
-            get { return new Type[] {typeof (int)}; }
+            get { return new Type[] { typeof(int) }; }
         }
 
-        public settingsChangedHandler SettingsChanged { get; set; }
+        public settingsChangedHandler<Type> SettingsChanged { get; set; }
 
         public void SetSettings(string xml)
         {
@@ -70,42 +71,42 @@ namespace BasicIndexes
             if (indexData == null)
                 return new IntBinaryTree();
             else if (!(indexData is IntBinaryTree))
-                throw new WrongIndexDataException(typeof (IntBinaryTree), indexData.GetType(),
+                throw new WrongIndexDataException(typeof(IntBinaryTree), indexData.GetType(),
                                                   "Nieoczekiwany typ danych o indeksie");
             else
                 return indexData as IntBinaryTree;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData AddObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             IntBinaryTree BT = getStorageData(indexData);
 
-            FieldInfo[] objFields = obj.GetType().GetFields();
+            /* FieldInfo[] objFields = obj.GetType().GetFields();
+
+             foreach (String attribute in attributes)
+             {
+                 if (objFields.Count(p => p.Name == attribute) != 1)
+                     throw new WrongAttributeException(obj.GetType(), attribute,
+                                                       "Nie odnaleziono podanego atrybutu w wskazanym obiekcie");
+                 else if (objFields.Single(p => p.Name == attribute).GetValue(obj).GetType() != typeof (int))
+                     throw new WrongTypeToIndexException(objFields.Single(p => p.Name == attribute).GetType(),
+                                                         string.Format("Unnsupported type of attribiute {0}", attribute));
+             }*/
 
             foreach (String attribute in attributes)
             {
-                if (objFields.Count(p => p.Name == attribute) != 1)
-                    throw new WrongAttributeException(obj.GetType(), attribute,
-                                                      "Nie odnaleziono podanego atrybutu w wskazanym obiekcie");
-                else if (objFields.Single(p => p.Name == attribute).GetValue(obj).GetType() != typeof (int))
-                    throw new WrongTypeToIndexException(objFields.Single(p => p.Name == attribute).GetType(),
-                                                        string.Format("Unnsupported type of attribiute {0}", attribute));
-            }
-
-            foreach (String attribute in attributes)
-            {
-                int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
-                BT.AddToBTvalue(obj, attribute, attributeValue);
+                // int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
+                BT.AddToBTvalue(obj, attribute, 1);
             }
 
             return BT;
         }
 
-        public IndexData AddObject(IndexData indexData, Oid obj)
+        public IndexData AddObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return AddObject(indexData, obj, attribiutes);
+            return AddObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData AddDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -118,7 +119,7 @@ namespace BasicIndexes
             throw new NotImplementedException();
         }
 
-        public IndexData RemoveObject(IndexData indexData, Oid obj, string[] attributes)
+        public IndexData RemoveObject(IndexData indexData, Oid obj, string[] attributes, QueryParameters queryParameters)
         {
             IntBinaryTree BT = getStorageData(indexData);
 
@@ -127,7 +128,7 @@ namespace BasicIndexes
             foreach (String attribute in attributes)
             {
                 if (objFields.Count(p => p.Name == attribute) != 1)
-                    throw new WrongAttributeException(obj.GetType(), attribute,
+                    throw new WrongAttributeException<Type>(obj.GetType(), attribute,
                                                       "Nie odnaleziono podanego atrybutu w wskazanym obiekcie");
                 //else if (objFields.Single(p => p.Name == attribute).GetType() != typeof(int))
                 //    throw new WrongTypeToIndexException(objFields.Single(p => p.Name == attribute).GetType(), string.Format("Unnsupported type of attribiute {0}", attribute));
@@ -135,9 +136,9 @@ namespace BasicIndexes
 
             foreach (String attribute in attributes)
             {
-                if (objFields.Single(p => p.Name == attribute).GetType() == typeof (int))
+                if (objFields.Single(p => p.Name == attribute).GetType() == typeof(int))
                 {
-                    int attributeValue = (int) objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
+                    int attributeValue = (int)objFields.Where(p => p.Name == attribute).Single().GetValue(obj);
                     BT.RemoveFromBTvalue(obj, attribute, attributeValue);
                 }
             }
@@ -145,11 +146,11 @@ namespace BasicIndexes
             return BT;
         }
 
-        public IndexData RemoveObject(IndexData indexData, Oid obj)
+        public IndexData RemoveObject(IndexData indexData, Oid obj, QueryParameters queryParameters)
         {
             FieldInfo[] objFields = obj.GetType().GetFields();
             String[] attribiutes = objFields.Select(p => p.Name).ToArray();
-            return RemoveObject(indexData, obj, attribiutes);
+            return RemoveObject(indexData, obj, attribiutes, queryParameters);
         }
 
         public IndexData RemoveDynamicRole(IndexData indexData, Oid obj, DynamicRole role, string[] attributes)
@@ -236,7 +237,7 @@ namespace BasicIndexes
                         {
                             if (baseType == OIDClass)
                             {
-                                foundOIDs.AddRange(BT.GetObjectsFromBT(OIDClass, attributes[i], (int) values[i],
+                                foundOIDs.AddRange(BT.GetObjectsFromBT(OIDClass, attributes[i], (int)values[i],
                                                                        compareTypes[i], out ro));
                                 readedObjects += ro;
                                 found = true;
@@ -270,41 +271,41 @@ namespace BasicIndexes
         public IndexOperationCost ObjectIndexingCost(int indexedObjects)
         {
             return new IndexOperationCost
-                       {
-                           AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
-                           OptimisticCost = 1,
-                           PessimisticCost = indexedObjects
-                       };
+            {
+                AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
+                OptimisticCost = 1,
+                PessimisticCost = indexedObjects
+            };
         }
 
         public IndexOperationCost ObjectIndexRefreshCost(int indexedObjects)
         {
             return new IndexOperationCost
-                       {
-                           AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
-                           OptimisticCost = 1,
-                           PessimisticCost = indexedObjects
-                       };
+            {
+                AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
+                OptimisticCost = 1,
+                PessimisticCost = indexedObjects
+            };
         }
 
         public IndexOperationCost ObjectIndexRemoveCost(int indexedObjects)
         {
             return new IndexOperationCost
-                       {
-                           AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
-                           OptimisticCost = 1,
-                           PessimisticCost = indexedObjects
-                       };
+            {
+                AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
+                OptimisticCost = 1,
+                PessimisticCost = indexedObjects
+            };
         }
 
         public IndexOperationCost ObjectFindCost(int indexedObjects)
         {
             return new IndexOperationCost
-                       {
-                           AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
-                           OptimisticCost = 1,
-                           PessimisticCost = indexedObjects
-                       };
+            {
+                AverageCost = Convert.ToInt32(Math.Log(indexedObjects, 2)),
+                OptimisticCost = 1,
+                PessimisticCost = indexedObjects
+            };
         }
 
         public IndexOperationCost RoleIndexingCost(int indexedObjects)
@@ -323,6 +324,21 @@ namespace BasicIndexes
         }
 
         public IndexOperationCost RoleFindCost(int indexedObjects)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetTypesNameIndexedObjects(IndexData indexData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetIndexedAttribiutesForType(string t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetIndexedAttribiutesForType(IndexData indexData, string type)
         {
             throw new NotImplementedException();
         }

@@ -14,6 +14,7 @@
           <DockableContent Name="StringResultsPad" AutoHide="false" />
           <DockableContent Name="GridResultsPad" AutoHide="false" />
           <DockableContent Name="GridTasksPad" AutoHide="false" />
+          <DockableContent Name="QueryPlanPad" AutoHide="false" />
         </DockablePane>
       </ResizingPanel>
       <Hidden />

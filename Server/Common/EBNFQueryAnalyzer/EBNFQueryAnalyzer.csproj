@@ -66,6 +66,14 @@
       <Project>{02C7D2E4-48B6-4C3E-89F4-F15A09DEE23F}</Project>
       <Name>ModuleBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IndexMechanism\BasicIndexes\BasicIndexes.csproj">
+      <Project>{ff13cab9-8fca-4923-b80a-956e5be8338f}</Project>
+      <Name>BasicIndexes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IndexMechanism\IndexMechanism\IndexMechanism.csproj">
+      <Project>{f60f8089-adb9-4d93-bf8a-059af83e3193}</Project>
+      <Name>IndexMechanism</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QueryTree\QueryTree.csproj">
       <Project>{D5E93D78-E622-491B-BC54-A0BD3CE37E67}</Project>
       <Name>QueryTree</Name>

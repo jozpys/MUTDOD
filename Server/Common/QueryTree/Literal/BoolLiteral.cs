@@ -14,6 +14,7 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public BoolLiteral() : base(ElementType.LITERAL){}
         [DataMember]
         public String Value { get; set; }
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             Boolean convertedValue = ConvertValue(Value);
@@ -30,5 +31,6 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
             else
                 throw new ApplicationException("Unknown BOOL_VALUE token value: " + value);
         }
+
     }
 }

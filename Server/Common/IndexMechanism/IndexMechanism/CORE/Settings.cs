@@ -7,7 +7,7 @@ using MUTDOD.Common;
 namespace IndexMechanism.CORE
 {
     [Serializable]
-    public class Settings
+    public class Settings<T>
     {
         [XmlElement]
         public string IndexesStorageDirectory
@@ -86,35 +86,35 @@ namespace IndexMechanism.CORE
         private int _indexesIdentity;
         private bool _indexesIdentityInitialized = false;
         private string _indexesDataStorageDirectory;
-        private static Settings _instance = null;
+        private static Settings<T> _instance = null;
 
 
-        internal static Settings GetInstance()
+        internal static Settings<T> GetInstance()
         {
             if (_instance == null)
             {
                 if (!File.Exists(SettingsXmlPath))
                 {
-                    (_instance = new Settings()).setDefaultValues();
+                    (_instance = new Settings<T>()).setDefaultValues();
                 }
                 else
                 {
                     using (TextReader textReader = new StreamReader(SettingsXmlPath))
                     {
-                        Settings s = null;
+                        Settings<T> s = null;
                         try
                         {
-                            XmlSerializer serializer = new XmlSerializer(typeof (Settings));
-                            s = serializer.Deserialize(textReader) as Settings;
+                            XmlSerializer serializer = new XmlSerializer(typeof (Settings<T>));
+                            s = serializer.Deserialize(textReader) as Settings<T>;
                         }
                         catch (Exception ex)
                         {
-                            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                                MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Unable to read file with setting\n{0}", ex), MessageLevel.Error);
+                            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                                MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",string.Format("Unable to read file with setting\n{0}", ex), MessageLevel.Error);
                         }
 
                         textReader.Close();
-                        _instance = s ?? new Settings();
+                        _instance = s ?? new Settings<T>();
                     }
                 }
             }
@@ -134,8 +134,8 @@ namespace IndexMechanism.CORE
             this._indexesIdentityInitialized = true;
             this._statisticSavingInterval = 60;
 
-            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism","Assigned default values", MessageLevel.Info);
+            if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism","Assigned default values", MessageLevel.Info);
 
             this.SettingsValueChanged();
         }
@@ -147,7 +147,7 @@ namespace IndexMechanism.CORE
                 string codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
-                return string.Format("{0}\\Settings.xml", Path.GetDirectoryName(path));
+                return string.Format("{0}\\IndexSettings.xml", Path.GetDirectoryName(path));
             }
         }
 
@@ -157,15 +157,15 @@ namespace IndexMechanism.CORE
             {
                 using (TextWriter textWriter = new StreamWriter(SettingsXmlPath))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof (Settings));
+                    XmlSerializer serializer = new XmlSerializer(typeof (Settings<T>));
                     serializer.Serialize(textWriter, _instance);
                     textWriter.Close();
                 }
             }
             catch (Exception ex)
             {
-                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger() != null)
-                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism.GetLoger().Log("IndexMechanism",string.Format("Unable to save file with setting\n{0}", ex), MessageLevel.Error);
+                if (MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger() != null)
+                    MUTDOD.Server.Common.IndexMechanism.IndexMechanism<T>.GetLoger().Log("IndexMechanism",string.Format("Unable to save file with setting\n{0}", ex), MessageLevel.Error);
             }
         }
 

@@ -22,15 +22,21 @@ namespace MUTDOD.Server.Common.QueryTree
         [DataMember]
         private readonly ElementType elementType;
         public ElementType ElementType => elementType;
-        
-        public virtual int GetCost()
-        {
-            return 0;
-        }
-        public virtual int GetCardinality()
-        {
-            return 0;
-        }
-    }
 
+        public virtual AccessType AccessType => AccessType.FULL;
+        public virtual int Cost => 1;
+        public virtual int Cardinality(QueryParameters parameters) {
+            return 0;
+        }
+        public virtual string Value => ToString();
+        public virtual bool IsOpenStackScope => false;
+        public virtual bool IsCloseStackScope => false;
+        public virtual string AccessObject => elementType.ToString();
+
+        public virtual Boolean Optimize(QueryParameters parameters, QueryStack queryStack)
+        {
+            return false;
+        }
+
+    }
 }

@@ -5,21 +5,23 @@ using IndexMechanism.IndexManager;
 using IndexPlugin;
 using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase;
+using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Indexing;
 using MUTDOD.Common.Types;
 using CompareType = MUTDOD.Common.ModuleBase.Indexing.CompareType;
+using System.Linq;
 
 namespace MUTDOD.Server.Common.IndexMechanism
 {
-    public class IndexMechanism : Module, IIndexMechanism
+    public class IndexMechanism<T> : Module, IIndexMechanism<T>
     {
         private static ILogger _loger = null;
-        private static global::IndexMechanism.ObjectIndexer.ObjectIndexer _objectIndexer = null;
+        private static global::IndexMechanism.ObjectIndexer.ObjectIndexer<T> _objectIndexer = null;
 
         public IndexMechanism(ILogger logger)
         {
             _loger = logger;
-            _objectIndexer = new global::IndexMechanism.ObjectIndexer.ObjectIndexer();
+            _objectIndexer = new global::IndexMechanism.ObjectIndexer.ObjectIndexer<T>();
         }
 
         internal static ILogger GetLoger()
@@ -29,14 +31,14 @@ namespace MUTDOD.Server.Common.IndexMechanism
 
         public bool AddIndex(string path)
         {
-            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().AddIndex(path);
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().AddIndex(path);
         }
 
         public Dictionary<int, string> GetIndexes()
         {
             Dictionary<int, string> ret = new Dictionary<int, string>();
 
-            foreach (IndexInfo index in global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndexes())
+            foreach (IndexInfo<T> index in global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndexes())
             {
                 ret.Add(index.IndexID, index.IndexName);
             }
@@ -48,12 +50,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndexingTypes(indexId);
+                return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndexingTypes(indexId);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While readin index indexing types excption occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While readin index indexing types excption occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -63,56 +65,56 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                return global::IndexMechanism.IndexManager.IndexManager.GetInstance().RemoveIndex(id);
+                return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().RemoveIndex(id);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While removing index exception occurred\n{0}", ex), MessageLevel.Error);
+                    GetLoger().Log(Name, string.Format("While removing index exception occurred\n{0}", ex), MessageLevel.Error);
                 throw ex;
             }
         }
 
-        public bool IndexObject(int indexID, Oid obj)
+        public bool IndexObject(int indexID, Oid obj, QueryParameters queryParameters)
         {
             try
             {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), new Oid[] {obj}, null);
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), new Oid[] { obj }, null, queryParameters);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing object exception occurred\n{0}", ex), MessageLevel.Error);
-                throw ex;
-            }
-            return true;
-        }
-
-        public bool IndexObjects(int indexID, Oid[] obj)
-        {
-            try
-            {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, null);
-            }
-            catch (Exception ex)
-            {
-                if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing objects exception occurred\n{0}", ex), MessageLevel.Error);
+                    GetLoger().Log(Name, string.Format("While indexing object exception occurred\n{0}", ex), MessageLevel.Error);
                 throw ex;
             }
             return true;
         }
 
-        public bool IndexObjects(int indexID, Oid[] obj, String[] attributes)
+        public bool IndexObjects(int indexID, Oid[] obj, QueryParameters queryParameters)
         {
             try
             {
-                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, attributes);
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj, null, queryParameters);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing objects exception occurred\n{0}", ex), MessageLevel.Error);
+                    GetLoger().Log(Name, string.Format("While indexing objects exception occurred\n{0}", ex), MessageLevel.Error);
+                throw ex;
+            }
+            return true;
+        }
+
+        public bool IndexObjects(int indexID, Oid[] obj, String[] attributes, QueryParameters queryParameters)
+        {
+            try
+            {
+                indexObjects(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj, attributes, queryParameters);
+            }
+            catch (Exception ex)
+            {
+                if (GetLoger() != null)
+                    GetLoger().Log(Name, string.Format("While indexing objects exception occurred\n{0}", ex), MessageLevel.Error);
                 throw ex;
             }
             return true;
@@ -122,13 +124,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), new Oid[] {obj},
+                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), new Oid[] { obj },
                                   role, null);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing object role exception occurred\n{0}", ex), MessageLevel.Error);
+                    GetLoger().Log(Name, string.Format("While indexing object role exception occurred\n{0}", ex), MessageLevel.Error);
                 throw ex;
             }
             return true;
@@ -138,12 +140,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, role, null);
+                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj, role, null);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing objects role exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While indexing objects role exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -154,46 +156,46 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj, role,
+                indexObjectsRoles(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj, role,
                                   attributes);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While indexing objects role exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While indexing objects role exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
             return true;
         }
 
-        public bool RemoveObject(int indexID, Oid obj, String[] attributes)
+        public bool RemoveObject(int indexID, Oid obj, String[] attributes, QueryParameters queryParameters)
         {
             try
             {
-                _objectIndexer.RemoveObject(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj,
-                                            attributes);
+                _objectIndexer.RemoveObject(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj,
+                                            attributes, queryParameters);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While removing object from index exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While removing object from index exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
             return true;
         }
 
-        public bool RemoveObject(int indexID, Oid obj)
+        public bool RemoveObject(int indexID, Oid obj, QueryParameters queryParameters)
         {
             try
             {
-                _objectIndexer.RemoveObject(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj);
+                _objectIndexer.RemoveObject(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj, queryParameters);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While removing object from index exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While removing object from index exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -204,13 +206,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                _objectIndexer.RemoveDynamicRole(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj,
+                _objectIndexer.RemoveDynamicRole(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj,
                                                  role, attributes);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While removing object role from index exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While removing object role from index exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -221,13 +223,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                _objectIndexer.RemoveDynamicRole(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID), obj,
+                _objectIndexer.RemoveDynamicRole(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID), obj,
                                                  role);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While removing object role from index exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While removing object role from index exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -238,27 +240,27 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                _objectIndexer.ClearIndexedObjects(indexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID));
+                _objectIndexer.ClearIndexedObjects(indexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID));
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While clearing indexed object exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While clearing indexed object exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
             return true;
         }
 
-        protected void indexObjects(int indexID, IIndex index, Oid[] obj, String[] attributes)
+        protected void indexObjects(int indexID, IIndex<T> index, Oid[] obj, String[] attributes, QueryParameters queryParameters)
         {
             if (attributes == null)
-                _objectIndexer.AddObjects(indexID, index, obj);
+                _objectIndexer.AddObjects(indexID, index, obj, queryParameters);
             else
-                _objectIndexer.AddObjects(indexID, index, obj, attributes);
+                _objectIndexer.AddObjects(indexID, index, obj, attributes, queryParameters);
         }
 
-        protected void indexObjectsRoles(int indexID, IIndex index, Oid[] obj, DynamicRole role,
+        protected void indexObjectsRoles(int indexID, IIndex<T> index, Oid[] obj, DynamicRole role,
                                          String[] attributes)
         {
             if (attributes == null)
@@ -272,14 +274,14 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.GetIndexedObjects(IndexID,
-                                                        global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                                                        global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                         packageSize,
                                                         skipItemsCount);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While reading indexed objects exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While reading indexed objects exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -290,49 +292,49 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.GetIndexedDynamicRoles(IndexID,
-                                                             global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                                                             global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                              packageSize,
                                                              skipItemsCount);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While reading indexed roles exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While reading indexed roles exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
         }
 
-        public Guid[] FindObjects(int IndexID, Type OIDClass, bool complexExtension, String[] attributes, object[] values,
+        public Guid[] FindObjects(int IndexID, T OIDClass, bool complexExtension, String[] attributes, object[] values,
                                  CompareType[] compareTypes)
         {
             try
             {
-                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                   OIDClass,
                                                   complexExtension, attributes, values, compareTypes);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While searching objects in indexed exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While searching objects in indexed exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
         }
 
-        public Guid[] FindObjects(int IndexID, Type OIDClass, bool complexExtension)
+        public Guid[] FindObjects(int IndexID, T OIDClass, bool complexExtension)
         {
             try
             {
-                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                   OIDClass,
                                                   complexExtension);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While searching objects in indexed exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While searching objects in indexed exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -343,13 +345,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                   role, attributes, values, compareTypes);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While searching objects in indexed exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While searching objects in indexed exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -359,13 +361,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(IndexID),
+                return _objectIndexer.FindObjects(IndexID, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(IndexID),
                                                   role);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While searching objects in indexed exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While searching objects in indexed exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -375,12 +377,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                global::IndexMechanism.IndexManager.IndexManager.GetInstance().SetIndexSettings(indexID, settingsXML);
+                global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().SetIndexSettings(indexID, settingsXML);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While replacing indexed settings exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While replacing indexed settings exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -390,12 +392,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             try
             {
-                return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndexSettings(indexID);
+                return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndexSettings(indexID);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While reading indexed settings exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While reading indexed settings exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -406,12 +408,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.CheckIndexValid(indexID,
-                                                      global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID));
+                                                      global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID));
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While checkin indexed valid exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While checkin indexed valid exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -422,12 +424,12 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.RebuildIndex(indexID,
-                                                   global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID));
+                                                   global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID));
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While rebuilding indexed exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While rebuilding indexed exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -438,13 +440,13 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.RebuildIndexWithObjects(indexID,
-                                                              global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID),
+                                                              global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID),
                                                               objects);
             }
             catch (Exception ex)
             {
                 if (GetLoger() != null)
-                    GetLoger().Log(Name,string.Format("While rebuilding indexed objects exception occurred\n{0}", ex),
+                    GetLoger().Log(Name, string.Format("While rebuilding indexed objects exception occurred\n{0}", ex),
                                                          MessageLevel.Error);
                 throw ex;
             }
@@ -455,7 +457,7 @@ namespace MUTDOD.Server.Common.IndexMechanism
             try
             {
                 return _objectIndexer.RebuildIndexWithRoles(indexID,
-                                                            global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetIndex(indexID),
+                                                            global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexID),
                                                             objects);
             }
             catch (Exception ex)
@@ -470,16 +472,74 @@ namespace MUTDOD.Server.Common.IndexMechanism
 
         public bool ResetStatistics(int indexID)
         {
-            global::IndexMechanism.IndexManager.IndexManager.GetInstance().ResetStatistics(indexID);
+            global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().ResetStatistics(indexID);
             return true;
         }
 
         public float GetStatistic(int indexID, IndexCostSource src, IndexCostType type, IndexCostInformation info,
                                   int? theoreticalIndexSize)
         {
-            return global::IndexMechanism.IndexManager.IndexManager.GetInstance().GetStatistic(indexID, src, type, info, theoreticalIndexSize);
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetStatistic(indexID, src, type, info, theoreticalIndexSize);
         }
 
+        public List<string> GetTypesNameIndexedObjects(int indexId)
+        {
+            return new List<string>(_objectIndexer.GetTypesNameIndexedObjects(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId)));
+        }
+
+        public List<string> GetIndexedAttribiutesForType(int indexId, string type)
+        {
+            return new List<string>(_objectIndexer.GetIndexedAttribiutesForType(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId), type));
+
+          //  return new List<string>(global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).GetIndexedAttribiutesForType(IndexManager<T>.GetInstance()..type));
+        }
+        public string GetIndex(int indexId)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).Name;
+        }
+
+        public int GetAvarageObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).AverageCost;
+        }
+
+        public int GetPessimisticObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).PessimisticCost;
+        }
+
+        public int GetOptimisticObjectFindCost(int indexId, int numberIndexedObject)
+        {
+            return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).ObjectFindCost(numberIndexedObject).OptimisticCost;
+
+        }
+        
+        public Dictionary<int, string> GetIndexesForClass(T className)
+        { 
+            return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className.ToString()))
+                               .ToDictionary(r => r.Key, r => r.Value);
+
+        }
+
+        public Dictionary<int, string> getIndexesForAttributes(T className, List<string> attributes)
+        {
+            return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className.ToString()) &&
+                                       GetIndexedAttribiutesForType(p.Key, className.ToString()).All(s => attributes.Contains(s)))
+                               .ToDictionary(r => r.Key, r => r.Value);
+        }
+
+        public Dictionary<int, string> getIndexesForAttribute(T className, string attribute)
+        {
+            return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className.ToString()) &&
+                                       GetIndexedAttribiutesForType(p.Key, className.ToString()).Any(s => s.Contains(attribute)))
+                               .ToDictionary(r => r.Key, r => r.Value);
+        }
+
+       /* public List<string> GetIndexedAttribiutesForType(int indexId, string type)
+        {
+            throw new NotImplementedException();
+        }*/
+
         public string Name { get { return "IndexMechanism"; } }
-    }    
+    }
 }
