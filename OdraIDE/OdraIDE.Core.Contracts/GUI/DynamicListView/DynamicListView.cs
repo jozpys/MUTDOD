@@ -17,6 +17,8 @@ namespace OdraIDE.Core
             ItemsSource = DataMatrix;
             GridView gridView = new GridView();
             View = gridView;
+            
+            
         }
 
         private DataMatrix m_DataMatrix;

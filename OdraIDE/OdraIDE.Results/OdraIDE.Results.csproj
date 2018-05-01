@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="App\Commands\StartupCommands.cs" />
     <Compile Include="CompositionPoints.cs" />
+    <Compile Include="CustomControl1.cs" />
     <Compile Include="Layout\GridResultsPad\GridResultsPadView.xaml.cs">
       <DependentUpon>GridResultsPadView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +93,7 @@
       <DependentUpon>Images.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ResultsService\ResultsService.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Workbench\MainMenu\ViewMenu.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -104,6 +106,7 @@
     <None Include="..\Plugins definition\OdraIDE.Results.plugin">
       <Link>OdraIDE.Results.plugin</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -139,6 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\StringResults.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

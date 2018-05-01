@@ -4,7 +4,7 @@
     xmlns:res="clr-namespace:OdraIDE.Core.Options"
     xmlns:local="clr-namespace:OdraIDE.Core.Options"
     xmlns:contracts="clr-namespace:OdraIDE.Core;assembly=OdraIDE.Core.Contracts"
-    Title="{x:Static res:Resources.Strings.OptionsDialog_Title}" 
+    Title="adfa" 
     Height="480" Width="640" 
     WindowStyle="SingleBorderWindow" 
     WindowStartupLocation="CenterOwner"
@@ -35,12 +35,12 @@
         <!-- Ok and Cancel -->
         <Button Grid.Column="1" Grid.Row="1" IsDefault="True" Margin="136,0,138,12" Height="30" VerticalAlignment="Bottom"
                 Command="{Binding OKButton.Command}" Click="OK_Click">
-            <TextBlock Text="{x:Static res:Resources.Strings.OptionsDialog_OK}"></TextBlock>
+            <TextBlock Text="OK"></TextBlock>
         </Button>
         <Button Grid.Column="1" IsCancel="True" Margin="0,0,12,12" 
                 HorizontalAlignment="Right" Width="120" Grid.Row="1" Height="30" VerticalAlignment="Bottom"
                 Command="{Binding CancelButton.Command}" Click="Cancel_Click">
-            <TextBlock Text="{x:Static res:Resources.Strings.OptionsDialog_Cancel}"></TextBlock>
+            <TextBlock Text="A"></TextBlock>
         </Button>
 
         <!-- Content -->

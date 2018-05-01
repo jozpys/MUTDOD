@@ -13,6 +13,7 @@ using MUTDOD.Common.Communication;
 using MUTDOD.Common.Settings;
 using MUTDOD.Server.Common.CoreModule.Communication;
 using OdraIDE.Core.Services;
+using MUTDOD.Common.ModuleBase.Communication;
 
 namespace OdraIDE.Core.Connection
 {
@@ -306,7 +307,50 @@ namespace OdraIDE.Core.Connection
             }
         }
 
+       /* public IQueryElement GetQueryPlan(IQuery query, ExecuteQueryCompleted executeQueryCompleted)
+        {
+            if (m_serverChanel == null)
+            {
+                throw new NoConnectionException();
+            }
 
+            if (!m_worker.IsBusy)
+            {
+                m_worker = new BackgroundWorker();
+                m_worker.WorkerSupportsCancellation = true;
+                m_worker.DoWork += new DoWorkEventHandler(DoExecuteQuery);
+
+                m_worker.RunWorkerCompleted += delegate (object s, RunWorkerCompletedEventArgs e)
+                {
+
+                    IsExecutingChanged(this, new IsExecutingEventArgs(false));
+                    if (e.Error != null)
+                    {
+                        messageService.ShowMessage(e.Error.Message, "Error");
+                        executeQueryCompleted(ExecuteQueryStatus.Error, null);
+                        Disconnected(this, EventArgs.Empty);
+                    }
+                    else if (e.Cancelled)
+                    {
+                        executeQueryCompleted(ExecuteQueryStatus.Canceled, null);
+                    }
+                    else
+                    {
+                        var qr = e.Result as IQueryResult;
+                        executeQueryCompleted(ExecuteQueryStatus.Done, qr);
+                    }
+                };
+
+                //wraps args to query structure
+                QueryStruct queryStruct = new QueryStruct();
+                queryStruct.DbName = dbName;
+                queryStruct.Query = query;
+
+                IsExecutingChanged(this, new IsExecutingEventArgs(true));
+                m_worker.RunWorkerAsync(queryStruct);
+            }
+
+        }*/
         public void ExecuteQuery(DatabaseInfo dbName, IQuery query, ExecuteQueryCompleted executeQueryCompleted)
         {
             if (m_serverChanel == null)
@@ -350,7 +394,44 @@ namespace OdraIDE.Core.Connection
                 m_worker.RunWorkerAsync(queryStruct);
             }
         }
+        void DoGetQueryPlan(object sender, DoWorkEventArgs e)
+        {
+            QueryStruct queryStruct = (QueryStruct)e.Argument;
 
+            try
+            {
+                e.Result = m_serverChanel.ExecuteQuery(new DatabaseInfo { Name = queryStruct.DbName.Name },
+                    new DTOQuery(queryStruct.Query));
+               // e.Result = m_serverChanel.Get
+            }
+            catch (EndpointNotFoundException)
+            {
+                Disconnect();
+                throw;
+            }
+            catch (CommunicationException)
+            {
+                Disconnect();
+                throw;
+            }
+            if (m_worker.WorkerSupportsCancellation)
+            {
+                while (true)
+                {
+                    if (m_worker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    if (e.Result != null)
+                    {
+                        return;
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+
+        }
         void DoExecuteQuery(object sender, DoWorkEventArgs e)
         {
             QueryStruct queryStruct = (QueryStruct)e.Argument;

@@ -17,6 +17,7 @@ namespace OdraIDE.Results
     {
         public const string RP_NAME = "GridResultsPad";
 
+
         [Import(OdraIDE.Core.Services.Layout.LayoutManager, typeof(ILayoutManager))]
         private Lazy<ILayoutManager> layoutManager { get; set; }
 

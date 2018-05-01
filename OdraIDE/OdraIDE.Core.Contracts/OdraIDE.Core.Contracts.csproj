@@ -65,7 +65,9 @@
     <Compile Include="GUI\Controls\ILabel.cs" />
     <Compile Include="GUI\Controls\IRadioButton.cs" />
     <Compile Include="GUI\Controls\IToggleButton.cs" />
+    <Compile Include="GUI\DynamicListView\DynamicTreeView.cs" />
     <Compile Include="GUI\Layout\IPainter.cs" />
+    <Compile Include="GUI\TreeItem\TreeNode.cs" />
     <Compile Include="Services\TaskService\ITaskService.cs" />
     <Compile Include="Services\TaskService\Task.cs" />
     <Compile Include="Utilities\TextBoxMaskBehavior.cs" />
@@ -182,6 +184,22 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\..\Libraries\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView">
+      <HintPath>..\..\Libraries\Telerik.Windows.Controls.GridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\..\Libraries\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\..\Libraries\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2011.2.11.831, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\TelerikCommon.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +286,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

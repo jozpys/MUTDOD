@@ -141,10 +141,11 @@ namespace OdraIDE.Core
             {
                 pluginXML = xs.FromXml(pluginNode.OuterXml) as PluginConfig;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                InvalidPluginException e = new InvalidPluginException("Wrong plugin definition in file: " + fileName);
+                InvalidPluginException e = new InvalidPluginException("Wrong plugin definition in file: " + fileName+ex.Message);
                 throw e;
+                Console.WriteLine(e.StackTrace);
             }
                 
             try
@@ -153,7 +154,7 @@ namespace OdraIDE.Core
             }
             catch (InvalidPluginException ex)
             {
-                InvalidPluginException e = new InvalidPluginException(ex.Message + " in file: " + fileName, ex);
+                InvalidPluginException e = new InvalidPluginException(ex.Message + " in file: " + fileName + ex.StackTrace, ex);
                 e.Plugin = pluginXML;
                 throw e;
             }

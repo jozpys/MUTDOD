@@ -4,7 +4,7 @@
     xmlns:res="clr-namespace:OdraIDE.Core.Workbench"
     xmlns:local="clr-namespace:OdraIDE.Core.Workbench"
     xmlns:contracts="clr-namespace:OdraIDE.Core;assembly=OdraIDE.Core.Contracts"
-    Title="{x:Static res:Resources.Strings.Workbench_Title}" WindowState="Maximized"
+    Title="x:Static res:Resources.Strings.Workbench_Title" WindowState="Maximized"
      Icon="/OdraIDE.Core.Workbench;component/Resources/AppIcon.ico">
 <!--WindowState="Maximized"-->
     <Window.Resources>

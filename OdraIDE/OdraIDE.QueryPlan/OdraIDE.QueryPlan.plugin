@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Plugin>
+  <File>OdraIDE.QueryPlan</File>
+  <Id>OdraIDE.QueryPlan</Id>
+  <Name>QueryPlan</Name>
+  <Version>1.0.0</Version>
+  <Company>Wojskowa Akademia Techniczna</Company>
+  <Description>
+  </Description>
+  <Dependencies>
+    
+  </Dependencies>
+  <Enabled>True</Enabled>
+</Plugin>

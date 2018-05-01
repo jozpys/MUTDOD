@@ -32,6 +32,7 @@ namespace OdraIDE.Core
 
             set
             {
+                Console.WriteLine(value);
                 if (value == null)
                 {
                     throw new ArgumentNullException(m_CommandName);

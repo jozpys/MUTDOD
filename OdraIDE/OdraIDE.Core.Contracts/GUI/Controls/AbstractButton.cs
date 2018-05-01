@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.ComponentModel;
 using OdraIDE.Utilities;
 
-namespace OdraIDE.Core
+namespace OdraIDE.Core 
 {
     public abstract class AbstractButton : AbstractCommandControl, IButton
     {

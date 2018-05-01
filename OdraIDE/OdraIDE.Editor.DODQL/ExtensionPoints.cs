@@ -11,6 +11,7 @@ namespace OdraIDE.Editor.Sbql.ExtensionPoints
         {
             public const string Execute = "Editor.Sbql.ExtensionPoints.Workbench.Toolbars.Execute";
             public const string Editor = "Editor.Sbql.ExtensionPoints.Workbench.Toolbars.Editor";
+            public const string QueryPlan = "Editor.Sbql.ExtensionPoints.Workbench.Toolbars.QueryPlan";
         }
     }
 }

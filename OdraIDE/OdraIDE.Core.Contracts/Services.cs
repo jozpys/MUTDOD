@@ -59,4 +59,8 @@ namespace OdraIDE.Core.Services
     {
         public const string TaskService = "Core.Services.Tasks.TaskService";
     }
+    public static class QueryPlan
+    {
+        public const string QueryPlanService = "Core.Services.QueryPlan.QueryPlanService";
+    }
 }
