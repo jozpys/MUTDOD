@@ -46,6 +46,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     return whereDto;
                 }
                 objs = whereDto.QueryObjects;
+                parameters.Subquery.QueryObjects = objs;
             }
             if(TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement property))
             {
