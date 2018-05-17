@@ -19,7 +19,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public override QueryDTO Execute(QueryParameters parameters)
         {
             var classProperties = parameters.Database.Schema.ClassProperties(parameters.Subquery.QueryClass);
-            var classProperty = classProperties.Where(p => p.Name == Name).Single();
+            var classProperty = classProperties.Where(p => p.Name == Name)?.Single();
 
             if (classProperty == null)
             {

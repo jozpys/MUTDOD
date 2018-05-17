@@ -45,8 +45,8 @@ namespace MUTDOD.Common.ModuleBase
 
         float GetStatistic(int indexID, IndexCostSource src, IndexCostType type, IndexCostInformation info,
             int? theoreticalIndexSize);
-        List<string> GetTypesNameIndexedObjects(int indexId);
-        List<string> GetIndexedAttribiutesForType(int indexId, string type);
+        string[] GetTypesNameIndexedObjects(int indexId);
+        string[] GetIndexedAttribiutesForType(int indexId, string type);
         int GetAvarageObjectFindCost(int indexId, int numberIndexedObject);
         int GetPessimisticObjectFindCost(int indexId, int numberIndexedObject);
         int GetOptimisticObjectFindCost(int indexId, int numberIndexedObject);

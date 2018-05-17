@@ -482,14 +482,14 @@ namespace MUTDOD.Server.Common.IndexMechanism
             return global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetStatistic(indexID, src, type, info, theoreticalIndexSize);
         }
 
-        public List<string> GetTypesNameIndexedObjects(int indexId)
+        public string[] GetTypesNameIndexedObjects(int indexId)
         {
-            return new List<string>(_objectIndexer.GetTypesNameIndexedObjects(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId)));
+            return _objectIndexer.GetTypesNameIndexedObjects(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId));
         }
 
-        public List<string> GetIndexedAttribiutesForType(int indexId, string type)
+        public string[] GetIndexedAttribiutesForType(int indexId, string type)
         {
-            return new List<string>(_objectIndexer.GetIndexedAttribiutesForType(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId), type));
+            return _objectIndexer.GetIndexedAttribiutesForType(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId), type);
 
         }
         public string GetIndex(int indexId)

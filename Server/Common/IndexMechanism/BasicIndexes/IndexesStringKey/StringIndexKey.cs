@@ -327,7 +327,7 @@ namespace MUTDOD.Server.Common.Indexes.BasicIndexes.IndexesStringKey
         {
             return queryParameters.Database.Schema.Classes.Where(p => queryParameters.Database.Schema.ClassProperties(p.Value)
                                                                      .All(pc => queryParameters.Storage.Get(queryParameters.Database.DatabaseId, obj)
-                                                                                .Properties.Any(po => po.Key.Equals(pc))))
+                                                                                .Properties.Any(po => po.Key.Equals(pc) && po.Key.ParentClassId == p.Key.Id)))
                                                           .Single().Value;
         }
 
@@ -467,7 +467,7 @@ namespace MUTDOD.Server.Common.Indexes.BasicIndexes.IndexesStringKey
 
         public string[] GetAttributesForTypeFromBT(string className)
         {
-            return BT.find(className).value.getAllKeys().Distinct().ToArray();
+            return BT.find(className)?.value.getAllKeys().Distinct().ToArray();
         }
 
         public void AddToBTvalue(Oid obj, string className, string attribiute, string value)
