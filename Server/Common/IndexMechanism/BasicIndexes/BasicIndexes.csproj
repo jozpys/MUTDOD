@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryTree\binaryTree.cs" />
+    <Compile Include="IndexesStringKey\IntIndexKey.cs" />
     <Compile Include="IndexesStringKey\StringIndexKey.cs" />
     <Compile Include="IntDumpIndex.cs" />
     <Compile Include="IntIndex.cs" />

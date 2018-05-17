@@ -491,7 +491,6 @@ namespace MUTDOD.Server.Common.IndexMechanism
         {
             return new List<string>(_objectIndexer.GetIndexedAttribiutesForType(indexId, global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId), type));
 
-          //  return new List<string>(global::IndexMechanism.IndexManager.IndexManager<T>.GetInstance().GetIndex(indexId).GetIndexedAttribiutesForType(IndexManager<T>.GetInstance()..type));
         }
         public string GetIndex(int indexId)
         {
@@ -534,11 +533,6 @@ namespace MUTDOD.Server.Common.IndexMechanism
                                        GetIndexedAttribiutesForType(p.Key, className.ToString()).Any(s => s.Contains(attribute)))
                                .ToDictionary(r => r.Key, r => r.Value);
         }
-
-       /* public List<string> GetIndexedAttribiutesForType(int indexId, string type)
-        {
-            throw new NotImplementedException();
-        }*/
 
         public string Name { get { return "IndexMechanism"; } }
     }
