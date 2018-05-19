@@ -41,10 +41,11 @@ namespace MUTDOD.Server.Common.QueryTree
 
             var oid = new Oid(Guid.NewGuid(), parameters.Database.DatabaseId.Dli);
             var toStore = new Storable { Oid = oid };
-            parameters.Subquery = new QueryDTO { Value = toStore, AdditionalValue = propeteries };
 
             foreach (var attrToSet in AllElements(ElementType.OBJECT_INITIALIZATION_ELEMENT))
             {
+                parameters.Subquery = new QueryDTO { Value = toStore, AdditionalValue = propeteries };
+
                 var attributeResult = attrToSet.Execute(parameters);
                 if(attributeResult.Result != null)
                 {

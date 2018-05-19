@@ -118,9 +118,18 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public override IQueryElement VisitGet_stmt([NotNull] QueryGrammarParser.Get_stmtContext context)
         {
-            if(context.get_stmt() != null)
+            if (context.K_DEREF() != null)
             {
-                SelectStatement parentSelect = (SelectStatement)Visit(context.get_stmt());
+                Deref deref = new Deref();
+
+                IQueryElement parentSelect = Visit(context.get_stmt());
+                deref.Add(parentSelect);
+                return deref;
+            }
+
+            if (context.get_stmt() != null)
+            {
+                IQueryCompositeElement parentSelect = Visit(context.get_stmt()).GetComposite();
                 if (context.child_value() != null)
                 {
                     IQueryElement property = Visit(context.child_value());
@@ -133,11 +142,6 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             SelectStatement select = new SelectStatement();
             IQueryElement className = Visit(context.get_header().class_name());
             select.Add(className);
-
-            if (context.K_DEREF() != null)
-            {
-                select.Deref = true;
-            }
 
             if (context.where_clause() != null)
             {

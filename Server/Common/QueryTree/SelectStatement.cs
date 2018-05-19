@@ -16,15 +16,11 @@ namespace MUTDOD.Server.Common.QueryTree
     [DataContract]
     public class SelectStatement : AbstractComposite
     {
-        public SelectStatement() : base(ElementType.SELECT)
-        {
-            Deref = false;
-        }
-        [DataMember]
-        public Boolean Deref { get; set; }
+        public SelectStatement() : base(ElementType.SELECT) { }
+
         public Dictionary<int, string> index { get; set; }
         public override bool IsOpenStackScope => true;
-        
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
 
@@ -49,6 +45,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     return whereDto;
                 }
                 objs = whereDto.QueryObjects;
+                parameters.Subquery.QueryObjects = objs;
             }
             if(TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement property))
             {
@@ -58,19 +55,6 @@ namespace MUTDOD.Server.Common.QueryTree
                     return propertyValueDto;
                 }
                 objs = propertyValueDto.QueryObjects;
-            }
-
-            if (Deref) {
-                var derefResult = new DTOQueryResult
-                {
-                    NextResult = null,
-                    QueryResultType = ResultType.Default,
-                    StringOutput = ToXml(objs, classToGet).OuterXml
-                };
-                selectDto.Result = derefResult;
-                selectDto.QueryClass = classToGet;
-                selectDto.QueryObjects = objs;
-                return selectDto;
             }
 
             var getDto = new DTOQueryResult
@@ -84,20 +68,5 @@ namespace MUTDOD.Server.Common.QueryTree
             selectDto.QueryObjects = objs;
             return selectDto;
         }
-
-        private XmlDocument ToXml(IEnumerable<IStorable> toSave, Class @class)
-        {
-            var doc = new XmlDocument();
-            var root = (XmlElement)doc.AppendChild(doc.CreateElement("result"));
-            foreach (var obj in toSave)
-            {
-                var el = (XmlElement)root.AppendChild(doc.CreateElement(@class.Name));
-                el.AppendChild(doc.CreateElement("Oid")).InnerText = obj.Oid.Id.ToString();
-                foreach (var p in obj.Properties)
-                    el.AppendChild(doc.CreateElement(p.Key.Name)).InnerText = p.Value.ToString();
-            }
-            return doc;
-        }
-
     }
 }

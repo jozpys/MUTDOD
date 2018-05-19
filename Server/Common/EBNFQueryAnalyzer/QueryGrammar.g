@@ -26,8 +26,9 @@ system_operation: op = SYS_INFO
 				| op = DROP_DB db_name = NAME
 				;
 
-get_stmt: K_DEREF? get_header where_clause?
+get_stmt: get_header where_clause?
 		| O_PAREN get_stmt C_PAREN child_value
+		| K_DEREF get_stmt
 		;
 
 get_header: class_name;

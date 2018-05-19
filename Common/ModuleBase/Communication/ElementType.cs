@@ -28,6 +28,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         OBJECT_UPDATE_ELEMENT,
         DELETE_OBJECT,
         SELECT,
+        DEREF,
         CLASS_NAME,
         WHERE,
         WHERE_OPERATION,
