@@ -17,6 +17,8 @@ namespace MUTDOD.Server.Common.QueryTree
     {
         public NewObject() : base(ElementType.NEW_OBJECT) { }
 
+        public const String cantCreateObjectLabel = "Can't create object of the interface!";
+
         public override QueryDTO Execute(QueryParameters parameters)
         {
             IQueryElement classNameElement = Element(ElementType.CLASS_NAME);
@@ -33,7 +35,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     Result = new DTOQueryResult()
                     {
                         QueryResultType = ResultType.StringResult,
-                        StringOutput = "Can't create object from the interface!"
+                        StringOutput = cantCreateObjectLabel
                     }
                 };
             }
