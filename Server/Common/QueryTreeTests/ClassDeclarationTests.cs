@@ -85,6 +85,8 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
 
             Assert.AreEqual(newClassId, createdClass.ClassId.Id);
             Assert.AreEqual(newClassName, createdClass.Name);
+            Assert.IsNull(createdClass.Parent);
+            Assert.IsFalse(createdClass.Interface);
         }
 
         [TestMethod()]
@@ -160,6 +162,82 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
             Assert.AreEqual(newClassId, createdClass.ClassId.Id);
             Assert.AreEqual(newClassName, createdClass.Name);
             Assert.AreEqual(newClassId, testProperty.ParentClassId);
+            Assert.IsNull(createdClass.Parent);
+            Assert.IsFalse(createdClass.Interface);
+        }
+
+        [TestMethod()]
+        public void ClassWithParentDeclarationTest()
+        {
+            String newClassName = "newClass";
+            int newClassId = 3;
+
+            Property property1 = new Property { Type = Property.INT, PropertyId = new PropertyId { Id = 1 } };
+            Property property2 = new Property { Type = Property.STRING, PropertyId = new PropertyId { Id = 2 } };
+            Property property3 = new Property { Type = Property.INT, PropertyId = new PropertyId { Id = 3 } };
+            var properties = new ConcurrentDictionary<PropertyId, Property>();
+            properties.TryAdd(property1.PropertyId, property1);
+            properties.TryAdd(property2.PropertyId, property2);
+            properties.TryAdd(property3.PropertyId, property3);
+
+
+            var existingClass = new Class
+            {
+                ClassId = new ClassId { Id = 1, Name = "Test1" },
+                Name = "Test1"
+            };
+
+            var otherExistingClass = new Class
+            {
+                ClassId = new ClassId { Id = 2, Name = "Test2" },
+                Name = "Test2"
+            };
+
+            var classes = new ConcurrentDictionary<ClassId, Class>();
+            classes.TryAdd(existingClass.ClassId, existingClass);
+            classes.TryAdd(otherExistingClass.ClassId, otherExistingClass);
+
+            Mock<IDatabaseParameters> database = new Mock<IDatabaseParameters>();
+            database.Setup(d => d.Schema.Classes).Returns(classes);
+
+            Mock<IStorage> storage = new Mock<IStorage>();
+            Class createdClass = null;
+            storage.Setup(s => s.SaveSchema(It.IsAny<IDatabaseSchema>())).Callback<IDatabaseSchema>(
+                schema => createdClass = schema.Classes.Values.Where(storable => storable.ClassId.Id == newClassId).SingleOrDefault());
+
+            Mock<Action<String, MessageLevel>> log = new Mock<Action<String, MessageLevel>>();
+
+            ClassDeclaration classDeclarationStatement = new ClassDeclaration();
+
+            Mock<ClassName> className = new Mock<ClassName>();
+            className.Setup(cn => cn.Execute(It.IsAny<QueryParameters>())).Returns(new QueryDTO
+            {
+                QueryClass = new Class
+                {
+                    Name = newClassName
+                },
+                Result = new DTOQueryResult
+                {
+                    QueryResultType = ResultType.StringResult,
+                    StringOutput = "No class"
+                }
+            });
+            classDeclarationStatement.Add(className.Object);
+
+            Mock<ParentClasses> parentClassDeclaration = new Mock<ParentClasses>();
+            parentClassDeclaration.Setup(cn => cn.Execute(It.IsAny<QueryParameters>())).Returns(new QueryDTO { Value = new HashSet<Class> { existingClass } });
+            classDeclarationStatement.Add(parentClassDeclaration.Object);
+
+            QueryParameters parameters = new QueryParameters { Database = database.Object, Storage = storage.Object, Log = log.Object };
+            var result = classDeclarationStatement.Execute(parameters);
+
+            Assert.AreEqual(ResultType.StringResult, result.Result.QueryResultType);
+            Assert.AreEqual("New class: " + newClassName + " created.", result.Result.StringOutput);
+
+            Assert.AreEqual(newClassId, createdClass.ClassId.Id);
+            Assert.AreEqual(newClassName, createdClass.Name);
+            Assert.AreEqual(existingClass, createdClass.Parent.Single());
+            Assert.IsFalse(createdClass.Interface);
         }
 
         [TestMethod()]
