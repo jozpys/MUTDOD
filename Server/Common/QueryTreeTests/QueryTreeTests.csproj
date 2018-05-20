@@ -70,6 +70,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ClassDeclarationTests.cs" />
     <Compile Include="ClassNameTests.cs" />
     <Compile Include="DerefTests.cs" />
     <Compile Include="DropClassTests.cs" />

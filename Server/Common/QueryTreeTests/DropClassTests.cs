@@ -73,7 +73,7 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
         }
 
         [TestMethod()]
-        public void NoDatabaseSchemaTest()
+        public void NoDatabaseSchemaWhileClassDroppingTest()
         {
             var classToDrop = new Class
             {
