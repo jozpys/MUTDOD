@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="ClassDeclarationTests.cs" />
     <Compile Include="ClassNameTests.cs" />
+    <Compile Include="DeleteObjectTests.cs" />
     <Compile Include="DerefTests.cs" />
     <Compile Include="DropClassTests.cs" />
     <Compile Include="NewObjectTests.cs" />

@@ -15,7 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
     [DataContract]
     public class DeleteObject : AbstractComposite
     {
-        public DeleteObject() : base(ElementType.UPDATE_OBJECT) { }
+        public DeleteObject() : base(ElementType.DELETE_OBJECT) { }
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
