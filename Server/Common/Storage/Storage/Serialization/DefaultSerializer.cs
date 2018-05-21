@@ -59,6 +59,11 @@ namespace MUTDOD.Server.Common.Storage.Serialization
 
         private byte[] SerializeValueType(Property property, object value)
         {
+            if (property.IsArray)
+            {
+                var array = (List<Object>)value;
+                value = String.Join(",", array);
+            }
             var bytes = Encoding.UTF8.GetBytes(value.ToString());
             return bytes;
         }
@@ -66,6 +71,18 @@ namespace MUTDOD.Server.Common.Storage.Serialization
         private object DeserializeValueType(Property property, byte[] value)
         {
             var s= Encoding.UTF8.GetString(value);
+            if (property.IsArray)
+            {
+                var elements = s.Split(',');
+                List<Object> list = new List<Object>();
+                foreach (var element in elements)
+                {
+                    var elementValue = TypeDescriptor.GetConverter(property.DotNetType).ConvertFromString(element);
+                    list.Add(element);
+                }
+
+                return list;
+            }
             var obj = TypeDescriptor.GetConverter(property.DotNetType).ConvertFromString(s);
             return obj;
         }

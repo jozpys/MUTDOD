@@ -23,6 +23,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(InterfaceDeclaration))]
     [KnownType(typeof(ParentClasses))]
     [KnownType(typeof(AttributeDeclaration))]
+    [KnownType(typeof(MethodDeclaration))]
     [KnownType(typeof(AlterClass))]
     [KnownType(typeof(AlterInterface))]
     [KnownType(typeof(AttributeDrop))]
@@ -57,6 +58,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(IntegerLiteral))]
     [KnownType(typeof(NullLiteral))]
     [KnownType(typeof(StringLiteral))]
+    [KnownType(typeof(ArrayValues))]
 
     [KnownType(typeof(BoolType))]
     [KnownType(typeof(ByteType))]

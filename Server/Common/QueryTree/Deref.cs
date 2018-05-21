@@ -46,7 +46,20 @@ namespace MUTDOD.Server.Common.QueryTree
                 var el = (XmlElement)root.AppendChild(doc.CreateElement(@class.Name));
                 el.AppendChild(doc.CreateElement("Oid")).InnerText = obj.Oid.Id.ToString();
                 foreach (var p in obj.Properties)
-                    el.AppendChild(doc.CreateElement(p.Key.Name)).InnerText = p.Value.ToString();
+                {
+                    String value = null;
+                    if (p.Key.IsArray)
+                    {
+                        List<Object> array = (List<Object>)p.Value;
+                        value = String.Join(", ", array);
+                    }
+                    else
+                    {
+                        value = p.Value.ToString();
+                    }
+                    el.AppendChild(doc.CreateElement(p.Key.Name)).InnerText = value;
+                }
+                    
             }
             return doc;
         }

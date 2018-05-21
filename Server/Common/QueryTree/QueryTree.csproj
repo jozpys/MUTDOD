@@ -46,6 +46,7 @@
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
     <Compile Include="AlterClass.cs" />
+    <Compile Include="ArrayValues.cs" />
     <Compile Include="Deref.cs" />
     <Compile Include="DropAttribute.cs" />
     <Compile Include="AttributeDeclaration.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="ClassProperty.cs" />
     <Compile Include="DropClass.cs" />
     <Compile Include="DropDatabase.cs" />
+    <Compile Include="MethodDeclaration.cs" />
     <Compile Include="ObjectUpdateElement.cs" />
     <Compile Include="DeleteObject.cs" />
     <Compile Include="LogicalOperatorAnd.cs" />

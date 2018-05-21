@@ -17,6 +17,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         INTERFACE_DECLARATION,
         PARENT_CLASSES,
         ATTRIBUTE_DECLARATION,
+        METHOD_DECLARATION,
         ALTER_CLASS,
         ALTER_INTERFACE,
         DROP_ATTRIBUTE,
@@ -36,6 +37,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         RIGHT_OPERAND,
         OPERATOR,
         CLASS_PROPERTY,
+        ARRAY,
         LITERAL,
         DATA_TYPE
     }

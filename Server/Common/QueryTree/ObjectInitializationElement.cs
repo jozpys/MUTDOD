@@ -48,6 +48,11 @@ namespace MUTDOD.Server.Common.QueryTree
                 var objectId = objects.Single().Oid.Id;
                 toStore.Properties.Add(property, objectId);
             }
+            else if(valueElement.ElementType == ElementType.ARRAY)
+            {
+                var array = valueElement.Execute(parameters).Value;
+                toStore.Properties.Add(property, array);
+            }
 
             return new QueryDTO() { Value = property };
         }

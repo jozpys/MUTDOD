@@ -76,17 +76,15 @@ namespace MUTDOD.Server.Common.QueryTree
                 }
             }
 
-            /*
-            _database.Schema.Methods.TryAdd(classId, new List<string>());
-            
-            foreach (var meth in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.METHOD_DEC_STM))
+
+            parameters.Database.Schema.Methods.TryAdd(classId, new List<string>());
+
+            foreach(IQueryElement meth in AllElements(ElementType.METHOD_DECLARATION))
             {
-                var methName = (isClass
-                    ? meth.ProductionsList.Single(t => t.TokenName == TokenName.METHOD_NAME)
-                    : meth)
-                    .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
-                _database.Schema.Methods[classId].Add(methName);
+                meth.Execute(parameters);
             }
+
+            /*
             foreach (var rel in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.RELATION_DEC_STM))
             {
                 var attrName = rel.ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;

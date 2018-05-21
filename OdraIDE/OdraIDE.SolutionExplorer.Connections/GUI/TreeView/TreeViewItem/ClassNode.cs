@@ -56,11 +56,13 @@ namespace OdraIDE.SolutionExplorer.Connections
     {
         private string m_className;
         private string m_type;
+        private bool m_array;
 
-        public FieldNode(string className, string type)
+        public FieldNode(string className, string type, bool array)
         {
             m_className = className;
             m_type = type;
+            m_array = array;
             ShowIcon = true;
         }
 
@@ -68,6 +70,10 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
+                if (m_array)
+                {
+                    return m_className + " (Array " + m_type + "[ ])";
+                }
                 return m_className + " (" + m_type + ")";
             }
         }

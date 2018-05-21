@@ -56,7 +56,11 @@ new_object: K_NEW class_name O_CURLY object_initialization_attributes_list C_CUR
 
 object_initialization_attributes_list: object_initialization_element (COMMA object_initialization_element)* ;
 
-object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN );
+object_initialization_element: NAME ASSIGN (literal | O_PAREN get_stmt C_PAREN | object_initialization_array);
+
+object_initialization_array: O_CURLY ( literal_list? | O_PAREN get_stmt C_PAREN ) C_CURLY;
+
+literal_list: literal ( COMMA literal )*;
 
 
 update_object: K_UPDATE O_PAREN get_stmt C_PAREN K_SET O_CURLY object_update_attributes_list C_CURLY;
@@ -71,11 +75,11 @@ delete_object: K_DELETE O_PAREN get_stmt C_PAREN;
 
 interface_declaration: K_INTERFACE K_TEMPORAL? NAME parent_type? O_CURLY attribute_dec_stm* method_dec_stm* relation_dec_stm* C_CURLY;
 
-attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
+attribute_dec_stm: K_ATTRIBUTE K_ARRAY? dataType NAME SEMICOLON;
 
-method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME method_params SEMICOLON;
+method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME O_BRACK method_params? C_BRACK SEMICOLON;
 
-method_params: O_BRACK method_param ( COMMA method_param )* C_BRACK;
+method_params: method_param ( COMMA method_param )*;
 
 method_param: (K_IN|K_OUT) dataType NAME;
 
@@ -84,7 +88,7 @@ relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
 
 class_delcaration: K_CLASS classType? K_TEMPORAL? cardinalyty? class_name parent_type? O_CURLY cls_attribute_dec_stm* cls_method_dec_stm* cls_relation_dec_stm* C_CURLY;
 
-cls_attribute_dec_stm: K_ATTRIBUTE dataType NAME SEMICOLON;
+cls_attribute_dec_stm: K_ATTRIBUTE K_ARRAY? dataType NAME SEMICOLON;
 
 cls_method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME method_params method_body;
 

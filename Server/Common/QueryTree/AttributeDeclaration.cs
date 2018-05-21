@@ -15,6 +15,7 @@ namespace MUTDOD.Server.Common.QueryTree
         public AttributeDeclaration() : base(ElementType.ATTRIBUTE_DECLARATION) { }
 
         public String Name { get; set; }
+        public bool IsArray { get; set; }
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
@@ -34,7 +35,8 @@ namespace MUTDOD.Server.Common.QueryTree
                 Name = Name,
                 PropertyId = propertyId,
                 Type = typeDao.Value,
-                IsValueType = typeDao.AdditionalValue
+                IsValueType = typeDao.AdditionalValue,
+                IsArray = IsArray
             };
 
             Boolean success = parameters.Database.Schema.Properties.TryAdd(propertyId, property);

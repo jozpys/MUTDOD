@@ -30,5 +30,6 @@ namespace MUTDOD.Common
     {
         public string Name { get; set; }
         public string Type { get; set; }
+        public bool IsArray { get; set; }
     }
 }

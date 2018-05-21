@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MUTDOD.Common.Types
 {
@@ -56,6 +57,7 @@ namespace MUTDOD.Common.Types
         public long ParentClassId { get; set; }
         public PropertyId PropertyId { get; set; }
         public bool IsValueType { get; set; }
+        public bool IsArray { get; set; }
         public bool Equals(Property other)
         {
             return other.PropertyId.Equals(this.PropertyId);

@@ -192,8 +192,27 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             {
                 return context.get_stmt();
             }
+            else if(context.object_initialization_array() != null)
+            {
+                return context.object_initialization_array();
+            }
 
             throw new SyntaxException("Attribute literal or statement");
+        }
+
+        public override IQueryElement VisitObject_initialization_array([NotNull] QueryGrammarParser.Object_initialization_arrayContext context)
+        {
+            ArrayValues arrayValues = new ArrayValues();
+            if(context.literal_list() != null)
+            {
+                foreach( var literal in context.literal_list().literal())
+                {
+                    IQueryElement literalElement = Visit(literal);
+                    arrayValues.Add(literalElement);
+                }
+            }
+
+            return arrayValues;
         }
 
         public override IQueryElement VisitUpdate_object([NotNull] QueryGrammarParser.Update_objectContext context)
@@ -266,6 +285,12 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 classDeclaration.Add(attributeDeclaration);
             }
 
+            foreach (var method in context.cls_method_dec_stm())
+            {
+                IQueryElement methodDeclaration = Visit(method);
+                classDeclaration.Add(methodDeclaration);
+            }
+
             return classDeclaration;
         }
 
@@ -287,11 +312,22 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
         {
             AttributeDeclaration attribute = new AttributeDeclaration();
             attribute.Name = context.NAME().GetText();
+            if(context.K_ARRAY() != null)
+            {
+                attribute.IsArray = true;
+            }
 
             IQueryElement dateType = Visit(context.dataType());
             attribute.Add(dateType);
 
             return attribute;
+        }
+
+        public override IQueryElement VisitCls_method_dec_stm([NotNull] QueryGrammarParser.Cls_method_dec_stmContext context)
+        {
+            MethodDeclaration method = new MethodDeclaration();
+            method.Name = context.NAME().GetText();
+            return method;
         }
 
         public override IQueryElement VisitInterface_declaration([NotNull] QueryGrammarParser.Interface_declarationContext context)
@@ -319,6 +355,10 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
         {
             AttributeDeclaration attribute = new AttributeDeclaration();
             attribute.Name = context.NAME().GetText();
+            if(context.K_ARRAY() != null)
+            {
+                attribute.IsArray = true;
+            }
 
             IQueryElement dateType = Visit(context.dataType());
             attribute.Add(dateType);
