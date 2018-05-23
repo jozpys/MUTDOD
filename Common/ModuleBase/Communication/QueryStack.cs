@@ -24,7 +24,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
             return Peek().FindLast(predicate);
         }
         
-        public IQueryElement FindLastAncestorOnPeekMatchType(ElementType elementType)
+        public IQueryElement FindLastAncestorOnPeekByType(ElementType elementType)
         {
             return Peek().FindLast(p => p.ElementType.Equals(elementType));
         }

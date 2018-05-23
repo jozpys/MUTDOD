@@ -22,7 +22,7 @@ namespace MUTDOD.Server.Common.QueryTree
         {
             return this;
         }
-
+        
         public IEnumerable<IQueryElement> AllElements(ElementType elementType)
         {
             if (!elements.ContainsKey(elementType))
@@ -83,7 +83,33 @@ namespace MUTDOD.Server.Common.QueryTree
         {
             return elements;
         }
-        
+
+        public Boolean HasDescendant(ElementType elementType)
+        {
+            if (AllElements(ElementType).Count() > 0)
+                return true;
+            else
+                return GetComposite().GetElements() != null && GetComposite().GetElements()
+                                                                                .ToList()
+                                                                                .Any(p => p.Value
+                                                                                        .ToList()
+                                                                                        .Any(pp => HasDescendant(pp, elementType)));
+
+        }
+
+        private Boolean HasDescendant(IQueryElement queryElement, ElementType elementType)
+        {
+
+            if (queryElement.GetComposite() != null && queryElement.GetComposite().GetElements().ContainsKey(elementType))
+                return true;
+
+            return queryElement.GetComposite() != null && queryElement.GetComposite().GetElements()
+                                                                       .ToList()
+                                                                       .Any(p => p.Value
+                                                                                .ToList()
+                                                                                .Any(pp => HasDescendant(pp, elementType)));
+        }
+
         public override string ToString()
         {
             return ElementType + " (" + String.Join(", ", elements.Values) + ")";

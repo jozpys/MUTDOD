@@ -70,9 +70,10 @@ namespace MUTDOD.Server.Common.QueryTree
             Boolean treeChanged = false;
 
             if(queryElementsStack.HasElementOnPeek(ElementType.WHERE) && 
-               queryElementsStack.FindLastAncestorOnPeekMatchType(ElementType.WHERE_OPERATION) is OperationComperision)
+               queryElementsStack.FindLastAncestorOnPeekByType(ElementType.WHERE_OPERATION) is OperationComperision &&
+               ((AbstractComposite)queryElementsStack.FindLastAncestorOnPeekByType(ElementType.WHERE_OPERATION)).HasDescendant(ElementType.LITERAL))
             {
-                var className = (ClassName)queryElementsStack.FindLastAncestorOnPeekMatchType(ElementType.CLASS_NAME);
+                var className = (ClassName)queryElementsStack.FindLastAncestorOnPeekByType(ElementType.CLASS_NAME);
                 
                 queryParameters.IndexMechanism.getIndexesForAttribute(className.Value, Name)
                      ?.ToList()
