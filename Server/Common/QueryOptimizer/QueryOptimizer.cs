@@ -15,6 +15,16 @@ namespace MUTDOD.Server.Common.QueryOptimizer
         {
             get { return "QueryOptimizer"; }
         }
+        private static ILogger _logger = null;
+        public QueryOptimizer(ILogger logger)
+        {
+            _logger = logger;
+        }
+        
+        internal static ILogger GetLoger()
+        {
+            return _logger;
+        }
 
         public IQueryElement OptimizeQueryPlan(IQueryElement queryTree, QueryParameters queryParameters)
         {
@@ -26,7 +36,7 @@ namespace MUTDOD.Server.Common.QueryOptimizer
             {
                 queryPlanTree = BuildTreeSummary(queryTree, queryParameters);
             }
-            while (queryPlanTree == null && sw.ElapsedMilliseconds < 500000);
+            while (queryPlanTree == null && sw.ElapsedMilliseconds < Settings.Settings.GetInstance().MaxTimeSearchingBestQueryPlan);
 
             return queryPlanTree != null ? queryPlanTree.QueryElement : queryTree;
 
@@ -165,7 +175,7 @@ namespace MUTDOD.Server.Common.QueryOptimizer
             {
                 queryPlanTree = BuildTreeSummary(queryTree, queryParameters);
             }
-            while (queryPlanTree == null && sw.ElapsedMilliseconds < 500000);
+            while (queryPlanTree == null && sw.ElapsedMilliseconds < Settings.Settings.GetInstance().MaxTimeSearchingBestQueryPlan);
 
             QueryPlan queryPlan = ConvertToQueryPlanSummary(queryPlanTree);
             return queryPlan;

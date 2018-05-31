@@ -75,7 +75,7 @@ namespace MUTDOD.Server.Common.QueryTree
             {
                 var className = (ClassName)queryElementsStack.FindLastAncestorOnPeekByType(ElementType.CLASS_NAME);
                 
-                queryParameters.IndexMechanism.getIndexesForAttribute(className.Value, Name)
+                queryParameters.IndexMechanism.GetIndexesForAttribute(className.Value, Name)
                      ?.ToList()
                      .ForEach(p => {
                               if (className.Indexes == null)

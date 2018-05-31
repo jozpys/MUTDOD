@@ -520,14 +520,14 @@ namespace MUTDOD.Server.Common.IndexMechanism
 
         }
 
-        public Dictionary<int, string> getIndexesForAttributes(T className, List<string> attributes)
+        public Dictionary<int, string> GetIndexesForAttributes(T className, List<string> attributes)
         {
             return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className.ToString()) &&
                                        GetIndexedAttribiutesForType(p.Key, className.ToString()).All(s => attributes.Contains(s)))
                                .ToDictionary(r => r.Key, r => r.Value);
         }
 
-        public Dictionary<int, string> getIndexesForAttribute(T className, string attribute)
+        public Dictionary<int, string> GetIndexesForAttribute(T className, string attribute)
         {
             return GetIndexes().Where(p => GetTypesNameIndexedObjects(p.Key).Contains(className.ToString()) &&
                                        GetIndexedAttribiutesForType(p.Key, className.ToString()).Any(s => s.Contains(attribute)))

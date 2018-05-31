@@ -51,7 +51,7 @@ namespace MUTDOD.Common.ModuleBase
         int GetPessimisticObjectFindCost(int indexId, int numberIndexedObject);
         int GetOptimisticObjectFindCost(int indexId, int numberIndexedObject);
         Dictionary<int, string> GetIndexesForClass(T className);
-        Dictionary<int, string> getIndexesForAttributes(T className, List<string> attributes);
-        Dictionary<int, string> getIndexesForAttribute(T className, string attribute);
+        Dictionary<int, string> GetIndexesForAttributes(T className, List<string> attributes);
+        Dictionary<int, string> GetIndexesForAttribute(T className, string attribute);
     }
 }
