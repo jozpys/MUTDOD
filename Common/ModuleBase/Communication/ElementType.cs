@@ -30,6 +30,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         DELETE_OBJECT,
         SELECT,
         DEREF,
+        AGGREGATE_FUNCTION,
         CLASS_NAME,
         WHERE,
         WHERE_OPERATION,

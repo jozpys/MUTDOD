@@ -1,6 +1,7 @@
 ﻿using MUTDOD.Common;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Server.Common.QueryTree;
+using MUTDOD.Server.Common.QueryTree.Aggregate;
 using MUTDOD.Server.Common.QueryTree.Literal;
 using MUTDOD.Server.Common.QueryTree.Operator;
 using MUTDOD.Server.Common.QueryTree.Type;
@@ -45,6 +46,12 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(OperationComperision))]
     [KnownType(typeof(LeftOperand))]
     [KnownType(typeof(RightOperand))]
+
+    [KnownType(typeof(Count))]
+    [KnownType(typeof(Maximum))]
+    [KnownType(typeof(Minimum))]
+    [KnownType(typeof(Sum))]
+    [KnownType(typeof(Average))]
 
     [KnownType(typeof(OperatorGrater))]
     [KnownType(typeof(OperatorGraterEqual))]

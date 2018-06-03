@@ -22,6 +22,7 @@ system_operation: op = SYS_INFO
 
 get_stmt: get_header where_clause?
 		| O_PAREN get_stmt C_PAREN child_value
+		| aggregate_function get_stmt
 		| K_DEREF get_stmt
 		;
 
@@ -155,6 +156,19 @@ value: NUMBER
 
 
 class_name: NAME;
+
+aggregate_function: COUNT
+				  | MAX
+				  | MIN
+				  | SUM
+				  | AVERAGE
+				  ;
+
+COUNT:	'COUNT'|'count';
+MAX:	'MAX'|'max';
+MIN:	'MIN'|'min';
+SUM:	'SUM'|'sum';
+AVERAGE:'AVG'|'avg';
 
 dataType: BYTE_TYPE
 		|SHORT_TYPE

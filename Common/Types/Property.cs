@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace MUTDOD.Common.Types
 {
@@ -15,6 +16,8 @@ namespace MUTDOD.Common.Types
         public const String CHAR = "char";
         public const String STRING = "string";
         public const String BOOL = "bool";
+
+        public static readonly ISet<String> numericTypes = ImmutableHashSet.Create(INT, SHORT, LONG, FLOAT, DOUBLE);
         public string Type { get; set; }
 
         public Type DotNetType
@@ -50,6 +53,13 @@ namespace MUTDOD.Common.Types
                         throw new Exception("Unknown value type: " + Type);
                 }
 
+            }
+        }
+
+        public bool IsNumericType {
+            get
+            {
+                return numericTypes.Contains(Type.ToLower());
             }
         }
 

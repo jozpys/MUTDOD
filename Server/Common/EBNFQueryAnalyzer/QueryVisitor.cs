@@ -12,6 +12,7 @@ using MUTDOD.Server.Common.QueryTree;
 using MUTDOD.Server.Common.QueryTree.Literal;
 using MUTDOD.Server.Common.QueryTree.Operator;
 using MUTDOD.Server.Common.QueryTree.Type;
+using MUTDOD.Server.Common.QueryTree.Aggregate;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
@@ -122,6 +123,15 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 return deref;
             }
 
+            if(context.aggregate_function() != null)
+            {
+                IQueryCompositeElement aggregate = Visit(context.aggregate_function()).GetComposite();
+
+                IQueryElement parentSelect = Visit(context.get_stmt());
+                aggregate.Add(parentSelect);
+                return aggregate;
+            }
+
             if (context.get_stmt() != null)
             {
                 IQueryCompositeElement parentSelect = Visit(context.get_stmt()).GetComposite();
@@ -145,6 +155,38 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
             }
 
             return select;
+        }
+
+        public override IQueryElement VisitAggregate_function([NotNull] QueryGrammarParser.Aggregate_functionContext context)
+        {
+            if (context.COUNT() != null)
+            {
+                Count count = new Count();
+                return count;
+            }
+            else if(context.MAX() != null)
+            {
+                Maximum max = new Maximum();
+                return max;
+            }
+            else if(context.MIN() != null)
+            {
+                Minimum min = new Minimum();
+                return min;
+            }
+            else if(context.SUM() != null)
+            {
+                Sum sum = new Sum();
+                return sum;
+            }
+            else if(context.AVERAGE() != null)
+            {
+                Average average = new Average();
+                return average;
+            }
+            
+
+            throw new SyntaxException("Unsuported aggregate function.");
         }
 
         public override IQueryElement VisitClass_name([NotNull] QueryGrammarParser.Class_nameContext context)

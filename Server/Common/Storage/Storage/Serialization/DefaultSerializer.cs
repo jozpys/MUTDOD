@@ -78,7 +78,7 @@ namespace MUTDOD.Server.Common.Storage.Serialization
                 foreach (var element in elements)
                 {
                     var elementValue = TypeDescriptor.GetConverter(property.DotNetType).ConvertFromString(element);
-                    list.Add(element);
+                    list.Add(elementValue);
                 }
 
                 return list;

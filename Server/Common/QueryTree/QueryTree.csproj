@@ -45,6 +45,11 @@
     <Compile Include="AbstractComposite.cs" />
     <Compile Include="AbstractElement.cs" />
     <Compile Include="AbstractLeaf.cs" />
+    <Compile Include="Aggregate\Average.cs" />
+    <Compile Include="Aggregate\Count.cs" />
+    <Compile Include="Aggregate\Maximum.cs" />
+    <Compile Include="Aggregate\Minimum.cs" />
+    <Compile Include="Aggregate\Sum.cs" />
     <Compile Include="AlterClass.cs" />
     <Compile Include="ArrayValues.cs" />
     <Compile Include="Deref.cs" />

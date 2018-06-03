@@ -45,8 +45,20 @@ namespace MUTDOD.Server.Common.QueryTree
             else if(valueElement.ElementType == ElementType.SELECT)
             {
                 var objects = valueElement.Execute(parameters).QueryObjects;
-                var objectId = objects.Single().Oid.Id;
-                toStore.Properties.Add(property, objectId);
+                if(property.IsArray)
+                {
+                    List<Object> elements = new List<Object>();
+                    foreach( var storable in objects)
+                    {
+                        elements.Add(storable.Oid.Id);
+                    }
+                    toStore.Properties.Add(property, elements);
+                }
+                else
+                {
+                    var objectId = objects.Single().Oid.Id;
+                    toStore.Properties.Add(property, objectId);
+                }
             }
             else if(valueElement.ElementType == ElementType.ARRAY)
             {

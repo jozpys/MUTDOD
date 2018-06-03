@@ -19,13 +19,20 @@ namespace MUTDOD.Server.Common.QueryTree
         public String Name { get; set; }
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            IStorable databaseObject = parameters.Subquery.QueryObjects.Single();
-            var objectProperty = databaseObject.Properties.Where(p => p.Key.Name == Name);
-            if(!objectProperty.Any())
+            var properties = new List<KeyValuePair<Property, object>>();
+            foreach (IStorable storable in parameters.Subquery.QueryObjects)
             {
-                var parentClass = parameters.Subquery.QueryClass;
-                var classProperties = parameters.Database.Schema.ClassProperties(parentClass);
-                var classProperty = classProperties.Where(p => p.Name == Name);
+                var objectProperty = storable.Properties.Where(p => p.Key.Name == Name);
+                properties.AddRange(objectProperty);
+                
+            }
+
+            var parentClass = parameters.Subquery.QueryClass;
+            var classProperties = parameters.Database.Schema.ClassProperties(parentClass);
+            var classProperty = classProperties.Where(p => p.Name == Name);
+
+            if (!properties.Any())
+            {
 
                 if (!classProperty.Any())
                 {
@@ -35,11 +42,10 @@ namespace MUTDOD.Server.Common.QueryTree
                 return new QueryDTO { Value = null };
             }
 
-            var propertyValue = objectProperty.Single().Value;
-            if (!objectProperty.Single().Key.IsValueType)
+            var property = properties.First();
+            if (!property.Key.IsValueType)
             {
-                var propertyObject = parameters.Storage.Get(parameters.Database.DatabaseId, (Guid)propertyValue);
-                parameters.Subquery.QueryObjects = new List<IStorable> { propertyObject };
+                parameters.Subquery.QueryObjects = GetPropertyObjects(parameters, properties);
 
                 if (TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement childProperty))
                 {
@@ -48,18 +54,82 @@ namespace MUTDOD.Server.Common.QueryTree
 
                 var result = parameters.Subquery;
                 result.Result = new DTOQueryResult { QueryResultType = ResultType.ReferencesOnly };
+                result.AdditionalValue = classProperty.Single();
                 return result;
+            }
+
+            var propertyValues = GetPropertyValues(parameters, properties);
+            if (propertyValues.Count() == 1)
+            {
+                var singleValue = propertyValues.Single();
+                var singlePropertyDto = new QueryDTO
+                {
+                    Result = new DTOQueryResult
+                    {
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Property " + Name + ": " + singleValue
+                    },
+                    Value = singleValue,
+                    AdditionalValue = classProperty.Single()
+                };
+                return singlePropertyDto;
             }
 
             var propertyDto = new QueryDTO {
                 Result = new DTOQueryResult
                 {
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Property " + Name + ": " + propertyValue
+                    StringOutput = "Property " + Name + ": " + String.Join(", ", propertyValues)
                 },
-                Value = propertyValue
+                Value = propertyValues,
+                AdditionalValue = classProperty.Single()
             };
             return propertyDto;
+        }
+
+        private IEnumerable<IStorable> GetPropertyObjects(QueryParameters parameters, IEnumerable<KeyValuePair<Property, object>> properties)
+        {
+            var aggreagatedProperties = new List<IStorable>();
+            foreach(var prop in properties)
+            {
+                if (prop.Key.IsArray)
+                {
+                    List<IStorable> objects = new List<IStorable>();
+                    List<Object> array = (List<Object>)prop.Value;
+                    foreach (var storable in array)
+                    {
+                        var arrayObject = parameters.Storage.Get(parameters.Database.DatabaseId, (Guid)storable);
+                        objects.Add(arrayObject);
+                    }
+                    aggreagatedProperties.AddRange(objects);
+                }
+                else
+                {
+                    var propertyObject = parameters.Storage.Get(parameters.Database.DatabaseId, (Guid)prop.Value);
+                    aggreagatedProperties.Add(propertyObject);
+                }
+            }
+
+            return aggreagatedProperties;
+        }
+
+        private IEnumerable<Object> GetPropertyValues(QueryParameters parameters, IEnumerable<KeyValuePair<Property, object>> properties)
+        {
+            var aggreagatedProperties = new List<Object>();
+            foreach (var prop in properties)
+            {
+                if (prop.Key.IsArray)
+                {
+                    List<Object> array = (List<Object>)prop.Value;
+                    aggreagatedProperties.AddRange(array);
+                }
+                else
+                {
+                    aggreagatedProperties.Add(prop.Value);
+                }
+            }
+
+            return aggreagatedProperties;
         }
     }
 }
