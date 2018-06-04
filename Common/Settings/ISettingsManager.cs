@@ -10,6 +10,7 @@ namespace MUTDOD.Common.Settings
         StorageStrategy StorageStrategy { get; }
         string DataBaseDirectory { get; }
         string LogFileDirectory { get; }
+        int MaxNumberObjectsFullScan { get; }
     }
 
     [Serializable]

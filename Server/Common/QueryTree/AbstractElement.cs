@@ -24,7 +24,9 @@ namespace MUTDOD.Server.Common.QueryTree
         public ElementType ElementType => elementType;
 
         public virtual AccessType AccessType => AccessType.FULL;
-        public virtual int Cost => 1;
+        public virtual int Cost(QueryParameters parameters) {
+            return 1;
+        }
         public virtual int Cardinality(QueryParameters parameters) {
             return 0;
         }

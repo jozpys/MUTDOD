@@ -47,5 +47,10 @@ namespace MUTDOD.Common.ModuleBase.Storage.Core.Metadata
             return false;
 
         }
+
+        public override int GetHashCode()
+        {
+            return (this.Name + this.Id).GetHashCode();
+        }
     }
 }

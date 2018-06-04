@@ -42,9 +42,9 @@ namespace MUTDOD.Server.Common.QueryTree
             return new QueryDTO { QueryClass = selectedClass };
         }
 
-        public override int Cost
+        public override int Cost(QueryParameters parameters)
         {
-            get { return 1; }
+            return 1; 
         }
 
         public override int Cardinality(QueryParameters queryParameters)
@@ -67,11 +67,20 @@ namespace MUTDOD.Server.Common.QueryTree
 
             if (Indexes != null && Indexes.Count > 0)
                 index = Indexes
-                               .OrderByDescending(p => parameters.IndexMechanism.GetPessimisticObjectFindCost(p.Key, 1000))
+                               .OrderByDescending(p => parameters.IndexMechanism.GetPessimisticObjectFindCost(p.Key, Cardinality(parameters)))
                                .First();
 
-            if (!index.Equals(Index) && Cardinality(parameters) < 1000)
+            if (!index.Equals(Index) && Cardinality(parameters) > parameters.SettingsManager.MaxNumberObjectsFullScan)
+            {
                 Index = index;
+                var selectStatement = (SelectStatement)queryStack.FindLastAncestorOnPeekByType(ElementType.SELECT);
+                selectStatement.Index = index;
+                return true;
+            }
+
+            
+            
+
 
             return false;
         }

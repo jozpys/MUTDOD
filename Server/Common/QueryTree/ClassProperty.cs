@@ -90,6 +90,13 @@ namespace MUTDOD.Server.Common.QueryTree
             
             return treeChanged;
         }
+        public override string Value
+        {
+            get
+            {
+                return Name;
+            }
+        }
 
         public override string AccessObject
         {
@@ -99,12 +106,9 @@ namespace MUTDOD.Server.Common.QueryTree
             }
         }
 
-        public override int Cost
+        public override int Cost(QueryParameters queryParameters)
         {
-            get
-            {
-                return 2;
-            }
+            return 1;
         }
     }
 }

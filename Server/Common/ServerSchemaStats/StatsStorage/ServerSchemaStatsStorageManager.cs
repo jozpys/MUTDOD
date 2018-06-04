@@ -12,6 +12,7 @@ namespace MUTDOD.Server.Common.ServerStats.StatsStorage
 {
     public class ServerSchemaStatsStorageManager
     {
+        private const string SearchPattern = "*.dat";
         private static ServerSchemaStatsStorageManager instance = null;
 
         protected static ServerSchemaStatsStorageManager Instance
@@ -53,7 +54,7 @@ namespace MUTDOD.Server.Common.ServerStats.StatsStorage
         {
             List<StatisticData> statisticDataAllSchemas = new List<StatisticData>();
 
-            foreach (string FileName in Directory.GetFiles(_storageDirectory))
+            foreach (string FileName in Directory.GetFiles(_storageDirectory, SearchPattern))
             {
                 try
                 {

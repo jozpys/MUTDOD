@@ -13,7 +13,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         ElementType ElementType { get; }
         AccessType AccessType { get; }
         string AccessObject { get; }
-        int Cost { get; }
+        int Cost(QueryParameters parameters);
         int Cardinality(QueryParameters parameters);
         string Value { get; }
         Boolean IsOpenStackScope { get; }

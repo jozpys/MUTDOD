@@ -44,5 +44,6 @@ namespace MUTDOD.Common.Settings
 
         public string DataBaseDirectory { get { return "DataStorage"; } }
         public string LogFileDirectory { get { return "Logs\\"; } }
+        public int MaxNumberObjectsFullScan { get { return 1000; } }
     }
 }

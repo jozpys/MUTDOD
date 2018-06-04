@@ -28,9 +28,26 @@ namespace MUTDOD.Server.Common.QueryOptimizer.Settings
             }
         }
 
+        [XmlElement]
+        public int MaxNumberObjectsFullScan
+        {
+            get { return this.maxNumberObjectsFullScan; }
+            set
+            {
+                bool valueChanged = this.maxNumberObjectsFullScan != value;
+
+
+                if (valueChanged)
+                    this.SettingsValueChanged();
+                this.maxNumberObjectsFullScan = value;
+            }
+        }
+
         #region methods and private attributes
 
         private long maxTimeSearchingBestQueryPlan;
+        private int maxNumberObjectsFullScan;
+
         private static Settings instance = null;
 
 

@@ -29,12 +29,12 @@ namespace MUTDOD.Server.Common.ServerStats
 
         public int GetClassObjectNumber(Did databaseId, ClassId classId)
         {
-            return ServerSchemaStatsManager.GetInstance().GetClassObjectNumber(databaseId, classId);
+            return ServerSchemaStatsManager.GetInstance(_storage).GetClassObjectNumber(databaseId, classId);
         }
 
         public void UpdateStatisticSchemaData(Did databaseId, SchemaStats schemaStats)
         {
-            ServerSchemaStatsManager.GetInstance().UpdateStatisticSchemaData(databaseId, schemaStats);
+            ServerSchemaStatsManager.GetInstance(_storage).UpdateStatisticSchemaData(databaseId, schemaStats);
         }
         public void PropertyValue(Property property, object value)
         {
@@ -48,7 +48,7 @@ namespace MUTDOD.Server.Common.ServerStats
 
         public bool RecalculateStats()
         {
-            throw new NotImplementedException();
+            return ServerSchemaStatsManager.GetInstance(_storage).RecalculateStats(_storage);
         }
 
         public string Name

@@ -46,8 +46,8 @@ namespace MUTDOD.Server.Common.QueryOptimizer
         {
             QueryStack queryStack = new QueryStack();
             int childId = 1;
-
-            QueryPlanTree queryPlanTree = new QueryPlanTree(childId, 0, queryTree, queryTree.ElementType, null, queryTree is AbstractLeaf ? ((AbstractLeaf)queryTree).GetValue() : "", queryTree.Cost, queryTree.Cardinality(queryParameters), queryTree.AccessType, queryTree.AccessObject);
+            queryStack.AddElement(queryTree);
+            QueryPlanTree queryPlanTree = new QueryPlanTree(childId, 0, queryTree, queryTree.ElementType, null, queryTree is AbstractLeaf ? ((AbstractLeaf)queryTree).GetValue() : "", queryTree.Cost(queryParameters), queryTree.Cardinality(queryParameters), queryTree.AccessType, queryTree.AccessObject);
 
             if (queryTree.GetComposite() != null)
             {
@@ -63,14 +63,14 @@ namespace MUTDOD.Server.Common.QueryOptimizer
 
                         if (element.GetComposite()?.GetElements()?.Count > 0)
                         {
-                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(++childId, 1, element, elements.Key, queryPlanTree, "", element.Cost, element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
+                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(++childId, 1, element, elements.Key, queryPlanTree, "", element.Cost(queryParameters), element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
                             queryPlanTree.Childrens.Add(queryPlanTreeChild);
                             if (BuildTreeChilds(element, childId, queryPlanTreeChild, queryParameters, queryStack) < 0)
                                 return null;
                         }
                         else
                         {
-                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(++childId, 1, element, elements.Key, queryPlanTree, element is AbstractLeaf ? ((AbstractLeaf)element).Value : "", element.Cost, element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
+                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(++childId, 1, element, elements.Key, queryPlanTree, element is AbstractLeaf ? ((AbstractLeaf)element).Value : "", element.Cost(queryParameters), element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
                             queryPlanTree.Childrens.Add(queryPlanTreeChild);
                         }
                     }
@@ -99,7 +99,7 @@ namespace MUTDOD.Server.Common.QueryOptimizer
 
                         if (element.GetComposite()?.GetElements()?.Count > 0)
                         {
-                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(childID, parentId, element, elements.Key, parent, "", element.Cost, element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
+                            QueryPlanTree queryPlanTreeChild = new QueryPlanTree(childID, parentId, element, elements.Key, parent, "", element.Cost(queryParameters), element.Cardinality(queryParameters), element.AccessType, element.AccessObject);
                             parent.Childrens.Add(queryPlanTreeChild);
                             childID = BuildTreeChilds(element, childID, queryPlanTreeChild, queryParameters, queryStack);
                             if (childID < 0)
@@ -107,7 +107,7 @@ namespace MUTDOD.Server.Common.QueryOptimizer
                         }
                         else
                         {
-                            parent.Childrens.Add(new QueryPlanTree(childID++, parentId, element, elements.Key, parent, element is AbstractLeaf ? ((AbstractLeaf)element).Value : "", element.Cost, element.Cardinality(queryParameters), element.AccessType, element.AccessObject));
+                            parent.Childrens.Add(new QueryPlanTree(childID++, parentId, element, elements.Key, parent, element is AbstractLeaf ? ((AbstractLeaf)element).Value : "", element.Cost(queryParameters), element.Cardinality(queryParameters), element.AccessType, element.AccessObject));
                         }
                     }
                 }

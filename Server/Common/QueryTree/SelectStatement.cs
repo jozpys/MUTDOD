@@ -18,7 +18,7 @@ namespace MUTDOD.Server.Common.QueryTree
     {
         public SelectStatement() : base(ElementType.SELECT) { }
 
-        public Dictionary<int, string> index { get; set; }
+        public KeyValuePair<int, string> Index { get; set; }
         public override bool IsOpenStackScope => true;
 
         public override QueryDTO Execute(QueryParameters parameters)
@@ -67,6 +67,15 @@ namespace MUTDOD.Server.Common.QueryTree
             selectDto.QueryClass = classToGet;
             selectDto.QueryObjects = objs;
             return selectDto;
+        }
+        public override int Cost(QueryParameters parameters)
+        {
+            IQueryElement classNameElement = Element(ElementType.CLASS_NAME);
+            QueryDTO classResult = classNameElement.Execute(parameters);
+            if(classResult.QueryClass.ClassId == null)
+                throw new ApplicationException("Unknow Class");
+            return  Index.Value == null ? parameters.ServerSchemaStats.GetClassObjectNumber(parameters.Database.DatabaseId, classResult.QueryClass.ClassId) : 
+                parameters.IndexMechanism.GetAvarageObjectFindCost(Index.Key, parameters.ServerSchemaStats.GetClassObjectNumber(parameters.Database.DatabaseId, classResult.QueryClass.ClassId));
         }
     }
 }

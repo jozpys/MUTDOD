@@ -12,7 +12,7 @@ namespace MUTDOD.Server.Common.ServerStats
     public class SchemaStats : StatisticData
     {
 
-        public int DatabaseId { get; set; }
+        public Did DatabaseId { get; set; }
         public PropertyStats PropertyStats { get; set; }
         public ClassStats ClassStats { get; set; }
 
