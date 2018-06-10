@@ -48,5 +48,10 @@ namespace OdraIDE.Results
         {
             m_ListView.DataMatrix = new DataMatrix(); ;
         }
+
+        public void Focus()
+        {
+            layoutManager.Value.ShowPad(this);
+        }
     }
 }

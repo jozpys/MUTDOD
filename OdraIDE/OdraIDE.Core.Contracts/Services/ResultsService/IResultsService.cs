@@ -9,6 +9,7 @@ namespace OdraIDE.Core
     {
         void ShowStringResult(string result);
         void ShowDataResult(DataMatrix dataMatrix);
+        void FocusOnDataResult();
         void Clear();
     }
 }

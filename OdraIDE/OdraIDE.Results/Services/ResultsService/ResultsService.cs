@@ -32,5 +32,10 @@ namespace OdraIDE.Results
         {
             gridResultsPad.ShowResults(dataMatrix);
         }
+
+        public void FocusOnDataResult()
+        {
+            gridResultsPad.Focus();
+        }
     }
 }

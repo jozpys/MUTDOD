@@ -93,6 +93,8 @@ namespace OdraIDE.Editor.Sbql
                         StringBuilder sb = new StringBuilder();
                     if (result != null)
                     {
+                        bool focusOnGrid = false;
+
                         while (result != null)
                         {
                             try
@@ -101,6 +103,7 @@ namespace OdraIDE.Editor.Sbql
                                 DataMatrix dm = CreateDataMatrix(refactoredResults);
                                 resultsService.ShowDataResult(dm);
                                 sb.AppendLine(string.Format("{0} objects affected", dm.Rows.Count));
+                                focusOnGrid = true;
                             }
                             catch (Exception)
                             {
@@ -116,11 +119,16 @@ namespace OdraIDE.Editor.Sbql
                                     result.QueryResults.ForEach(o => dm.Rows.Add(new object[] {++id, o.Id}));
                                     resultsService.ShowDataResult(dm);
                                     sb.AppendLine(string.Format("{0} objects affected", id));
+                                    focusOnGrid = true;
                                 }
                             }
                             result = result.NextResult;
                         }
                         resultsService.ShowStringResult(sb.ToString());
+                        if(focusOnGrid)
+                        {
+                            resultsService.FocusOnDataResult();
+                        }
                     }
                     else
                     {
