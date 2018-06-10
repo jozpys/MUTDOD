@@ -43,7 +43,7 @@ namespace MUTDOD.Server.Common.QueryTree
                                {
                                    Name = c.Value.Name,
                                    Interface = c.Value.Interface,
-                                   Fields = d.Schema.ClassProperties(c.Value).Select(f => new Field { Name = f.Name, Type = f.Type, IsArray = f.IsArray }).ToList(),
+                                   Fields = d.Schema.ClassProperties(c.Value).Select(f => new Field { Name = f.Name, Type = f.Type, Reference = !f.IsValueType, IsArray = f.IsArray }).ToList(),
                                    Methods = d.Schema.Methods.ContainsKey(c.Key) ? d.Schema.Methods[c.Key] : new List<string>()
                                }).ToList()
                 }).ToList();

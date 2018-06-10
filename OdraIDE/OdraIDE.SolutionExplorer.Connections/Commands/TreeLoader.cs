@@ -46,7 +46,7 @@ namespace OdraIDE.SolutionExplorer.Connections.Commands
                         var cn = new ClassNode(@class.Name, @class.Interface, @class.ParentClasses);
                         foreach (var f in @class.Fields.OrderBy(f => f.Name))
                         {
-                            var fn = new FieldNode(f.Name, f.Type, f.IsArray);
+                            var fn = new FieldNode(f.Name, f.Type, f.Reference, f.IsArray);
                             cn.Children.Add(fn);
                         }
                         foreach (var m in @class.Methods.OrderBy(m => m))

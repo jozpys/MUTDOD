@@ -103,7 +103,7 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                     Interface = c.Value.Interface,
                                     Fields =
                                         db.Schema.Properties.Values.Where(p => p.ParentClassId == c.Value.ClassId.Id)
-                                        .Select(f => new Field { Name = f.Name, Type = f.Type, IsArray = f.IsArray })
+                                        .Select(f => new Field { Name = f.Name, Type = f.Type, Reference = !f.IsValueType, IsArray = f.IsArray })
                                         .ToList(),
                                     Methods =
                                         db.Schema.Methods.ContainsKey(c.Key)

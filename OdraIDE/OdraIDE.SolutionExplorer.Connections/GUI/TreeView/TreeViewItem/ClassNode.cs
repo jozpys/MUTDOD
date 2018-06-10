@@ -29,10 +29,6 @@ namespace OdraIDE.SolutionExplorer.Connections
             get
             {
                 string visableName = m_className;
-                if (m_interface)
-                {
-                    visableName = "(I) " + visableName;
-                }
                 if(m_parentClasses.Any())
                 {
                     visableName += " :" + String.Join(" ,", m_parentClasses);
@@ -45,7 +41,11 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return ImageHelper.GetImageFromResources(Resources.Images.NewSolution);
+                if (m_interface)
+                {
+                    return ImageHelper.GetImageFromResources(Resources.Images.PurpleBall);
+                }
+                return ImageHelper.GetImageFromResources(Resources.Images.GreenBall);
             }
         }
     }
@@ -56,12 +56,14 @@ namespace OdraIDE.SolutionExplorer.Connections
     {
         private string m_className;
         private string m_type;
+        private bool m_reference;
         private bool m_array;
 
-        public FieldNode(string className, string type, bool array)
+        public FieldNode(string className, string type, bool reference, bool array)
         {
             m_className = className;
             m_type = type;
+            m_reference = reference;
             m_array = array;
             ShowIcon = true;
         }
@@ -82,6 +84,10 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
+                if (m_reference)
+                {
+                    return ImageHelper.GetImageFromResources(Resources.Images.reference);
+                }
                 return ImageHelper.GetImageFromResources(Resources.Images.field);
             }
         }
@@ -111,7 +117,7 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return ImageHelper.GetImageFromResources(Resources.Images.method);
+                return ImageHelper.GetImageFromResources(Resources.Images.Gear);
             }
         }
     }
