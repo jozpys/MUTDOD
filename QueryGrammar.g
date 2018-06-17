@@ -265,7 +265,7 @@ K_TEMPORAL:	'TEMPORAL'|'temporal';
 K_THEN:		'THEN'|'then';
 K_UNIQUE:	'UNIQUE'|'unique';
 K_UPDATE:	'UPDATE'|'update';
-K_WHERE:	'WHERE'|'wherecc';
+K_WHERE:	'WHERE'|'where';
 K_WHILE:	'WHILE'|'while';
 
 k_add_dr:	K_ADD K_DYNAMIC K_ROLE;
