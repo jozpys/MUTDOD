@@ -21,7 +21,7 @@ namespace MUTDOD.Server.Common.QueryTree
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            var toStore = parameters.Subquery.Value;
+            IStorable toStore = parameters.Subquery.Value;
             List<Property> propeteries = parameters.Subquery.AdditionalValue;
 
             Property property = propeteries.SingleOrDefault(p => p.Name == FieldName);
@@ -37,14 +37,37 @@ namespace MUTDOD.Server.Common.QueryTree
                 };
 
             var valueElement = SingleElement();
-            if(valueElement.ElementType == ElementType.LITERAL)
+            var valueDto = valueElement.Execute(parameters);
+            String literalType = valueDto.AdditionalValue;
+
+            if(literalType == null)
             {
-                var literal = valueElement.Execute(parameters).Value;
+                toStore.Properties.Remove(property);
+                return new QueryDTO() { Value = null };
+            }
+
+            if (literalType != null && !literalType.Equals(property.Type))
+            {
+                return new QueryDTO()
+                {
+                    Result = new DTOQueryResult
+                    {
+                        NextResult = null,
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Can't use literal type " + literalType + " for property type " + property.Type
+                    }
+                };
+            }
+
+            if (valueElement.ElementType == ElementType.LITERAL)
+            {
+                var literal = valueDto.Value;
+
                 toStore.Properties.Add(property, literal);
             }
             else if(valueElement.ElementType == ElementType.SELECT)
             {
-                var objects = valueElement.Execute(parameters).QueryObjects;
+                var objects = valueDto.QueryObjects;
                 if(property.IsArray)
                 {
                     List<Object> elements = new List<Object>();
@@ -62,7 +85,7 @@ namespace MUTDOD.Server.Common.QueryTree
             }
             else if(valueElement.ElementType == ElementType.ARRAY)
             {
-                var array = valueElement.Execute(parameters).Value;
+                var array = valueDto.Value;
                 toStore.Properties.Add(property, array);
             }
 

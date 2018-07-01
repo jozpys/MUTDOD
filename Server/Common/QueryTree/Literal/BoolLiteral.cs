@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree.Literal
 {
@@ -17,7 +18,7 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public override QueryDTO Execute(QueryParameters parameters)
         {
             Boolean convertedValue = ConvertValue(Value);
-            var literalDto = new QueryDTO { Value = convertedValue };
+            var literalDto = new QueryDTO { Value = convertedValue, AdditionalValue = Property.BOOL };
             return literalDto;
         }
 

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree.Literal
 {
@@ -18,8 +19,10 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public override QueryDTO Execute(QueryParameters parameters)
         {
             int integerValue = Int32.Parse(Value, NumberStyles.Number, CultureInfo.InvariantCulture);
-            var literalDto = new QueryDTO { Value = integerValue };
+            var literalDto = new QueryDTO { Value = integerValue, AdditionalValue = Property.INT };
             return literalDto;
         }
+
+
     }
 }

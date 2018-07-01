@@ -666,7 +666,7 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 literal.Value = context.BOOL_VALUE().GetText();
                 return literal;
             }
-            else if(context.NULL_VALUE() != null)
+            else if(context.K_NULL() != null)
             {
                 NullLiteral literal = new NullLiteral();
                 return literal;

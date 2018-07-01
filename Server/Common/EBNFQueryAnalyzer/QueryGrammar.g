@@ -46,7 +46,7 @@ child_value: (SELECTION NAME)+;
 literal: NUMBER 
 	   | STRING_VALUE 
 	   | BOOL_VALUE 
-       | NULL_VALUE
+       | K_NULL
 	   ;
 
 where_operator: is_null
@@ -364,7 +364,6 @@ DIGIT: '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9';
 
 STRING_VALUE: '\'' (~[\r\n\'])* '\'';
 BOOL_VALUE:	'true'|'TRUE'|'false'|'FALSE';      
-NULL_VALUE: 'NULL'|'null';
 
 NAME:		[a-zA-Z][a-zA-Z_0-9]*;
 

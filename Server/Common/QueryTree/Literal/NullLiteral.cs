@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree.Literal
 {
@@ -14,7 +15,8 @@ namespace MUTDOD.Server.Common.QueryTree.Literal
         public NullLiteral() : base(ElementType.LITERAL){}
         public override QueryDTO Execute(QueryParameters parameters)
         {
-            return null;
+            var nullDto = new QueryDTO { Value = null, AdditionalValue = null };
+            return nullDto;
         }
     }
 }

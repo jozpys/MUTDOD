@@ -35,11 +35,62 @@ namespace MUTDOD.Server.Common.QueryTree
                         StringOutput = "Unknown field: " + FieldName
                     }
                 };
-            var literalElement = SingleElement();
-            var literal = literalElement.Execute(parameters).Value;
-            toStore.Properties[property] = literal;
+
+            var valueElement = SingleElement();
+            var valueDto = valueElement.Execute(parameters);
+            String literalType = valueDto.AdditionalValue;
+
+            if (literalType == null)
+            {
+                toStore.Properties.Remove(property);
+                return new QueryDTO() { Value = null };
+            }
+
+            if (literalType != null && !literalType.Equals(property.Type))
+            {
+                return new QueryDTO()
+                {
+                    Result = new DTOQueryResult
+                    {
+                        NextResult = null,
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Can't use literal type " + literalType + " for property type " + property.Type
+                    }
+                };
+            }
+
+            if (valueElement.ElementType == ElementType.LITERAL)
+            {
+                var literal = valueDto.Value;
+                toStore.Properties[property] = literal;
+            }
+            else if (valueElement.ElementType == ElementType.SELECT)
+            {
+                var objects = valueDto.QueryObjects;
+                if (property.IsArray)
+                {
+                    List<Object> elements = new List<Object>();
+                    foreach (var storable in objects)
+                    {
+                        elements.Add(storable.Oid.Id);
+                    }
+                    toStore.Properties[property] = elements;
+                }
+                else
+                {
+                    var objectId = objects.Single().Oid.Id;
+                    toStore.Properties[property] = objectId;
+                }
+            }
+            else if (valueElement.ElementType == ElementType.ARRAY)
+            {
+                var array = valueDto.Value;
+                toStore.Properties[property] = array;
+            }
 
             return new QueryDTO() { Value = property };
         }
+
+
     }
 }
