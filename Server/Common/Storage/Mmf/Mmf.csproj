@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSharpTest.Net.BPlusTree">
-      <HintPath>..\lib\CSharpTest.Net.BPlusTree.dll</HintPath>
+      <HintPath>..\..\..\..\Libraries\CSharpTest.Net.BPlusTree\CSharpTest.Net.BPlusTree.dll</HintPath>
     </Reference>
     <Reference Include="CSharpTest.Net.Library">
-      <HintPath>..\lib\CSharpTest.Net.Library.dll</HintPath>
+      <HintPath>..\..\..\..\Libraries\CSharpTest.Net.Library\CSharpTest.Net.Library.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
