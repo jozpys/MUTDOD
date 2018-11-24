@@ -52,6 +52,7 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
 
             Mock<IDatabaseParameters> database = new Mock<IDatabaseParameters>();
             database.Setup(d => d.Schema.Classes).Returns(classes);
+            database.Setup(d => d.Schema.Methods).Returns(new ConcurrentDictionary<ClassId, List<IMethod>>());
 
             Mock<IStorage> storage = new Mock<IStorage>();
             Class createdClass = null;
@@ -123,6 +124,7 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
 
             Mock<IDatabaseParameters> database = new Mock<IDatabaseParameters>();
             database.Setup(d => d.Schema.Classes).Returns(classes);
+            database.Setup(d => d.Schema.Methods).Returns(new ConcurrentDictionary<ClassId, List<IMethod>>());
 
             Mock<IStorage> storage = new Mock<IStorage>();
             Class createdClass = null;
@@ -199,6 +201,7 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
 
             Mock<IDatabaseParameters> database = new Mock<IDatabaseParameters>();
             database.Setup(d => d.Schema.Classes).Returns(classes);
+            database.Setup(d => d.Schema.Methods).Returns(new ConcurrentDictionary<ClassId, List<IMethod>>());
 
             Mock<IStorage> storage = new Mock<IStorage>();
             Class createdClass = null;
@@ -229,10 +232,12 @@ namespace MUTDOD.Server.Common.QueryTree.Tests
             classDeclarationStatement.Add(parentClassDeclaration.Object);
 
             QueryParameters parameters = new QueryParameters { Database = database.Object, Storage = storage.Object, Log = log.Object };
+
             var result = classDeclarationStatement.Execute(parameters);
 
             Assert.AreEqual(ResultType.StringResult, result.Result.QueryResultType);
             Assert.AreEqual("New class: " + newClassName + " created.", result.Result.StringOutput);
+            storage.Verify(s => s.SaveSchema(It.IsAny<IDatabaseSchema>()), Times.Once);
 
             Assert.AreEqual(newClassId, createdClass.ClassId.Id);
             Assert.AreEqual(newClassName, createdClass.Name);

@@ -91,9 +91,9 @@ class_delcaration: K_CLASS classType? K_TEMPORAL? cardinalyty? class_name parent
 
 cls_attribute_dec_stm: K_ATTRIBUTE K_ARRAY? dataType NAME SEMICOLON;
 
-cls_method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME method_params method_body;
+cls_method_dec_stm: K_METHOD (dataType|VOID_TYPE) NAME O_BRACK method_params? C_BRACK O_CURLY method_body? C_CURLY SEMICOLON;
 
-method_body: O_CURLY operation* (K_RETURN operation)? C_CURLY;
+method_body: operation* (K_RETURN operation)? ;
 
 cls_relation_dec_stm: K_RELATION dataType cardinalyty? NAME SEMICOLON;
 
@@ -108,7 +108,7 @@ drop_attribute_dec_stm: K_DROP K_ATTRIBUTE NAME SEMICOLON;
 
 add_method_dec_stm: K_ADD method_dec_stm;
 
-drop_method_dec_stm: K_DROP K_METHOD NAME method_params SEMICOLON;
+drop_method_dec_stm: K_DROP K_METHOD NAME method_params? SEMICOLON;
 
 add_relation_dec_stm: K_ADD relation_dec_stm;
 
@@ -123,7 +123,7 @@ drop_cls_attribute_dec_stm: K_DROP K_ATTRIBUTE NAME SEMICOLON;
 
 add_cls_method_dec_stm: K_ADD cls_method_dec_stm;
 
-drop_cls_method_dec_stm: K_DROP K_METHOD NAME method_params SEMICOLON;
+drop_cls_method_dec_stm: K_DROP K_METHOD NAME method_params? SEMICOLON;
 
 add_cls_relation_dec_stm: K_ADD cls_relation_dec_stm;
 

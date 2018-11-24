@@ -1,5 +1,4 @@
-﻿using MUTDOD.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,7 @@ using MUTDOD.Server.Common.QueryTree.Literal;
 using MUTDOD.Server.Common.QueryTree.Operator;
 using MUTDOD.Server.Common.QueryTree.Type;
 using MUTDOD.Server.Common.QueryTree.Aggregate;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
@@ -369,6 +369,10 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
         {
             MethodDeclaration method = new MethodDeclaration();
             method.Name = context.NAME().GetText();
+
+            IQueryElement dateType = Visit(context.dataType());
+            method.Add(dateType);
+
             return method;
         }
 
@@ -427,6 +431,18 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 alterClass.Add(attributeDeclaration);
             }
 
+            foreach(var addMethod in context.add_cls_method_dec_stm())
+            {
+                IQueryElement methodDeclaretion = Visit(addMethod.cls_method_dec_stm());
+                alterClass.Add(methodDeclaretion);
+            }
+
+            foreach (var dropMethod in context.drop_cls_method_dec_stm())
+            {
+                IQueryElement methodDeclaretion = Visit(dropMethod);
+                alterClass.Add(methodDeclaretion);
+            }
+
             return alterClass;
         }
 
@@ -454,10 +470,46 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 
         public override IQueryElement VisitDrop_attribute_dec_stm([NotNull] QueryGrammarParser.Drop_attribute_dec_stmContext context)
         {
-            AttributeDrop attributeDrop = new AttributeDrop();
-            attributeDrop.Name = context.NAME().GetText();
+            DropAttribute dropAttribute = new DropAttribute();
+            dropAttribute.Name = context.NAME().GetText();
 
-            return attributeDrop;
+            return dropAttribute;
+        }
+
+        public override IQueryElement VisitDrop_cls_attribute_dec_stm([NotNull] QueryGrammarParser.Drop_cls_attribute_dec_stmContext context)
+        {
+            DropAttribute dropAttribute = new DropAttribute();
+            dropAttribute.Name = context.NAME().GetText();
+
+            return dropAttribute;
+        }
+
+        public override IQueryElement VisitDrop_cls_method_dec_stm([NotNull] QueryGrammarParser.Drop_cls_method_dec_stmContext context)
+        {
+            DropMethod dropMethod = new DropMethod();
+            dropMethod.Name = context.NAME().GetText();
+
+            return dropMethod;
+        }
+
+        public override IQueryElement VisitMethod_param([NotNull] QueryGrammarParser.Method_paramContext context)
+        {
+            MethodParam param = new MethodParam();
+            param.Name = context.NAME().GetText();
+
+            IQueryElement dateType = Visit(context.dataType());
+            param.Add(dateType);
+            
+            if(context.K_OUT() != null)
+            {
+                param.Direction = ParameterDirection.OUT;
+            }
+            else
+            {
+                param.Direction = ParameterDirection.IN;
+            }
+
+            return param;
         }
 
         public override IQueryElement VisitDrop_stmt([NotNull] QueryGrammarParser.Drop_stmtContext context)

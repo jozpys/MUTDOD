@@ -21,6 +21,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         ALTER_CLASS,
         ALTER_INTERFACE,
         DROP_ATTRIBUTE,
+        DROP_METHOD,
         DROP_CLASS,
         DROP_INTERFACE,
         NEW_OBJECT,
@@ -38,6 +39,7 @@ namespace MUTDOD.Common.ModuleBase.Communication
         RIGHT_OPERAND,
         OPERATOR,
         CLASS_PROPERTY,
+        METHOD_PARAM,
         ARRAY,
         LITERAL,
         DATA_TYPE

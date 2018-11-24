@@ -67,18 +67,19 @@ namespace MUTDOD.Server.Common.QueryTree
                     return dropAttributeResult;
                 }
             }
+            
+            foreach (var meth in AllElements(ElementType.METHOD_DECLARATION))
+            {
+                meth.Execute(parameters);
+            }
+
+            foreach (var meth in AllElements(ElementType.DROP_METHOD))
+            {
+                meth.Execute(parameters);
+            }
+
 
             /*
-            _database.Schema.Methods.TryAdd(classId, new List<string>());
-            
-            foreach (var meth in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.METHOD_DEC_STM))
-            {
-                var methName = (isClass
-                    ? meth.ProductionsList.Single(t => t.TokenName == TokenName.METHOD_NAME)
-                    : meth)
-                    .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
-                _database.Schema.Methods[classId].Add(methName);
-            }
             foreach (var rel in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.RELATION_DEC_STM))
             {
                 var attrName = rel.ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;

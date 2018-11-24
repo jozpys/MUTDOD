@@ -13,7 +13,7 @@ namespace MutDood.Storage.Core.MetadataElements
         public Did DatabaseId { get; set; }
         public ConcurrentDictionary<ClassId, Class> Classes { get; set; }
         public ConcurrentDictionary<PropertyId, Property> Properties { get; set; }
-        public ConcurrentDictionary<ClassId, List<string>> Methods { get; set; }
+        public ConcurrentDictionary<ClassId, List<IMethod>> Methods { get; set; }
 
         public List<Property> ClassProperties(Class className)
         {

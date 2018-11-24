@@ -8,6 +8,7 @@ using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
@@ -77,7 +78,7 @@ namespace MUTDOD.Server.Common.QueryTree
             }
 
 
-            parameters.Database.Schema.Methods.TryAdd(classId, new List<string>());
+            parameters.Database.Schema.Methods.TryAdd(classId, new List<IMethod>());
 
             foreach(IQueryElement meth in AllElements(ElementType.METHOD_DECLARATION))
             {

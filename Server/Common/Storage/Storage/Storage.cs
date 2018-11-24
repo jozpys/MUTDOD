@@ -177,7 +177,7 @@ namespace MUTDOD.Server.Common.Storage
                     DatabaseId = newDid,
                     Classes = new ConcurrentDictionary<ClassId, Class>(),
                     Properties = new ConcurrentDictionary<PropertyId, Property>(),
-                    Methods = new ConcurrentDictionary<ClassId, List<string>>()
+                    Methods = new ConcurrentDictionary<ClassId, List<IMethod>>()
                 };
             newDid.Duid = _metadata.Databases.Count == 0 ? 0 : _metadata.Databases.Max(d => d.Key.Duid) + 1;
             databaseParameters.DatabaseId = newDid;

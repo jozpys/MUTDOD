@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
-    public class AttributeDrop : AbstractComposite
+    public class DropAttribute : AbstractComposite
     {
-        public AttributeDrop() : base(ElementType.DROP_ATTRIBUTE) { }
+        public DropAttribute() : base(ElementType.DROP_ATTRIBUTE) { }
 
         public String Name { get; set; }
 

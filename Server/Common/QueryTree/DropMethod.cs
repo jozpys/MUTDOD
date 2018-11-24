@@ -10,9 +10,9 @@ using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
-    public class MethodDeclaration : AbstractComposite
+    public class DropMethod : AbstractComposite
     {
-        public MethodDeclaration() : base(ElementType.METHOD_DECLARATION) { }
+        public DropMethod() : base(ElementType.DROP_METHOD) { }
 
         public String Name { get; set; }
         public List<IMethodParameter> Parameters { get; set; }
@@ -20,22 +20,16 @@ namespace MUTDOD.Server.Common.QueryTree
         public override QueryDTO Execute(QueryParameters parameters)
         {
             var classId = parameters.Subquery.QueryClass.ClassId;
-            var typeElement = Element(ElementType.DATA_TYPE);
-            var typeDao = typeElement.Execute(parameters);
-            Method method = new Method { Name = Name, ReturnType = typeDao.Value };
-            foreach(var paramElement in AllElements(ElementType.METHOD_PARAM))
-            {
-                var paramDao = paramElement.Execute(parameters);
-                method.Parameters.Add(paramDao.Value);
-            }
-            parameters.Database.Schema.Methods[classId].Add(method);
+            IMethod method = parameters.Database.Schema.Methods[classId].Where(
+                m => m.Name == Name && m.Parameters.Count == Parameters.Count && m.Parameters.All(p => Parameters.Contains(p))).Single();
+            parameters.Database.Schema.Methods[classId].Remove(method);
 
             return new QueryDTO
             {
                 Result = new DTOQueryResult
                 {
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Method added:" + Name
+                    StringOutput = "Method removed:" + Name
                 }
             };
         }

@@ -22,7 +22,7 @@ namespace MUTDOD.Common
         public bool Interface { get; set; }
         public List<string> ParentClasses { get; set; }
         public List<Field> Fields { get; set; }
-        public List<string> Methods { get; set; }
+        public List<ClassMethod> Methods { get; set; }
     }
 
     [Serializable]
@@ -32,5 +32,21 @@ namespace MUTDOD.Common
         public string Type { get; set; }
         public bool Reference { get; set; }
         public bool IsArray { get; set; }
+    }
+
+    [Serializable]
+    public class ClassMethod
+    {
+        public string Name { get; set; }
+        public string ReturnType { get; set; }
+        public List<ClassMethodParam> Params { get; set; }
+
+    }
+
+    [Serializable]
+    public class ClassMethodParam
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
     }
 }

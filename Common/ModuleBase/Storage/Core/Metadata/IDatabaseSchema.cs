@@ -9,7 +9,7 @@ namespace MUTDOD.Common.ModuleBase.Storage.Core.Metadata
         Did DatabaseId { get; set; }
         ConcurrentDictionary<ClassId, Class> Classes { get; set; }
         ConcurrentDictionary<PropertyId, Property> Properties { get; set; }
-        ConcurrentDictionary<ClassId, List<string>> Methods { get; set; }
+        ConcurrentDictionary<ClassId, List<IMethod>> Methods { get; set; }
         List<Property> ClassProperties(Class className);
     }
 }

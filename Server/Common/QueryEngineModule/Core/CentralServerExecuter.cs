@@ -105,10 +105,8 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                                         db.Schema.Properties.Values.Where(p => p.ParentClassId == c.Value.ClassId.Id)
                                         .Select(f => new Field { Name = f.Name, Type = f.Type, Reference = !f.IsValueType, IsArray = f.IsArray })
                                         .ToList(),
-                                    Methods =
-                                        db.Schema.Methods.ContainsKey(c.Key)
-                                            ? db.Schema.Methods[c.Key]
-                                            : new List<string>()
+                                    Methods = db.Schema.Methods.ContainsKey(c.Key) ? db.Schema.Methods[c.Key].Select(
+                                        m => new ClassMethod { Name = m.Name, ReturnType = m.ReturnType }).ToList() : new List<ClassMethod>()
                                 }).ToList()
                             });
                         return new DTOQueryResult()
@@ -194,14 +192,14 @@ namespace MUTDOD.Server.Common.QueryEngineModule.Core
                             IsValueType = typeName.TokenName != TokenName.NAME
                         });
                     }
-                    _database.Schema.Methods.TryAdd(classId, new List<string>());
+                    _database.Schema.Methods.TryAdd(classId, new List<IMethod>());
                     foreach (var meth in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.METHOD_DEC_STM))
                     {
                         var methName = (isClass
                             ? meth.ProductionsList.Single(t => t.TokenName == TokenName.METHOD_NAME)
                             : meth)
                             .ProductionsList.Single(t => t.TokenName == TokenName.NAME).TokenValue;
-                        _database.Schema.Methods[classId].Add(methName);
+                        //_database.Schema.Methods[classId].Add(methName);
                     }
                     foreach (var rel in queryTree.ProductionsList.Where(t => t.TokenName == TokenName.RELATION_DEC_STM))
                     {

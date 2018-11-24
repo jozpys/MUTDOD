@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.Linq;
 using ICSharpCode.TreeView;
@@ -98,10 +100,14 @@ namespace OdraIDE.SolutionExplorer.Connections
     public class MethodNode : SharpTreeNode
     {
         private string m_className;
+        private string m_returnType;
+        private OrderedDictionary m_parameters;
 
-        public MethodNode(string className)
+        public MethodNode(string className, string returnValue, OrderedDictionary parameters)
         {
             m_className = className;
+            m_returnType = returnValue;
+            m_parameters = parameters;
             ShowIcon = true;
         }
 
@@ -109,7 +115,16 @@ namespace OdraIDE.SolutionExplorer.Connections
         {
             get
             {
-                return m_className;
+                List<String> parametersString = new List<String>();
+                foreach(DictionaryEntry param in m_parameters){
+                    parametersString.Add(param.Key + ":" + param.Value);
+                }
+                if(m_returnType == null)
+                {
+                    m_returnType = "null";
+                }
+                String text = m_className + " [:" + m_returnType + "(" + String.Join(", ", parametersString) + ")]";
+                return text;
             }
         }
 

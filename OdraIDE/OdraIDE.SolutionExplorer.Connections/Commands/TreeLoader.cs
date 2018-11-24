@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OdraIDE.SolutionExplorer.Connections.CompositionPoints;
 using OdraIDE.Core.Services;
+using System.Collections.Specialized;
 
 namespace OdraIDE.SolutionExplorer.Connections.Commands
 {
@@ -49,9 +50,14 @@ namespace OdraIDE.SolutionExplorer.Connections.Commands
                             var fn = new FieldNode(f.Name, f.Type, f.Reference, f.IsArray);
                             cn.Children.Add(fn);
                         }
-                        foreach (var m in @class.Methods.OrderBy(m => m))
+                        foreach (var m in @class.Methods.OrderBy(m => m.Name))
                         {
-                            var mn = new MethodNode(m);
+                            OrderedDictionary parameters = new OrderedDictionary();
+                            foreach (var prop in m.Params)
+                            {
+                                parameters.Add(prop.Name, prop.Type);
+                            }
+                            var mn = new MethodNode(m.Name, m.ReturnType, parameters);
                             cn.Children.Add(mn);
                         }
                         databaseNode.Children.Add(cn);
