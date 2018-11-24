@@ -11,5 +11,6 @@ namespace MUTDOD.Common.ModuleBase.Storage.Core.Metadata
         ConcurrentDictionary<PropertyId, Property> Properties { get; set; }
         ConcurrentDictionary<ClassId, List<IMethod>> Methods { get; set; }
         List<Property> ClassProperties(Class className);
+        List<IMethod> ClassMethods(Class className);
     }
 }

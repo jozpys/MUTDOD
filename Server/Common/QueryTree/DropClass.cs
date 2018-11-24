@@ -63,8 +63,8 @@ namespace MUTDOD.Server.Common.QueryTree
                 return new QueryDTO() { Result = noInterfaceResult };
             }
 
-            List<Property> propeteries = parameters.Database.Schema.ClassProperties(classToDrop);
-            foreach(var parameterToDrop in propeteries)
+            IEnumerable<Property> propeteries = parameters.Database.Schema.Properties.Values.Where(p => p.ParentClassId == classToDrop.ClassId.Id);
+            foreach (var parameterToDrop in propeteries)
             {
                 Boolean success = parameters.Database.Schema.Properties.TryRemove(parameterToDrop.PropertyId, out Property dropedProperty);
 
@@ -78,6 +78,8 @@ namespace MUTDOD.Server.Common.QueryTree
                     return new QueryDTO() { Result = errorMessage };
                 }
             }
+
+            parameters.Database.Schema.Methods.TryRemove(classToDrop.ClassId, out List<IMethod> dropedMethods);
 
             if (!parameters.Database.Schema.Classes.TryRemove(classToDrop.ClassId, out Class dropedClass))
 
@@ -94,6 +96,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     }
                 };
             }
+
             parameters.Storage.SaveSchema(parameters.Database.Schema);
 
             parameters.Log("Droped class: " + dropedClass.Name, MessageLevel.QueryExecution);

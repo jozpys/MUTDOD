@@ -44,7 +44,7 @@ namespace MUTDOD.Server.Common.QueryTree
                                    Name = c.Value.Name,
                                    Interface = c.Value.Interface,
                                    Fields = d.Schema.ClassProperties(c.Value).Select(f => new Field { Name = f.Name, Type = f.Type, Reference = !f.IsValueType, IsArray = f.IsArray }).ToList(),
-                                   Methods = d.Schema.Methods.ContainsKey(c.Key) ? d.Schema.Methods[c.Key].Select(
+                                   Methods = d.Schema.ClassMethods(c.Value).Any() ? d.Schema.ClassMethods(c.Value).Select(
                                         m => new ClassMethod { Name = m.Name, ReturnType = m.ReturnType }).ToList() : new List<ClassMethod>()
                                }).ToList()
                 }).ToList();

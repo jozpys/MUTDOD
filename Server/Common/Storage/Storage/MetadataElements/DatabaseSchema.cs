@@ -27,6 +27,26 @@ namespace MutDood.Storage.Core.MetadataElements
 
             return classProperties.ToList();
         }
+
+        public List<IMethod> ClassMethods(Class className)
+        {
+            ISet<IMethod> classProperties = new HashSet<IMethod>();
+            if(Methods.TryGetValue(className.ClassId, out List<IMethod> methods))
+            {
+                classProperties.UnionWith(methods);
+            }
+            
+
+            foreach (var parentClass in className.AllParents())
+            {
+                if (Methods.TryGetValue(parentClass.ClassId, out List<IMethod> parentMethods))
+                {
+                    classProperties.UnionWith(parentMethods);
+                }
+            }
+
+            return classProperties.ToList();
+        }
     }
      
 }

@@ -85,10 +85,13 @@ namespace MUTDOD.Server.Common.QueryEngineModule
             public ConcurrentDictionary<ClassId, Class> Classes { get; set; }
             public ConcurrentDictionary<PropertyId, Property> Properties { get; set; }
             public ConcurrentDictionary<ClassId, List<IMethod>> Methods { get; set; }
-
             public List<Property> ClassProperties(Class className)
             {
                 return Enumerable.Empty<Property>().ToList();
+            }
+            public List<IMethod> ClassMethods(Class className)
+            {
+                return Enumerable.Empty<IMethod>().ToList();
             }
         }
     }

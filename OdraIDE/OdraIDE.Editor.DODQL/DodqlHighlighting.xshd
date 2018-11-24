@@ -54,6 +54,7 @@
 			<Word>class</Word>
       <Word>interface</Word>
       <Word>attribute</Word>
+      <Word>method</Word>
       <Word>alter</Word>
       <Word>add</Word>
       <Word>update</Word>
