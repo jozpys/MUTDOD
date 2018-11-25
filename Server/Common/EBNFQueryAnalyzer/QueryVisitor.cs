@@ -700,10 +700,16 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
         
         public override IQueryElement VisitLiteral([NotNull] QueryGrammarParser.LiteralContext context)
         {
-            if (context.NUMBER() != null)
+            if (context.number() != null)
             {
+                if(context.number().FLOAT_PRESICION() != null)
+                {
+                    FloatLiteral floatLiteral = new FloatLiteral();
+                    floatLiteral.Value = context.number().GetText();
+                    return floatLiteral;
+                }
                 IntegerLiteral literal = new IntegerLiteral();
-                literal.Value = context.NUMBER().GetText();
+                literal.Value = context.number().GetText();
                 return literal;
             }
             else if(context.STRING_VALUE() != null)

@@ -43,7 +43,7 @@ where_value: literal
 
 child_value: (SELECTION NAME)+;
 
-literal: NUMBER 
+literal: number 
 	   | STRING_VALUE 
 	   | BOOL_VALUE 
        | K_NULL
@@ -151,7 +151,7 @@ array_value: arr_name=NAME O_BRACK ((NAME (SELECTION NAME)*)|literal) C_BRACK;
 
 coercion: O_PAREN dataType C_PAREN;
 
-value: NUMBER 
+value: number 
      | NAME;
 
 
@@ -357,7 +357,7 @@ DROP_DB:	'DropDatabase';
 TASKS:		'tasks';
 PARALLEL_MTD:'parallel_method';
 
-NUMBER: INTEGER FLOAT_PRESICION?;
+number: INTEGER FLOAT_PRESICION?;
 FLOAT_PRESICION: SELECTION DIGIT+;
 INTEGER: SUB? DIGIT+; 
 DIGIT: '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9';

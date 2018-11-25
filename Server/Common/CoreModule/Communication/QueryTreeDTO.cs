@@ -67,6 +67,7 @@ namespace MUTDOD.Server.Common.CoreModule.Communication
     [KnownType(typeof(NullLiteral))]
     [KnownType(typeof(StringLiteral))]
     [KnownType(typeof(ArrayValues))]
+    [KnownType(typeof(FloatLiteral))]
 
     [KnownType(typeof(BoolType))]
     [KnownType(typeof(ByteType))]
