@@ -70,12 +70,20 @@ namespace MUTDOD.Server.Common.QueryTree
             
             foreach (var meth in AllElements(ElementType.METHOD_DECLARATION))
             {
-                meth.Execute(parameters);
+                var methodResult = meth.Execute(parameters);
+                if(methodResult.Result != null)
+                {
+                    return methodResult;
+                }
             }
 
             foreach (var meth in AllElements(ElementType.DROP_METHOD))
             {
-                meth.Execute(parameters);
+                var dropMeyhodResult = meth.Execute(parameters);
+                if(dropMeyhodResult.Result != null)
+                {
+                    return dropMeyhodResult;
+                }
             }
 
 

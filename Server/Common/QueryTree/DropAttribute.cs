@@ -39,7 +39,7 @@ namespace MUTDOD.Server.Common.QueryTree
                 var errorMessage = new DTOQueryResult()
                 {
                     QueryResultType = ResultType.StringResult,
-                    StringOutput = "Attribute with name: " + Name + "belongs to parent class: " + parentClass.Name
+                    StringOutput = "Attribute with name: " + Name + " belongs to parent class(interface): " + parentClass.Name
                 };
                 return new QueryDTO() { Result = errorMessage };
 

@@ -19,18 +19,31 @@ namespace MUTDOD.Server.Common.QueryTree
 
         public override QueryDTO Execute(QueryParameters parameters)
         {
+            if(Parameters == null)
+            {
+                Parameters = Enumerable.Empty<IMethodParameter>().ToList();
+            }
             var classId = parameters.Subquery.QueryClass.ClassId;
-            IMethod method = parameters.Database.Schema.Methods[classId].Where(
-                m => m.Name == Name && m.Parameters.Count == Parameters.Count && m.Parameters.All(p => Parameters.Contains(p))).Single();
+            List<IMethod> classMethods = parameters.Database.Schema.Methods[classId];
+            IMethod method = classMethods.Where(
+                m => m.Name == Name && m.Parameters.Count == Parameters.Count && m.Parameters.All(p => Parameters.Contains(p))).SingleOrDefault();
+            if(method == null)
+            {
+                return new QueryDTO
+                {
+                    Result = new DTOQueryResult
+                    {
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "No method with name:" + Name
+                    }
+                };
+            }
+
             parameters.Database.Schema.Methods[classId].Remove(method);
 
             return new QueryDTO
             {
-                Result = new DTOQueryResult
-                {
-                    QueryResultType = ResultType.StringResult,
-                    StringOutput = "Method removed:" + Name
-                }
+                Value = method
             };
         }
     }

@@ -32,11 +32,7 @@ namespace MUTDOD.Server.Common.QueryTree
 
             return new QueryDTO
             {
-                Result = new DTOQueryResult
-                {
-                    QueryResultType = ResultType.StringResult,
-                    StringOutput = "Method added:" + Name
-                }
+                Value = method
             };
         }
     }
