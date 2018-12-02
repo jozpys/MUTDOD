@@ -629,6 +629,11 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
                 }
                 return property;
             }
+            else if(context.get_stmt() != null)
+            {
+                IQueryElement select = Visit(context.get_stmt());
+                return select;
+            }
 
             return null;
         }

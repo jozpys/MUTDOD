@@ -9,7 +9,6 @@ using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.Types;
-
 namespace MUTDOD.Server.Common.QueryTree
 {
     [DataContract]
@@ -25,9 +24,14 @@ namespace MUTDOD.Server.Common.QueryTree
             {
                 QueryDTO subquery = new QueryDTO { QueryClass = parameters.Subquery.QueryClass, QueryObjects = new List<IStorable> { databaseObject } };
                 QueryParameters singleParameter = new QueryParameters { Database = parameters.Database, Storage = parameters.Storage, Subquery = subquery };
-                var left = leftElement.Execute(singleParameter).Value;
-                var right = rightElement.Execute(singleParameter).Value;
-                QueryDTO comparisionSubquery = new QueryDTO { Value = left, AdditionalValue = right };
+                QueryDTO leftResult = leftElement.Execute(singleParameter);
+                QueryDTO rightResult = rightElement.Execute(singleParameter);
+                if(leftResult.Result.QueryResultType == ResultType.ReferencesOnly && rightResult.Result.QueryResultType == ResultType.ReferencesOnly)
+                {
+                    bool containsCommonObject = leftResult.QueryObjects.Any(x => rightResult.QueryObjects.Contains(x));
+                    return containsCommonObject;
+                }
+                QueryDTO comparisionSubquery = new QueryDTO { Value = leftResult.Value, AdditionalValue = rightResult.Value };
                 QueryParameters comparisionParameter = new QueryParameters { Subquery = comparisionSubquery };
                 return (Boolean)operation.Execute(comparisionParameter).Value;
             };
@@ -51,6 +55,16 @@ namespace MUTDOD.Server.Common.QueryTree
                     NextResult = null,
                     QueryResultType = ResultType.StringResult,
                     StringOutput = "Unknown propertyName: " + exc.PropertyName
+                };
+                return new QueryDTO { Result = errorResult };
+            }
+            catch (InvalidOperationException exc)
+            {
+                DTOQueryResult errorResult = new DTOQueryResult
+                {
+                    NextResult = null,
+                    QueryResultType = ResultType.StringResult,
+                    StringOutput = "Can't compare diferent types!"
                 };
                 return new QueryDTO { Result = errorResult };
             }

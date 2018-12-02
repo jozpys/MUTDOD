@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase.Communication;
+using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
 using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree
@@ -49,6 +50,8 @@ namespace MUTDOD.Server.Common.QueryTree
 
                 if (TryGetElement(ElementType.CLASS_PROPERTY, out IQueryElement childProperty))
                 {
+                    var classType = classProperty.Single();
+                    parameters.Subquery.QueryClass = parameters.Database.Schema.Classes.Values.SingleOrDefault(c => c.Name == classType.Type);
                     return childProperty.Execute(parameters);
                 }
 

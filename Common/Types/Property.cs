@@ -32,7 +32,7 @@ namespace MUTDOD.Common.Types
                 switch (Type.ToLower())
                 {
                     case FLOAT:
-                        return typeof (double);
+                        return typeof (float);
                     case BYTE:
                         return typeof (byte);
                     case SHORT:

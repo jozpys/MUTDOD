@@ -11,12 +11,14 @@ namespace MUTDOD.Server.Common.EBNFQueryAnalyzer
 {
     class QueryParserErrorListener : BaseErrorListener, IAntlrErrorListener<IQueryElement>
     {
-        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line,
+            int charPositionInLine, string msg, RecognitionException e)
         {
             throw new SyntaxException("Line " + line + ":" + charPositionInLine + " " + msg);
         }
 
-        public void SyntaxError(IRecognizer recognizer, IQueryElement offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public void SyntaxError(IRecognizer recognizer, IQueryElement offendingSymbol, int line,
+            int charPositionInLine, string msg, RecognitionException e)
         {
             throw new SyntaxException("Line " + line + ":" + charPositionInLine + " " + msg);
         }

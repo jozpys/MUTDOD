@@ -20,6 +20,11 @@ namespace MUTDOD.Server.Common.QueryTree
         {
             var selectStatement = SingleElement();
             var selectResult = selectStatement.Execute(parameters);
+            if(selectResult.Result.QueryResultType == ResultType.StringResult)
+            {
+                return selectResult;
+            }
+
             var classToGet = selectResult.QueryClass;
             var objs = selectResult.QueryObjects;
 

@@ -40,12 +40,6 @@ namespace MUTDOD.Server.Common.QueryTree
             var valueDto = valueElement.Execute(parameters);
             String literalType = valueDto.AdditionalValue;
 
-            if (literalType == null)
-            {
-                toStore.Properties.Remove(property);
-                return new QueryDTO() { Value = null };
-            }
-
             if (literalType != null && !literalType.Equals(property.Type))
             {
                 return new QueryDTO()

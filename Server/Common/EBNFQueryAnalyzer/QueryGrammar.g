@@ -39,7 +39,8 @@ clause: where_operation and_or_clause?
 where_operation: left=where_value where_operator right=where_value?;
 
 where_value: literal
-		   | NAME child_value?;
+		   | NAME child_value?
+		   | get_stmt;
 
 child_value: (SELECTION NAME)+;
 
