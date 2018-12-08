@@ -25,14 +25,20 @@ namespace MUTDOD.Server.DataServer.DataServerBase
             _logger = logger;
             do
             {
-                _addres = string.Format("net.tcp://localhost:{0}", DateTime.Now.Millisecond%10000);
+                Port = Convert.ToInt16(DateTime.Now.Millisecond % 10000);
+                _addres = string.Format("net.tcp://localhost:{0}", Port);
             } while (_addres == settingsManager.CentralServerRemoteAdress);
 
-            var dataServerConnector = new DataServerConnector(settingsManager, storage, logger);
+            InitServiceHost();
+        }
+
+        private void InitServiceHost()
+        {
+            var dataServerConnector = new DataServerConnector(_settingsManager, _storage, _logger);
 
             _serviceHost = new ServiceHost(
-                dataServerConnector,
-                new Uri(Adress));
+               dataServerConnector,
+               new Uri(Adress));
             //_serviceHost.
             _serviceHost.AddServiceEndpoint(
                 typeof(IDataServerContract),
@@ -51,11 +57,7 @@ namespace MUTDOD.Server.DataServer.DataServerBase
             get { return _addres; }
         }
 
-        public override short Port
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public override short Port { get; set; }
 
         #endregion
 
@@ -70,24 +72,26 @@ namespace MUTDOD.Server.DataServer.DataServerBase
         protected override void RunMain()
         {
             base.RunMain();
-            _serviceHost.Open();
-            ChannelFactory<ICentralServerContract> scf =
-                new ChannelFactory<ICentralServerContract>(_settingsManager.CentralServerRemoteBinding,
-                    _settingsManager.CentralServerRemoteAdress);
-
-            var m_serverChanel = scf.CreateChannel();
+           
             bool done = false;
             do
             {
-                try
+                 try
                 {
+                _serviceHost.Open();
+                ChannelFactory<ICentralServerContract> scf =
+                    new ChannelFactory<ICentralServerContract>(_settingsManager.CentralServerRemoteBinding,
+                        _settingsManager.CentralServerRemoteAdress);
+
+                var m_serverChanel = scf.CreateChannel();
+
+               
                     m_serverChanel.RegisterDataServer(Name, Adress);
                     done = true;
                 }
                 catch (CommunicationObjectFaultedException)
                 {
                     _logger.Log("DataServer", "Faulted communication! Wating for recall", MessageLevel.Warning);
-                    m_serverChanel = scf.CreateChannel();
                     Thread.Sleep(3000);
                 }
                 catch (Exception)
@@ -95,6 +99,16 @@ namespace MUTDOD.Server.DataServer.DataServerBase
                     _logger.Log("DataServer", "Can not connect to Central server! Wating for recall",
                         MessageLevel.Warning);
                     Thread.Sleep(3000);
+                }
+
+                if (!done)
+                {
+                    do
+                    {
+                        Port += 1;
+                        _addres = string.Format("net.tcp://localhost:{0}", Port);
+                    } while (_addres == _settingsManager.CentralServerRemoteAdress);
+                    InitServiceHost();
                 }
             } while (!done);
             Thread.Sleep(500);
