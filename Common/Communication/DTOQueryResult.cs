@@ -11,6 +11,7 @@ namespace MUTDOD.Common.Communication
         //for serialization
         public DTOQueryResult()
         {
+            IsError = false;
         }
 
         public DTOQueryResult(IQueryResult query)
@@ -19,9 +20,12 @@ namespace MUTDOD.Common.Communication
             NextResult = query.NextResult;
             StringOutput = query.StringOutput;
             QueryResults = query.QueryResults;
+            IsError = query.IsError;
         }
 
         public ResultType QueryResultType { get; set; }
+
+        public bool IsError { get; set; }
 
         [XmlIgnore]
         public IQueryResult NextResult

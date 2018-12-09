@@ -25,8 +25,16 @@ namespace MUTDOD.Server.Common.QueryTree
                 QueryDTO subquery = new QueryDTO { QueryClass = parameters.Subquery.QueryClass, QueryObjects = new List<IStorable> { databaseObject } };
                 QueryParameters singleParameter = new QueryParameters { Database = parameters.Database, Storage = parameters.Storage, Subquery = subquery };
                 QueryDTO leftResult = leftElement.Execute(singleParameter);
+                if(leftResult.Result?.IsError == true)
+                {
+                    throw new SelectExecutionException(leftResult);
+                }
                 QueryDTO rightResult = rightElement.Execute(singleParameter);
-                if(leftResult.Result.QueryResultType == ResultType.ReferencesOnly && rightResult.Result.QueryResultType == ResultType.ReferencesOnly)
+                if(rightResult.Result?.IsError == true)
+                {
+                    throw new SelectExecutionException(rightResult);
+                }
+                if(leftResult.Result?.QueryResultType == ResultType.ReferencesOnly && rightResult.Result?.QueryResultType == ResultType.ReferencesOnly)
                 {
                     bool containsCommonObject = leftResult.QueryObjects.Any(x => rightResult.QueryObjects.Contains(x));
                     return containsCommonObject;
@@ -54,9 +62,15 @@ namespace MUTDOD.Server.Common.QueryTree
                 {
                     NextResult = null,
                     QueryResultType = ResultType.StringResult,
+                    IsError = true,
                     StringOutput = "Unknown propertyName: " + exc.PropertyName
                 };
                 return new QueryDTO { Result = errorResult };
+            }
+            catch(SelectExecutionException exc)
+            {
+                var errorDto = exc.ErrorDto;
+                return errorDto;
             }
             catch (InvalidOperationException exc)
             {

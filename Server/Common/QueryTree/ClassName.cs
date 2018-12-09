@@ -29,6 +29,7 @@ namespace MUTDOD.Server.Common.QueryTree
                 {
                     NextResult = null,
                     QueryResultType = ResultType.StringResult,
+                    IsError = true,
                     StringOutput = "Unknown class: " + Name
                 };
                 return new QueryDTO { Result = errorResult, QueryClass = errorClass };

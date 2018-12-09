@@ -40,7 +40,7 @@ namespace MUTDOD.Server.Common.QueryTree
                     throw new NoClassPropertyException { PropertyName = Name };
                 }
 
-                return new QueryDTO { Value = null };
+                return new QueryDTO { QueryObjects = Enumerable.Empty<IStorable>(), Value = null };
             }
 
             var property = properties.First();
