@@ -8,6 +8,7 @@ using MUTDOD.Common;
 using MUTDOD.Common.Communication;
 using MUTDOD.Common.ModuleBase.Communication;
 using MUTDOD.Common.ModuleBase.Storage.Core.Metadata;
+using MUTDOD.Common.Types;
 
 namespace MUTDOD.Server.Common.QueryTree
 {
@@ -61,6 +62,24 @@ namespace MUTDOD.Server.Common.QueryTree
                 };
                 return new QueryDTO() { Result = noInterfaceResult };
             }
+
+            IEnumerable<Property> propeteries = parameters.Database.Schema.Properties.Values.Where(p => p.ParentClassId == classToDrop.ClassId.Id);
+            foreach (var parameterToDrop in propeteries)
+            {
+                Boolean success = parameters.Database.Schema.Properties.TryRemove(parameterToDrop.PropertyId, out Property dropedProperty);
+
+                if (!success)
+                {
+                    var errorMessage = new DTOQueryResult()
+                    {
+                        QueryResultType = ResultType.StringResult,
+                        StringOutput = "Error while droping attribute: " + dropedProperty.Name
+                    };
+                    return new QueryDTO() { Result = errorMessage };
+                }
+            }
+
+            parameters.Database.Schema.Methods.TryRemove(classToDrop.ClassId, out List<IMethod> dropedMethods);
 
             if (!parameters.Database.Schema.Classes.TryRemove(classToDrop.ClassId, out Class dropedClass))
             {
